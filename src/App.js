@@ -1,21 +1,20 @@
-import React from 'react';
+import React from "react";
+
+import Summary from "./components/Summary";
+import ListView from "./components/money/ListView";
+import PieChart from "./components/money/PieChart";
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Summary/>
+
+      <div>
+        <ListView/>
+        <PieChart/>
+      </div>
+
+
     </div>
   );
 }
