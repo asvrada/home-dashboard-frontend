@@ -1,9 +1,10 @@
 import React from "react";
 
+import { useGet } from "restful-react";
+
 import AddEntryGadget from "./gadgets/AddEntryGadget";
-import BudgeGadget from "./gadgets/BudgeGadget";
-import DayGadget from "./gadgets/DayGadget";
-import StockGadget from "./gadgets/StockGadget";
+import BudgetGadget from "./gadgets/BudgetGadget";
+import TimeDate from "./gadgets/TimeDate";
 
 /**
  * Display a summary of information at the top of window
@@ -14,11 +15,26 @@ import StockGadget from "./gadgets/StockGadget";
  *  Add new entry
  */
 function Summary() {
+  // GET summary/
+  const { data: objSummary } = useGet({
+    path: "summary/",
+  });
+
+  // Generate <BudgetGadget>
+  let componentBudgetGadget = <span>Loading...</span>;
+  if (objSummary !== null) {
+    componentBudgetGadget = <BudgetGadget total={objSummary.total}
+                                          remainingTotal={objSummary.remainingTotal}
+                                          remainingToday={objSummary.remainingToday}/>;
+  }
+
   return (
     <div className="Summary">
-      <DayGadget/>
-      <BudgeGadget/>
-      <StockGadget/>
+      <TimeDate/>
+
+      {componentBudgetGadget}
+
+      {/*<StockGadget/>*/}
       <AddEntryGadget/>
     </div>
   );

@@ -6,7 +6,9 @@ import React from "react";
 function AddEntryGadget() {
   return (
     <div className="AddEntryGadget">
-      <div><button>Add new entry</button></div>
+      <div>
+        <button>Add new entry</button>
+      </div>
     </div>
   );
 }
