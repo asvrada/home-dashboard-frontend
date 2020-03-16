@@ -2,9 +2,9 @@ import React from "react";
 
 import { useGet } from "restful-react";
 
-import AddEntryGadget from "./gadgets/AddEntryGadget";
-import BudgetGadget from "./gadgets/BudgetGadget";
-import TimeDate from "./gadgets/TimeDate";
+import AddEntryGadget from "./AddEntryGadget";
+import BudgetGadget from "./BudgetGadget";
+import TimeDate from "./TimeDate";
 
 /**
  * Display a summary of information at the top of window

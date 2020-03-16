@@ -1,6 +1,6 @@
 import React from "react";
 
-import Entry from "../Entry";
+import Entry from "./Entry";
 import { useGet } from "restful-react";
 
 /**
@@ -8,23 +8,28 @@ import { useGet } from "restful-react";
  */
 function ListView() {
   // GET bill/
-  const { data: objEntries } = useGet({
+  const { data: listEntries } = useGet({
     path: "bill/",
+    resolve: data => {
+      if (typeof data === "string") {
+        data = JSON.parse(data);
+      }
+
+      return data;
+    },
   });
 
   // Generate list of Entry
   let componentEntries = <span>Loading...</span>;
-  if (objEntries !== null) {
-    let listEntries = objEntries.map((entry) =>
+  if (listEntries !== null) {
+    let entries = listEntries.map((entry) =>
       <li key={entry.id}>
-        <Entry icon={"NONE"}
-               amount={entry.amount}
-               category={entry.category}
-               note={entry.note}/>
+        <Entry entry={entry}
+        />
       </li>,
     );
 
-    componentEntries = <ul>{listEntries}</ul>;
+    componentEntries = <ul>{entries}</ul>;
   }
 
   return (
