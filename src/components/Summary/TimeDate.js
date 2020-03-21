@@ -9,10 +9,12 @@ import { getDate, getDay, getMonth } from "../../helpers/TimeDateRelated";
  * {time} {day} {month date}
  */
 function TimeDate() {
+  const month = getMonth().toString();
+  const date = getDate().toString().padStart(2, '0');
   return (
     <div className="TimeDate">
       <span>{getDay()}</span>
-      <span>{getMonth()} / {getDate()}</span>
+      <span>{month}/{date}</span>
       <span>
         <Clock format={"HH:mm"} ticking={true} timezone={"US/Pacific"}/>
       </span>

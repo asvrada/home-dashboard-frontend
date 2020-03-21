@@ -23,7 +23,7 @@ function CategoryField() {
 
   return (
     <span>
-      <input {...getInputProps()} placeholder={"food?"}/>
+      <input {...getInputProps()} placeholder={"Category"}/>
     </span>
   );
 }
@@ -35,7 +35,19 @@ function CompanyField() {
 
   return (
     <span>
-      <input {...getInputProps()} placeholder={"apple?"}/>
+      <input {...getInputProps()} placeholder={"Company you paid money to"}/>
+    </span>
+  );
+}
+
+function CardField() {
+  const {
+    getInputProps,
+  } = useField("card");
+
+  return (
+    <span>
+      <input {...getInputProps()} placeholder={"Credit Card Company"}/>
     </span>
   );
 }
@@ -47,7 +59,7 @@ function NoteField() {
 
   return (
     <span>
-      <input {...getInputProps()} placeholder={"about?"}/>
+      <input {...getInputProps()} placeholder={"Any note?"}/>
     </span>
   );
 }
@@ -58,24 +70,21 @@ async function onSubmitForm(values, executePost) {
     amount: -1,
     category: "Undefined",
     company: "Undefined",
+    card: "Undefined",
     note: "",
     ...values,
   };
 
-  let data = await executePost(obj);
+  let response = await executePost(obj);
 
-  // Simulate networking time
   if (isDevEnv()) {
-    await new Promise(resolve => setTimeout(resolve, 2000));
+    console.log(response);
   }
-
-  // do something with data
-  console.log(data);
 }
 
 function EnterEntry() {
   // Loading is true if executePost is running
-  const { mutate: executePost, loading } = useMutate({
+  const { mutate: executePost } = useMutate({
     verb: "POST",
     path: `/bill/`,
   });
@@ -85,11 +94,11 @@ function EnterEntry() {
     meta: { isSubmitting },
   } = useForm({
     onSubmit: (values) => onSubmitForm(values, executePost),
-    debugForm: true,
+    // debugForm: true,
   });
 
   return (
-    <div>
+    <div className={"EnterEntry"}>
       <Form>
         <div>
           <label>
@@ -106,6 +115,12 @@ function EnterEntry() {
         <div>
           <label>
             Company: <CompanyField/>
+          </label>
+        </div>
+
+        <div>
+          <label>
+            Card: <CardField/>
           </label>
         </div>
 
