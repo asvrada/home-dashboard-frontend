@@ -1,12 +1,13 @@
 import React from "react";
 
-function DateTime({time}) {
-  console.log(time);
-  const year = time.getFullYear();
-  const month = time.getMonth() + 1;
-  const date = time.getDate().toString().padStart(2, '0');
-  const hour = time.getHours();
-  const minute = time.getMinutes().toString().padStart(2, '0');
+function DateTime({ time }) {
+  const objDatetime = new Date(time);
+
+  const year = objDatetime.getFullYear();
+  const month = objDatetime.getMonth() + 1;
+  const date = objDatetime.getDate().toString().padStart(2, "0");
+  const hour = objDatetime.getHours();
+  const minute = objDatetime.getMinutes().toString().padStart(2, "0");
 
   const str = `${hour}:${minute} ${month}/${date}/${year}`;
 
@@ -18,7 +19,7 @@ function DateTime({time}) {
 /**
  * Display a single entry of log
  */
-function Entry({entry}) {
+function Entry({ entry }) {
   return (
     <div className="Entry">
       <div>{entry.icon}</div>
@@ -27,7 +28,7 @@ function Entry({entry}) {
       <div>{entry.company}</div>
       <div>{entry.card}</div>
       <div>{entry.note}</div>
-      <DateTime time={new Date (entry.time)} />
+      <DateTime time={entry.time_created}/>
     </div>
   );
 }
