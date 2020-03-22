@@ -67,6 +67,7 @@ function NoteField() {
 async function onSubmitForm(values, executePost) {
   // This way we assign default value to each key
   let obj = {
+    icon: "Undefined Icon",
     amount: -1,
     category: "Undefined",
     company: "Undefined",
@@ -75,7 +76,12 @@ async function onSubmitForm(values, executePost) {
     ...values,
   };
 
-  let response = await executePost(obj);
+  let response = null;
+  try {
+    response = await executePost(obj);
+  } catch (e) {
+    console.log(e);
+  }
 
   if (isDevEnv()) {
     console.log(response);
