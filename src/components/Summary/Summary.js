@@ -23,9 +23,7 @@ function Summary() {
   // Generate <BudgetGadget>
   let componentBudgetGadget = <span>Loading...</span>;
   if (objSummary !== null) {
-    componentBudgetGadget = <BudgetGadget total={objSummary.total}
-                                          remainingTotal={objSummary.remainingTotal}
-                                          remainingToday={objSummary.remainingToday}/>;
+    componentBudgetGadget = <BudgetGadget input={objSummary}/>;
   }
 
   return (

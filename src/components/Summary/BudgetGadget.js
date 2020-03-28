@@ -5,14 +5,14 @@ import React from "react";
  * Format:
  * {budget left in this month} {budget left today} / {Total budget this month}
  */
-function BudgetGadget({ total, remainingTotal, remainingToday }) {
+function BudgetGadget({ input }) {
   let componentDisplay = null;
   // overdrawn
-  if (total <= 0) {
-    componentDisplay = <div>当月超支{total}</div>;
+  if (input.total <= 0) {
+    componentDisplay = <div>当月超支{input.total}</div>;
   } else {
     componentDisplay =
-      <div>当月剩余{remainingTotal} (今日剩余{remainingToday}) / {total}</div>;
+      <div>当月剩余{input.budgetTotal} (今日剩余{input.budgetToday}) / {input.total}</div>;
   }
 
   return (
