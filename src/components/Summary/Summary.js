@@ -23,7 +23,7 @@ function Summary() {
   // Generate <BudgetGadget>
   let componentBudgetGadget = <span>Loading...</span>;
   if (objSummary !== null) {
-    componentBudgetGadget = <BudgetGadget input={objSummary}/>;
+    componentBudgetGadget = <BudgetGadget obj={objSummary}/>;
   }
 
   return (
