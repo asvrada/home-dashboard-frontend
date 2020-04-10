@@ -6,6 +6,8 @@ import AddEntryGadget from "./AddEntryGadget";
 import BudgetGadget from "./BudgetGadget";
 import TimeDate from "./TimeDate";
 
+import "./Summary.scss";
+
 /**
  * Display a summary of information at the top of window
  * Information to display:
@@ -27,13 +29,18 @@ function Summary() {
   }
 
   return (
-    <div className="Summary">
-      <TimeDate/>
+    <div className="Summary row text-center">
+      <div className={"col-2"}>
+        <TimeDate/>
+      </div>
 
-      {componentBudgetGadget}
+      <div className={"col-sm"}>
+        {componentBudgetGadget}
+      </div>
 
-      {/*<StockGadget/>*/}
-      <AddEntryGadget/>
+      <div className={"col-1"}>
+        <AddEntryGadget/>
+      </div>
     </div>
   );
 }

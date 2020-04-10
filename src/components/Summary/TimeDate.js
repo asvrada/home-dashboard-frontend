@@ -10,14 +10,24 @@ import { getDate, getDay, getMonth } from "../../helpers/TimeDateRelated";
  */
 function TimeDate() {
   const month = getMonth().toString();
-  const date = getDate().toString().padStart(2, '0');
+  const date = getDate().toString();
   return (
-    <div className="TimeDate">
-      <span>{getDay()}</span>
-      <span>{month}/{date}</span>
-      <span>
+    <div className="TimeDate row">
+      <div id={"day-date"} className={"col-4"}>
+        <div id={"day"} className={"col"}>
+          {getDay()}
+        </div>
+
+        <div className={"w-100"}/>
+
+        <div id={"date"} className={"col"}>
+          {month}/{date}
+        </div>
+      </div>
+
+      <div id={"clock"} className={"col-8"}>
         <Clock format={"HH:mm"} ticking={true} timezone={"US/Pacific"}/>
-      </span>
+      </div>
     </div>
   );
 }

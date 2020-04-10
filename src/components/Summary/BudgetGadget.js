@@ -1,4 +1,64 @@
-import React from "react";
+/** @jsx jsx */
+import { jsx } from "@emotion/core";
+
+import React, { useState } from "react";
+import { getColor } from "../../helpers/Utils";
+
+function Bar(text, current, total) {
+  const range = Math.round(current / total * 100);
+  const textWidth = `${range}%`;
+
+  // red
+  const colorZero = [255, 0, 0];
+  // yellow
+  const colorMiddle = [255, 255, 0];
+  // green
+  const colorFull = [0, 255, 0];
+
+  // generate color array
+  let colorArray = getColor([
+      [0.1, colorZero],
+      [0.5, colorMiddle],
+      [1, colorFull],
+    ],
+    range / 100);
+
+  // color array to rgb(x,y,z)
+  const textColor = `rgb(${colorArray[0]}, ${colorArray[1]}, ${colorArray[2]})`;
+
+  return (
+    <div className={"Bar"}>
+      <div className={"text"}>
+        {text}
+      </div>
+
+      <div className={"bar"}>
+        <div className={"bar-text"}>
+          <span className={"span-1"}>{current}</span>
+          <span className={"span-2"}>/</span>
+          <span className={"span-3"}>{total}</span>
+        </div>
+
+        {/* overlay bar */}
+        <div className={"bar-overlay"} css={{
+          "width": textWidth,
+          "background-color": textColor,
+        }}/>
+
+        {/* separator */}
+        <div className={"bar-separator bar-separator-1"}/>
+        <div className={"bar-separator bar-separator-2"}/>
+        <div className={"bar-separator bar-separator-3"}/>
+
+        {/* background bar */}
+        <div className={"bar-background"}/>
+
+        {/* Take up space */}
+        <div className={"placeholder"}/>
+      </div>
+    </div>
+  );
+}
 
 /**
  * Display money remaining for this month
@@ -11,33 +71,22 @@ import React from "react";
  *   savingMonth, incomeMonthTotal
  */
 function BudgetGadget({ obj }) {
+  const today = Bar("今日预算", obj.budgetToday, obj.budgetTodayTotal);
+  const month = Bar("本月预算", obj.budgetMonth, obj.budgetMonthTotal);
+  const saving = Bar("预计存款", obj.savingMonth, obj.incomeMonthTotal);
+
   return (
-    <div className="BudgeGadget">
-      {/* 当日预算 */}
-      <div>
-        <div>今日预算</div>
-        <div>
-          <div>{obj.budgetToday}</div>
-          <div>{obj.budgetTodayTotal}</div>
-        </div>
+    <div className="BudgeGadget row">
+      <div className={"col-sm"}>
+        {today}
       </div>
 
-      {/* 当月预算 */}
-      <div>
-        <div>本月预算</div>
-        <div>
-          <div>{obj.budgetMonth}</div>
-          <div>{obj.budgetMonthTotal}</div>
-        </div>
+      <div className={"col-sm"}>
+        {month}
       </div>
 
-      {/*  当月预计存款*/}
-      <div>
-        <div>本月预计存款</div>
-        <div>
-          <div>{obj.savingMonth}</div>
-          <div>{obj.incomeMonthTotal}</div>
-        </div>
+      <div className={"col-sm"}>
+        {saving}
       </div>
     </div>
   );

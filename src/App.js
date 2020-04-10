@@ -1,4 +1,5 @@
 import React from "react";
+import './App.scss';
 
 import { RestfulProvider } from "restful-react";
 
@@ -18,7 +19,7 @@ function App() {
   }
   return (
     <RestfulProvider base={baseURL}>
-      <div className="App">
+      <div className="App container-fluid">
         <Summary/>
 
         <div>
