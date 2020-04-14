@@ -30,15 +30,15 @@ function Summary() {
 
   return (
     <div className="Summary row text-center">
-      <div className={"col-2"}>
+      <div className={"col-md-2"}>
         <TimeDate/>
       </div>
 
-      <div className={"col-sm"}>
+      <div className={"col-md"}>
         {componentBudgetGadget}
       </div>
 
-      <div className={"col-1"}>
+      <div className={"col-md-1"}>
         <AddEntryGadget/>
       </div>
     </div>

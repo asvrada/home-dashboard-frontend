@@ -77,15 +77,15 @@ function BudgetGadget({ obj }) {
 
   return (
     <div className="BudgeGadget row">
-      <div className={"col-sm"}>
+      <div className={"col-md"}>
         {today}
       </div>
 
-      <div className={"col-sm"}>
+      <div className={"col-md"}>
         {month}
       </div>
 
-      <div className={"col-sm"}>
+      <div className={"col-md"}>
         {saving}
       </div>
     </div>
