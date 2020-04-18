@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx } from "@emotion/core";
+import React from "react";
 
-import React, { useState } from "react";
 import { getColor } from "../../helpers/Utils";
 
 function Bar(text, current, total) {

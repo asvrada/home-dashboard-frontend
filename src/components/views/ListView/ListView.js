@@ -1,40 +1,42 @@
 import React from "react";
-
-import Entry from "./Entry";
-import { useGet } from "restful-react";
+import { useQuery } from "@apollo/react-hooks";
+import { ALL_TRANSACTIONS } from "../../../helpers/graphql";
 
 /**
  * Display a list of most recent transactions
  */
 function ListView() {
-  // GET bill/
-  const { data: listEntries } = useGet({
-    path: "bill/",
-    resolve: data => {
-      if (typeof data === "string") {
-        data = JSON.parse(data);
-      }
+  const { loading, error, data } = useQuery(ALL_TRANSACTIONS);
 
-      return data;
-    },
-  });
+  console.log(data);
+
+  let component = null;
+
+  if (loading) {
+    component = (<div>Loading...</div>);
+  }
+
+  if (error) {
+    console.log(error);
+    component = (<div>An error occurred</div>);
+  }
 
   // Generate list of Entry
-  let componentEntries = <span>Loading...</span>;
-  if (listEntries !== null) {
-    let entries = listEntries.map((entry) =>
-      <li key={entry.id}>
-        <Entry entry={entry}
-        />
-      </li>,
-    );
-
-    componentEntries = <ul>{entries}</ul>;
-  }
+  // let componentEntries = <span>Loading...</span>;
+  // if (listEntries !== null) {
+  //   let entries = listEntries.map((entry) =>
+  //     <li key={entry.id}>
+  //       <Entry entry={entry}
+  //       />
+  //     </li>,
+  //   );
+  //
+  //   componentEntries = <ul>{entries}</ul>;
+  // }
 
   return (
     <div className="ListView">
-      {componentEntries}
+      {component}
     </div>
   );
 }
