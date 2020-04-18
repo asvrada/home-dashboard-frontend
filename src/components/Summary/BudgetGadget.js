@@ -1,12 +1,15 @@
-/** @jsx jsx */
-import { jsx } from "@emotion/core";
 import React from "react";
+import styled from "styled-components";
 
 import { getColor } from "../../helpers/Utils";
 
+const ResizeDiv = styled.div`
+    width: ${props => props.textWidth};
+    background-color: ${props => props.textColor};
+  `;
+
 function Bar(text, current, total) {
   const range = Math.round(current / total * 100);
-  const textWidth = `${range}%`;
 
   // red
   const colorZero = [255, 0, 0];
@@ -16,13 +19,14 @@ function Bar(text, current, total) {
   const colorFull = [0, 255, 0];
 
   // generate color array
-  let colorArray = getColor([
+  const colorArray = getColor([
       [0.1, colorZero],
       [0.5, colorMiddle],
       [1, colorFull],
     ],
     range / 100);
 
+  const textWidth = `${range}%`;
   // color array to rgb(x,y,z)
   const textColor = `rgb(${colorArray[0]}, ${colorArray[1]}, ${colorArray[2]})`;
 
@@ -40,10 +44,9 @@ function Bar(text, current, total) {
         </div>
 
         {/* overlay bar */}
-        <div className={"bar-overlay"} css={{
-          "width": textWidth,
-          "background-color": textColor,
-        }}/>
+        <ResizeDiv className={"bar-overlay"}
+                   textWidth={textWidth}
+                   textColor={textColor}/>
 
         {/* separator */}
         <div className={"bar-separator bar-separator-1"}/>

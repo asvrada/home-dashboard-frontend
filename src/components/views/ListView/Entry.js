@@ -19,16 +19,16 @@ function DateTime({ time }) {
 /**
  * Display a single entry of log
  */
-function Entry({ entry }) {
+function Entry({node}) {
   return (
     <div className="Entry">
-      <div>{entry.icon}</div>
-      <div>${entry.amount}</div>
-      <div>{entry.category}</div>
-      <div>{entry.company}</div>
-      <div>{entry.card}</div>
-      <div>{entry.note}</div>
-      <DateTime time={entry.time_created}/>
+      <div>{node.category.name}</div>
+      <div>${node.amount}</div>
+
+      <div>{node.company.name}</div>
+      <div>{node.card.name}</div>
+      <div>{node.note}</div>
+      <DateTime time={node.timeCreated}/>
     </div>
   );
 }

@@ -28,7 +28,8 @@ const ALL_TRANSACTIONS = gql`query getAllTransaction {
             keyword
           }
         },
-        note
+        note,
+        timeCreated
       }
     }
   } 

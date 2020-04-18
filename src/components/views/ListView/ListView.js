@@ -1,6 +1,7 @@
 import React from "react";
 import { useQuery } from "@apollo/react-hooks";
 import { ALL_TRANSACTIONS } from "../../../helpers/graphql";
+import Entry from "./Entry";
 
 /**
  * Display a list of most recent transactions
@@ -22,21 +23,20 @@ function ListView() {
   }
 
   // Generate list of Entry
-  // let componentEntries = <span>Loading...</span>;
-  // if (listEntries !== null) {
-  //   let entries = listEntries.map((entry) =>
-  //     <li key={entry.id}>
-  //       <Entry entry={entry}
-  //       />
-  //     </li>,
-  //   );
-  //
-  //   componentEntries = <ul>{entries}</ul>;
-  // }
+  if (!loading) {
+    component = data.allBills.edges.map(({ node }) =>
+      <li key={node.id}>
+        <Entry node={node}/>
+      </li>
+    );
+
+  }
 
   return (
     <div className="ListView">
-      {component}
+      <ul>
+        {component}
+      </ul>
     </div>
   );
 }
