@@ -4,8 +4,13 @@ const client = new ApolloClient({
   uri: "http://127.0.0.1:4444/graphql/",
 });
 
-const ALL_TRANSACTIONS = gql`query getAllTransaction {
-  allBills {
+const ALL_TRANSACTIONS = gql`query getBills($cursor: String, $limit: Int) {
+  bills(after: $cursor, first: $limit) {
+    pageInfo {
+      startCursor
+      endCursor,
+      hasNextPage
+    },
     edges {
       node {
         id,
