@@ -1,3 +1,5 @@
+import React from "react";
+
 function isDevEnv() {
   return [process, process.env, process.env.NODE_ENV === "development"].every(
     (each) => each !== null && each !== false,
@@ -53,4 +55,20 @@ function getColor(config, percentage) {
   return colorHelper(colorStart, colorEnd, relativePercentage);
 }
 
-export { isDevEnv, getColor };
+function DateTime({ time }) {
+  const objDatetime = new Date(time);
+
+  const year = objDatetime.getFullYear();
+  const month = objDatetime.getMonth() + 1;
+  const date = objDatetime.getDate().toString().padStart(2, "0");
+  const hour = objDatetime.getHours();
+  const minute = objDatetime.getMinutes().toString().padStart(2, "0");
+
+  const str = `${hour}:${minute} ${month}/${date}/${year}`;
+
+  return (
+    <div>{str}</div>
+  );
+}
+
+export { isDevEnv, getColor, DateTime };

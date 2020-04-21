@@ -1,34 +1,43 @@
 import React from "react";
 
-function DateTime({ time }) {
-  const objDatetime = new Date(time);
-
-  const year = objDatetime.getFullYear();
-  const month = objDatetime.getMonth() + 1;
-  const date = objDatetime.getDate().toString().padStart(2, "0");
-  const hour = objDatetime.getHours();
-  const minute = objDatetime.getMinutes().toString().padStart(2, "0");
-
-  const str = `${hour}:${minute} ${month}/${date}/${year}`;
+function getNaturalCurrency(amount) {
+  amount = Math.abs(amount);
+  const strAmount = amount
+    .toFixed(2)
+    .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
 
   return (
-    <div>{str}</div>
+    <div className="amount">
+      <span>$</span>
+      <span>{strAmount}</span>
+    </div>
   );
 }
 
 /**
  * Display a single entry of log
  */
-function Entry({node}) {
-  return (
-    <div className="Entry">
-      <div>{node.category.name}</div>
-      <div>${node.amount}</div>
+function Entry({ node }) {
+  const amountNatural = getNaturalCurrency(node.amount);
 
-      <div>{node.company.name}</div>
-      <div>{node.card.name}</div>
-      <div>{node.note}</div>
-      <DateTime time={node.timeCreated}/>
+  return (
+    <div className="Entry row col-10">
+      <div className="col-3 text-center word-break">
+        <div className="">{node.category.name}</div>
+      </div>
+
+      <div className="col-9">
+        <div className="row align-items-center">
+          <div className="col-7">{amountNatural}</div>
+
+          <div className="col">
+            <div>{node.company.name}</div>
+            <div>{node.card.name}</div>
+          </div>
+        </div>
+
+        <div className="word-break">- {node.note}</div>
+      </div>
     </div>
   );
 }

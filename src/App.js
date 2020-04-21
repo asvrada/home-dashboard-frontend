@@ -25,9 +25,9 @@ function App() {
         <div className="App container-fluid">
           <Summary/>
 
-          <div>
-            <ListView/>
-            <PieChart/>
+          <div id="graph-container" className="row">
+              <ListView/>
+              <PieChart/>
           </div>
 
         </div>

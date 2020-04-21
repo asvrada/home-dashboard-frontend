@@ -5,8 +5,8 @@ import React from "react";
  */
 function PieChart() {
   return (
-    <div className="PieChart">
-
+    <div className="PieChart col">
+      placeholder
     </div>
   );
 }

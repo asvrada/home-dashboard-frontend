@@ -6,7 +6,7 @@ import { ALL_TRANSACTIONS } from "../../../helpers/graphql";
 import Entry from "./Entry";
 
 function Loading() {
-  return <div>Loading...</div>;
+  return <div className="Entry">Loading...</div>;
 }
 
 /**
@@ -30,14 +30,14 @@ function ListView() {
 
   let component = data.bills.edges.map(({ node }) => {
     return (
-      <li key={node.id}>
+      <div className="row" key={node.id}>
         <Entry node={node}/>
-      </li>
+      </div>
     );
   });
 
   return (
-    <div className="ListView">
+    <div className="ListView col-4">
       <InfiniteScroll
         pageStart={0}
         loadMore={() =>
@@ -64,10 +64,9 @@ function ListView() {
           })}
         hasMore={data.bills.pageInfo.hasNextPage}
         loader={<Loading key={"0"}/>}
+        useWindow={false}
       >
-        <ol>
-          {component}
-        </ol>
+        {component}
       </InfiniteScroll>
     </div>
   );

@@ -1,1 +1,39 @@
 @import "~bootstrap/scss/bootstrap";
+
+.word-break {
+  word-break: break-word;
+}
+
+.App {
+  height: 100vh;
+  overflow: hidden;
+
+  .Summary {
+    min-height: 10%;
+  }
+
+  #graph-container {
+    height: 90%;
+
+    .ListView {
+      height: 100%;
+      overflow: auto;
+
+      .Entry {
+        background-color: antiquewhite;
+
+        padding: 5px;
+        margin: 10px;
+
+        .amount {
+          font-size: 1.5em;
+          font-weight: bold;
+        }
+      }
+    }
+
+    .PieChart {
+      background-color: green;
+    }
+  }
+}
