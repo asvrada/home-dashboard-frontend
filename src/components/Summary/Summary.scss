@@ -1,12 +1,8 @@
 .Summary {
-  background-color: #d8d7fe;
+  background-color: darkgrey;
   // vertical align center
   align-items: center;
   font-size: 1.5em;
-
-  div {
-    //border: gray 1px dashed;
-  }
 
   .TimeDate {
 
@@ -37,9 +33,6 @@
 
   .Bar {
     padding-bottom: 10px;
-
-    .text {
-    }
 
     .bar {
       $bar-height: 40px;
