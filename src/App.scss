@@ -4,31 +4,75 @@
   word-break: break-word;
 }
 
+.amount {
+  .dollar-sign {
+    opacity: 0.5;
+    margin-right: 5px;
+  }
+
+  .amount-decimal {
+    font-size: 0.8em;
+  }
+}
+
+
 .App {
+  $summary-min-height: 10%;
+  $icon-category-size: 84px;
+  $icon-other-size: 36px;
+
   height: 100vh;
   overflow: hidden;
 
   .Summary {
-    min-height: 10%;
+    min-height: $summary-min-height;
   }
 
   #graph-container {
-    height: 90%;
+    height: 100% - $summary-min-height;
 
     .ListView {
       height: 100%;
       overflow: auto;
+      background-color: antiquewhite;
+
+      .h-separator {
+        height: 5px;
+      }
+
+      .category-icon {
+        height: $icon-category-size;
+        width: $icon-category-size;
+
+        border-radius: $icon-category-size;
+      }
+
+      .other-icon {
+        height: $icon-other-size;
+        width: $icon-other-size;
+
+        border-radius: $icon-other-size;
+
+        margin-right: 5px;
+      }
 
       .Entry {
-        background-color: antiquewhite;
-
         padding: 5px;
         margin: 10px;
+        font-size: 1.1em;
 
         .amount {
           font-size: 1.5em;
           font-weight: bold;
         }
+      }
+
+      .EntryIn {
+        //background-color: aqua;
+      }
+
+      .EntryOut {
+        //background-color: antiquewhite;
       }
     }
 

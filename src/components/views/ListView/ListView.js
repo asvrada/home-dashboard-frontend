@@ -3,7 +3,8 @@ import InfiniteScroll from "react-infinite-scroller";
 import { useQuery } from "@apollo/react-hooks";
 
 import { ALL_TRANSACTIONS } from "../../../helpers/graphql";
-import Entry from "./Entry";
+import EntryOut from "./EntryOut";
+import EntryIn from "./EntryIn";
 
 function Loading() {
   return <div className="Entry">Loading...</div>;
@@ -29,11 +30,20 @@ function ListView() {
   }
 
   let component = data.bills.edges.map(({ node }) => {
-    return (
-      <div className="row" key={node.id}>
-        <Entry node={node}/>
-      </div>
-    );
+    const isIncome = node.amount > 0;
+    if (isIncome) {
+      return (
+        <div className="row justify-content-end" key={node.id}>
+          <EntryIn node={node}/>
+        </div>
+      );
+    } else {
+      return (
+        <div className="row" key={node.id}>
+          <EntryOut node={node}/>
+        </div>
+      );
+    }
   });
 
   return (

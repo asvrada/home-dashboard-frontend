@@ -48,7 +48,8 @@ function getColor(config, percentage) {
     colorEnd = config[i][1];
     const startPercentage = config[i - 1][0];
     const endPercentage = config[i][0];
-    relativePercentage = (percentage - startPercentage) / (endPercentage - startPercentage);
+    relativePercentage = (percentage - startPercentage) /
+      (endPercentage - startPercentage);
   }
 
   // generate color array
@@ -71,4 +72,21 @@ function DateTime({ time }) {
   );
 }
 
-export { isDevEnv, getColor, DateTime };
+function getNaturalCurrency(amount) {
+  amount = Math.abs(amount);
+  const strAmount = amount
+    .toFixed(2)
+    .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")
+    .split(".");
+
+  return (
+    <div className="amount">
+      <span className="dollar-sign">$</span>
+      <span>{strAmount[0]}</span>
+      <span>.</span>
+      <span className="amount-decimal">{strAmount[1]}</span>
+    </div>
+  );
+}
+
+export { isDevEnv, getColor, DateTime, getNaturalCurrency };
