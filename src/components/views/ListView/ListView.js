@@ -33,7 +33,7 @@ function ListView() {
     const isIncome = node.amount > 0;
     if (isIncome) {
       return (
-        <div className="row justify-content-end" key={node.id}>
+        <div className="row" key={node.id}>
           <EntryIn node={node}/>
         </div>
       );
@@ -47,7 +47,7 @@ function ListView() {
   });
 
   return (
-    <div className="ListView col-4">
+    <div className="ListView col-md-4">
       <InfiniteScroll
         pageStart={0}
         loadMore={() =>

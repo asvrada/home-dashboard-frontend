@@ -18,7 +18,7 @@
 
 .App {
   $summary-min-height: 10%;
-  $icon-category-size: 84px;
+  $icon-category-size: 64px;
   $icon-other-size: 36px;
 
   height: 100vh;
@@ -34,7 +34,6 @@
     .ListView {
       height: 100%;
       overflow: auto;
-      background-color: antiquewhite;
 
       .h-separator {
         height: 5px;
@@ -57,13 +56,17 @@
       }
 
       .Entry {
-        padding: 5px;
-        margin: 10px;
+        margin: 0 0 10px;
+        padding-top: 5px;
         font-size: 1.1em;
 
         .amount {
           font-size: 1.5em;
           font-weight: bold;
+        }
+
+        .category-name {
+          font-size: 0.8em;
         }
       }
 
@@ -72,7 +75,7 @@
       }
 
       .EntryOut {
-        //background-color: antiquewhite;
+        background-color: aqua;
       }
     }
 
