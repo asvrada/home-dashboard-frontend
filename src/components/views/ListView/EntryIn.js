@@ -1,8 +1,19 @@
 import React from "react";
+
+import CompanyCard from "./CompanyCard";
 import { getNaturalCurrency } from "../../../helpers/Utils";
+import Category from "./Category";
 
 function EntryIn({ node }) {
   const amountNatural = getNaturalCurrency(node.amount);
+
+  const componentCategory = Category({ node });
+  const componentCompanyCard = CompanyCard({ node });
+  const componentNote = node.note
+    ? (<div className="word-break">- {node.note}</div>)
+    : null;
+  const componentSeparatorNote = componentNote
+    ? (<div className="h-separator"/>) : null;
 
   return (
     <div className="EntryIn Entry row col align-items-center">
@@ -10,39 +21,15 @@ function EntryIn({ node }) {
       <div className="col">
         {/* Amount Company Card */}
         <div className="row align-items-center">
-          <div className="col p-0">
-            <div className="row align-items-center m-0">
-              <img className="other-icon"
-                   src={process.env.PUBLIC_URL + "/static/test_icon.jpeg"}
-                   alt="icon for company"/>
-              <span>{node.company && node.company.name}</span>
-            </div>
-            <div className="row align-items-center m-0">
-              <img className="other-icon"
-                   src={process.env.PUBLIC_URL + "/static/test_icon.jpeg"}
-                   alt="icon for card"/>
-              <span>{node.card && node.card.name}</span>
-            </div>
-          </div>
-
+          {componentCompanyCard}
           <div className="col-7">{amountNatural}</div>
         </div>
 
-        <div className="h-separator"/>
-
-        {/* Note */}
-        <div className="word-break">+ {node.note}</div>
+        {componentSeparatorNote}
+        {componentNote}
       </div>
 
-      {/* Category */}
-      <div className="col-3 p-0 text-center word-break">
-        <img className="category-icon"
-             src={process.env.PUBLIC_URL + "/static/test_icon.jpeg"}
-             alt="icon for category"/>
-        <div className="category-name">
-          {node.category.name}
-        </div>
-      </div>
+      {componentCategory}
     </div>
   );
 }

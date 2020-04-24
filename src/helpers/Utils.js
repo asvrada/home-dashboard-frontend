@@ -89,4 +89,37 @@ function getNaturalCurrency(amount) {
   );
 }
 
-export { isDevEnv, getColor, DateTime, getNaturalCurrency };
+function convertDate(str_datetime) {
+  const day = new Date(str_datetime);
+  return [day.getFullYear(), day.getMonth() + 1, day.getDate()];
+}
+
+/**
+ * edges: [node: {timeCreated}]
+ */
+function insertDate(edges) {
+  function isEqual(a, b) {
+    return a[0] === b[0] && a[1] === b[1] && a[2] === b[2];
+  }
+
+  const today = new Date();
+  let prevDay = [today.getFullYear(), today.getMonth() + 1, today.getDate()];
+  let newEdges = [];
+
+  for (let idx in edges) {
+    const node = edges[idx].node;
+    const date = convertDate(node.timeCreated);
+
+    if (!isEqual(prevDay, date)) {
+      newEdges.push(date);
+      prevDay = date;
+    }
+
+    // add
+    newEdges.push(node);
+  }
+
+  return newEdges;
+}
+
+export { isDevEnv, getColor, DateTime, getNaturalCurrency, convertDate, insertDate };
