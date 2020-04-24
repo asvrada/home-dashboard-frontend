@@ -3,9 +3,10 @@ import InfiniteScroll from "react-infinite-scroller";
 import { useQuery } from "@apollo/react-hooks";
 
 import { ALL_TRANSACTIONS } from "../../../helpers/graphql";
-import {insertDate} from "../../../helpers/Utils";
+import { insertDate } from "../../../helpers/Utils";
 import EntryOut from "./EntryOut";
 import EntryIn from "./EntryIn";
+import DateBox from "./DateBox";
 
 function Loading() {
   return <div className="Entry">Loading...</div>;
@@ -35,8 +36,8 @@ function ListView() {
   let component = edges.map((node) => {
     if (Array.isArray(node)) {
       return (
-        <div>{node[0]}-{node[1]}-{node[2]}</div>
-      )
+        <DateBox key={String(node)} date={node}/>
+      );
     }
 
     const isIncome = node.amount > 0;

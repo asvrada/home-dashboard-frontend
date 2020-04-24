@@ -55,6 +55,11 @@
         margin-right: 5px;
       }
 
+      .date-box {
+        border-radius: 5px;
+        background-color: antiquewhite;
+      }
+
       .Entry {
         margin: 0 0 10px;
         padding-top: 5px;
@@ -71,16 +76,16 @@
       }
 
       .EntryIn {
-        //background-color: aqua;
+        background-color: aqua;
       }
 
       .EntryOut {
-        background-color: aqua;
+        //background-color: aqua;
       }
     }
 
     .PieChart {
-      background-color: green;
+      background-color: gray;
     }
   }
 }

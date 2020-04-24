@@ -10,8 +10,8 @@ import Category from "./Category";
 function EntryOut({ node }) {
   const amountNatural = getNaturalCurrency(node.amount);
 
-  const componentCategory = Category({ node });
-  const componentCompanyCard = CompanyCard({ node });
+  const componentCategory = <Category node={node}/>;
+  const componentCompanyCard = <CompanyCard node={node}/>;
   const componentNote = node.note
     ? (<div className="word-break">- {node.note}</div>)
     : null;
