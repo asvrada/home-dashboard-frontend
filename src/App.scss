@@ -32,8 +32,20 @@
     height: 100% - $summary-min-height;
 
     .ListView {
+      position: relative;
       height: 100%;
       overflow: auto;
+
+      .scroll-top {
+        cursor: pointer;
+
+        padding: 0;
+        position: sticky;
+        top: 0;
+        height: 20px;
+
+        z-index: 3;
+      }
 
       .h-separator {
         height: 5px;
@@ -64,6 +76,8 @@
         margin: 0 0 10px;
         padding-top: 5px;
         font-size: 1.1em;
+
+        cursor: pointer;
 
         .amount {
           font-size: 1.5em;
