@@ -79,7 +79,7 @@ function Bar(text, current, total) {
 function BudgetGadget({ obj }) {
   const today = Bar("今日预算", obj.budgetToday, obj.budgetTodayTotal);
   const month = Bar("本月预算", obj.budgetMonth, obj.budgetMonthTotal);
-  const saving = Bar("本月剩余", obj.savingMonth, obj.incomeMonthTotal);
+  const saving = Bar("本月存款", obj.savingMonth, obj.incomeMonthTotal);
 
   return (
     <div className="BudgeGadget row">

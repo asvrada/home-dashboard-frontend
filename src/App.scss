@@ -103,3 +103,16 @@
     }
   }
 }
+
+#detail-page {
+  position: fixed;
+  top: 100px;
+  left: 100px;
+
+  height: 200px;
+  width: 200px;
+
+  z-index: 99;
+
+  background-color: burlywood;
+}

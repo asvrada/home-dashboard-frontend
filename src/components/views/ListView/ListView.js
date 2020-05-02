@@ -8,8 +8,8 @@ import EntryOut from "./EntryOut";
 import EntryIn from "./EntryIn";
 import DateBox from "./DateBox";
 
-function Loading() {
-  return <div className="Entry">Loading...</div>;
+function Wrapper({ children }) {
+  return <div className="ListView col-md-4">{children}</div>;
 }
 
 /**
@@ -24,12 +24,16 @@ function ListView() {
   });
 
   if (loading) {
-    return <Loading/>;
+    return <Wrapper>
+      <div className="Entry text-center">Loading...</div>
+    </Wrapper>;
   }
 
   if (error) {
     console.log(error);
-    return <div>An error occurred</div>;
+    return <Wrapper>
+      <div className="Entry text-center">An error occurred</div>
+    </Wrapper>;
   }
 
   const edges = insertDate(data.bills.edges);
@@ -84,7 +88,7 @@ function ListView() {
           },
         })}
         hasMore={data.bills.pageInfo.hasNextPage}
-        loader={<Loading key={"0"}/>}
+        loader={<div className="Entry text-center" key="0">Loading...</div>}
         useWindow={false}
         ref={scrollView}
       >
