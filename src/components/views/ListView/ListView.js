@@ -57,7 +57,7 @@ function ListView() {
   });
 
   return (
-    <div className="ListView col-md-4">
+    <Wrapper>
       {/* Tap to scroll to top */}
       <div className="scroll-top"
            onClick={() => scrollView.current.scrollComponent.scrollIntoView(
@@ -94,7 +94,7 @@ function ListView() {
       >
         {component}
       </InfiniteScroll>
-    </div>
+    </Wrapper>
   );
 }
 
