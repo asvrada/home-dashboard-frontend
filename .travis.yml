@@ -1,0 +1,8 @@
+language: node_js
+
+deploy:
+  provider: script
+  script: bash ci/deploy.sh
+  on:
+    branch: master
+
