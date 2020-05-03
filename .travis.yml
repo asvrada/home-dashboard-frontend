@@ -1,10 +1,13 @@
 language: node_js
 
+git:
+  depth: false
+
 node_js:
   - node
 
 script:
-  echo "Script test skip"
+  echo "Script step, test skipped"
 
 deploy:
   provider: script
