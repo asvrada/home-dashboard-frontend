@@ -3,6 +3,9 @@ language: node_js
 node_js:
   - node
 
+script:
+  echo "Script test skip"
+
 deploy:
   provider: script
   script: bash ci/deploy.sh
