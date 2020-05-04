@@ -1,17 +1,18 @@
 # First
 FROM node as builder
 
-COPY . /app/
+COPY package.json yarn.lock /app/
 
 WORKDIR /app/
 
-RUN yarn install
+RUN yarn install --frozen-lockfile
+
+COPY . /app/
+
 RUN yarn run build
 
 # Second
 FROM nginx
-
-#RUN rm -rf /usr/share/nginx/html/*
 
 COPY --from=builder /app/build /usr/share/nginx/html
 COPY ci/nginx.conf /etc/nginx/nginx.conf
