@@ -10,7 +10,7 @@ docker tag ${IMAGE}:${GIT_VERSION} ${IMAGE}:latest
 
 # Log in to Docker Hub and push
 echo "${DOCKER_PASSWORD}" | docker login -u "${DOCKER_USERNAME}" --password-stdin
-docker push ${IMAGE}:${GIT_VERSION}
+docker push ${IMAGE}
 
 echo "Docker image pushed to Hub"
 
