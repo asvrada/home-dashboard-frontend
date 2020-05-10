@@ -1,5 +1,5 @@
 import React from "react";
-
+import { useHistory } from "react-router-dom";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 
@@ -14,6 +14,7 @@ import Category from "./Category";
  * Display a single entry of log
  */
 function Entry({ isIncome, node }) {
+  const history = useHistory();
   const amountNatural = getNaturalCurrency(node.amount);
 
   const componentCategory = <Category node={node}/>;
@@ -33,7 +34,8 @@ function Entry({ isIncome, node }) {
   });
 
   return (
-    <Row className={classname}>
+    <Row className={classname}
+         onClick={() => history.push(`/detail/${node.id}`)}>
       {componentCategory}
 
       {/* Amount Note */}

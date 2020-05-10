@@ -32,14 +32,19 @@ function App() {
 
           <Switch>
             {/* Edit ID */}
-            <Route path="/detail/:id/edit"
-                   children={<BillDetail mode="edit"/>}/>
+            <Route path="/detail/:id/edit">
+              <BillDetail mode="edit"/>
+            </Route>
 
             {/* View/Delete ID */}
-            <Route path="/detail/:id" children={<BillDetail/>}/>
+            <Route path="/detail/:id">
+              <BillDetail/>
+            </Route>
 
             {/* Show 404 */}
-            <Route path="/detail" children={<BillDetail/>}/>
+            <Route path="/detail">
+              <BillDetail/>
+            </Route>
 
             <Route path="/">
               <Container className="App" fluid>

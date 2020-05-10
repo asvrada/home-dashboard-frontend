@@ -1,7 +1,6 @@
-import React, { useRef } from "react";
+import React from "react";
 import InfiniteScroll from "react-infinite-scroller";
 import { useQuery } from "@apollo/react-hooks";
-
 import Col from "react-bootstrap/Col";
 
 import { ALL_TRANSACTIONS } from "../../../helpers/graphql";
@@ -21,7 +20,6 @@ function Wrapper({ children }) {
  * Display a list of most recent transactions
  */
 function ListView() {
-  const scrollView = useRef(null);
   const { loading, error, data, fetchMore } = useQuery(ALL_TRANSACTIONS, {
     variables: {
       limit: 30,
@@ -43,7 +41,7 @@ function ListView() {
 
   const edges = insertDate(data.bills.edges);
 
-  const component = edges.map((node) => {
+  const components = edges.map((node) => {
     if (Array.isArray(node)) {
       return (
         <DateBox key={String(node)} date={node}/>
@@ -59,10 +57,7 @@ function ListView() {
   return (
     <Wrapper>
       {/* Tap to scroll to top */}
-      <div className="scroll-top"
-           onClick={() => scrollView.current.scrollComponent.scrollIntoView(
-             { behavior: "smooth" })}
-      />
+      <div className="scroll-top"/>
 
       <InfiniteScroll
         pageStart={0}
@@ -90,9 +85,8 @@ function ListView() {
         hasMore={data.bills.pageInfo.hasNextPage}
         loader={<div className="Entry text-center" key="0">Loading...</div>}
         useWindow={false}
-        ref={scrollView}
       >
-        {component}
+        {components}
       </InfiniteScroll>
     </Wrapper>
   );
