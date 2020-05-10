@@ -6,8 +6,7 @@ import Col from "react-bootstrap/Col";
 
 import { ALL_TRANSACTIONS } from "../../../helpers/graphql";
 import { insertDate } from "../../../helpers/Utils";
-import EntryOut from "./EntryOut";
-import EntryIn from "./EntryIn";
+import Entry from "./Entry";
 import DateBox from "./DateBox";
 
 function Wrapper({ children }) {
@@ -52,9 +51,8 @@ function ListView() {
     }
 
     const isIncome = node.amount > 0;
-    const ComponentEntry = isIncome ? EntryIn : EntryOut;
     return (
-      <ComponentEntry key={node.id} node={node}/>
+      <Entry isIncome={isIncome} key={node.id} node={node}/>
     );
   });
 
