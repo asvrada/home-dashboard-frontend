@@ -1,7 +1,11 @@
 import React from "react";
 
-import CompanyCard from "./CompanyCard";
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
+
 import { getNaturalCurrency } from "../../../helpers/Utils";
+
+import CompanyCard from "./CompanyCard";
 import Category from "./Category";
 
 function EntryIn({ node }) {
@@ -16,21 +20,21 @@ function EntryIn({ node }) {
     ? (<div className="h-separator"/>) : null;
 
   return (
-    <div className="EntryIn Entry row col align-items-center">
+    <Row className="EntryIn Entry align-items-center">
       {/* Detail */}
-      <div className="col">
+      <Col>
         {/* Amount Company Card */}
-        <div className="row align-items-center">
+        <Row className="align-items-center">
           {componentCompanyCard}
-          <div className="col-7">{amountNatural}</div>
-        </div>
+          <Col xs={7}>{amountNatural}</Col>
+        </Row>
 
         {componentSeparatorNote}
         {componentNote}
-      </div>
+      </Col>
 
       {componentCategory}
-    </div>
+    </Row>
   );
 }
 

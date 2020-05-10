@@ -1,6 +1,9 @@
 import React from "react";
 import Clock from "react-live-clock";
 
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+
 import { getDate, getDay, getMonth } from "../../helpers/TimeDateRelated";
 
 /**
@@ -12,23 +15,23 @@ function TimeDate() {
   const month = getMonth().toString();
   const date = getDate().toString();
   return (
-    <div className="TimeDate row">
-      <div id={"day-date"} className={"col-4"}>
-        <div id={"day"} className={"col"}>
+    <Row className="TimeDate">
+      <Col id="day-date" xs={4}>
+        <Col id="day">
           {getDay()}
-        </div>
+        </Col>
 
         <div className={"w-100"}/>
 
-        <div id={"date"} className={"col"}>
+        <Col id="date">
           {month}/{date}
-        </div>
-      </div>
+        </Col>
+      </Col>
 
-      <div id={"clock"} className={"col-8"}>
+      <Col id="clock" xs={8}>
         <Clock format={"HH:mm"} ticking={true} timezone={"US/Pacific"}/>
-      </div>
-    </div>
+      </Col>
+    </Row>
   );
 }
 

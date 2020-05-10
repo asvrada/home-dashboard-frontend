@@ -1,4 +1,6 @@
 import React from "react";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 
 import { useGet } from "restful-react";
 
@@ -29,19 +31,19 @@ function Summary() {
   }
 
   return (
-    <div className="Summary row text-center">
-      <div className={"col-md-2"}>
+    <Row className="Summary text-center">
+      <Col md={2}>
         <TimeDate/>
-      </div>
+      </Col>
 
-      <div className={"col-md"}>
+      <Col>
         {componentBudgetGadget}
-      </div>
+      </Col>
 
-      <div className={"col-md-1"}>
+      <Col md={1}>
         <AddEntryGadget/>
-      </div>
-    </div>
+      </Col>
+    </Row>
   );
 }
 

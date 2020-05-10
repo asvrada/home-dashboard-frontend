@@ -2,6 +2,8 @@ import React, { useRef } from "react";
 import InfiniteScroll from "react-infinite-scroller";
 import { useQuery } from "@apollo/react-hooks";
 
+import Col from "react-bootstrap/Col";
+
 import { ALL_TRANSACTIONS } from "../../../helpers/graphql";
 import { insertDate } from "../../../helpers/Utils";
 import EntryOut from "./EntryOut";
@@ -9,7 +11,11 @@ import EntryIn from "./EntryIn";
 import DateBox from "./DateBox";
 
 function Wrapper({ children }) {
-  return <div className="ListView col-md-4">{children}</div>;
+  return (
+    <Col className="ListView" md={4}>
+      {children}
+    </Col>
+  );
 }
 
 /**
@@ -46,13 +52,9 @@ function ListView() {
     }
 
     const isIncome = node.amount > 0;
-    const component = isIncome
-      ? <EntryIn node={node}/>
-      : <EntryOut node={node}/>;
+    const ComponentEntry = isIncome ? EntryIn : EntryOut;
     return (
-      <div className="row" key={node.id}>
-        {component}
-      </div>
+      <ComponentEntry key={node.id} node={node}/>
     );
   });
 

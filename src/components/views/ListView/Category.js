@@ -1,4 +1,5 @@
 import React from "react";
+import Col from "react-bootstrap/Col";
 
 function Category({ node }) {
   let componentCategory = null;
@@ -16,9 +17,9 @@ function Category({ node }) {
   }
 
   return (
-    <div className="col-3 p-0 text-center word-break">
+    <Col className="p-0 text-center word-break" xs={3}>
       {componentCategory}
-    </div>
+    </Col>
   );
 }
 

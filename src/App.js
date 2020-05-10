@@ -5,6 +5,9 @@ import "./App.scss";
 import { RestfulProvider } from "restful-react";
 import { ApolloProvider } from "@apollo/react-hooks";
 
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+
 import Summary from "./components/Summary/Summary";
 import PieChart from "./components/views/PieChart/PieChart";
 import ListView from "./components/views/ListView/ListView";
@@ -39,15 +42,15 @@ function App() {
             <Route path="/detail" children={<BillDetail/>}/>
 
             <Route path="/">
-              <div className="App container-fluid">
+              <Container className="App" fluid>
                 <Summary/>
 
-                <div id="graph-container" className="row">
+                <Row id="graph-container">
                   <ListView/>
                   <PieChart/>
-                </div>
+                </Row>
 
-              </div>
+              </Container>
             </Route>
           </Switch>
 
