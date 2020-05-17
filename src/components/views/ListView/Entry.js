@@ -5,7 +5,7 @@ import Row from "react-bootstrap/Row";
 
 import className from "classnames";
 
-import { getNaturalCurrency } from "../../../helpers/Utils";
+import { NaturalCurrency } from "../../../helpers/Utils";
 
 import CompanyAndCard from "./CompanyAndCard";
 import Category from "./Category";
@@ -15,7 +15,7 @@ import Category from "./Category";
  */
 function Entry({ isIncome, node }) {
   const history = useHistory();
-  const amountNatural = getNaturalCurrency(node.amount);
+  const componentCurrency = <NaturalCurrency amount={node.amount}/>;
 
   const componentCategory = <Category node={node}/>;
   const componentCompanyCard = <CompanyAndCard node={node}/>;
@@ -40,7 +40,7 @@ function Entry({ isIncome, node }) {
 
       {/* Amount Note */}
       <Col>
-        {amountNatural}
+        {componentCurrency}
         {componentNote}
       </Col>
 

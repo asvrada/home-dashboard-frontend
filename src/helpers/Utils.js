@@ -56,6 +56,14 @@ function getColor(config, percentage) {
   return colorHelper(colorStart, colorEnd, relativePercentage);
 }
 
+function formatCurrency(amount) {
+  return amount
+    .toFixed(2)
+    .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")
+    .split(".");
+
+}
+
 function DateTime({ time }) {
   const objDatetime = new Date(time);
 
@@ -72,12 +80,9 @@ function DateTime({ time }) {
   );
 }
 
-function getNaturalCurrency(amount) {
+function NaturalCurrency({ amount }) {
   amount = Math.abs(amount);
-  const strAmount = amount
-    .toFixed(2)
-    .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")
-    .split(".");
+  const strAmount = formatCurrency(amount);
 
   return (
     <div className="amount">
@@ -95,7 +100,8 @@ function convertDate(str_datetime) {
 }
 
 /**
- * edges: [node: {timeCreated}]
+ * @param edges: [{node: {amount, timeCreated}}]
+ * @return: [node | {type: metadata, date: [1 2 3], sum: number}]
  */
 function insertDate(edges) {
   function isEqual(a, b) {
@@ -103,23 +109,57 @@ function insertDate(edges) {
   }
 
   const today = new Date();
-  let prevDay = [today.getFullYear(), today.getMonth() + 1, today.getDate()];
   let newEdges = [];
 
-  for (let idx in edges) {
+  let tempSum = 0;
+  let prevDay = null;
+
+  for (let idx = edges.length - 1; idx >= 0; idx--) {
+    if (!edges.hasOwnProperty(idx)) {
+      continue;
+    }
+
     const node = edges[idx].node;
     const date = convertDate(node.timeCreated);
-
-    if (!isEqual(prevDay, date)) {
-      newEdges.push(date);
+    if (prevDay === null) {
       prevDay = date;
     }
 
-    // add
+    if (!isEqual(prevDay, date)) {
+      newEdges.push({
+        type: "metadata",
+        sum: tempSum,
+        date: prevDay,
+      });
+
+      tempSum = 0;
+      prevDay = date;
+    }
+
     newEdges.push(node);
+
+    tempSum += node.amount;
   }
 
-  return newEdges;
+  // handle last
+  const dateLatest = convertDate(edges[0].node.timeCreated);
+  if (!isEqual(dateLatest, today)) {
+    newEdges.push({
+      type: "metadata",
+      sum: tempSum,
+      date: dateLatest,
+    });
+  }
+
+  return newEdges.reverse();
 }
 
-export { isDevEnv, getColor, DateTime, getNaturalCurrency, convertDate, insertDate };
+export {
+  isDevEnv,
+  formatCurrency,
+  getColor,
+  DateTime,
+  NaturalCurrency,
+  convertDate,
+  insertDate,
+};

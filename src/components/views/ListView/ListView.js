@@ -40,12 +40,16 @@ function ListView() {
     </Wrapper>;
   }
 
+  ////////////////
+  // Main Logic //
+  ////////////////
   const edges = insertDate(data.bills.edges);
 
   const components = edges.map((node) => {
-    if (Array.isArray(node)) {
+    if (node.hasOwnProperty("type")) {
+
       return (
-        <DateBox key={String(node)} date={node}/>
+        <DateBox key={String(node.date)} date={node.date} sum={node.sum}/>
       );
     }
 
