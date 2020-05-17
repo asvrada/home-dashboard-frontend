@@ -10,7 +10,7 @@ import DateBox from "./DateBox";
 
 function Wrapper({ children }) {
   return (
-    <Col className="ListView" md={4}>
+    <Col className="ListView" xs={4}>
       {children}
     </Col>
   );
