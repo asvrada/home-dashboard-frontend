@@ -54,10 +54,11 @@ function BillDetail({ mode }) {
       <p>
         {bill.amount}
       </p>
-      <p> {bill.category.name}
+      <p>
+        {bill.category && bill.category.name}
       </p>
-      <p>{bill.company.name}</p>
-      <p>{bill.card.name}</p>
+      <p>{bill.company && bill.company.name}</p>
+      <p>{bill.card && bill.card.name}</p>
       <p>{bill.note}</p>
       <p>{bill.timeCreated}</p>
     </Wrapper>

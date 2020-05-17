@@ -22,14 +22,17 @@
   $icon-other-size: 36px;
 
   height: 100vh;
-  overflow: hidden;
+
+  display: flex;
+  flex-flow: column;
 
   .Summary {
-    min-height: $summary-min-height;
   }
 
   #graph-container {
-    height: 100% - $summary-min-height;
+    // grow shrink basis
+    flex: 1 1 100%;
+    overflow: hidden;
 
     .ListView {
       position: relative;

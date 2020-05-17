@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import InfiniteScroll from "react-infinite-scroller";
 import { useQuery } from "@apollo/react-hooks";
 import Col from "react-bootstrap/Col";
@@ -20,6 +20,7 @@ function Wrapper({ children }) {
  * Display a list of most recent transactions
  */
 function ListView() {
+  const topRef = useRef(null);
   const { loading, error, data, fetchMore } = useQuery(ALL_TRANSACTIONS, {
     variables: {
       limit: 30,
@@ -56,8 +57,9 @@ function ListView() {
 
   return (
     <Wrapper>
-      {/* Tap to scroll to top */}
-      <div className="scroll-top"/>
+      <div className="scroll-top"
+           onClick={() => topRef.current.scrollIntoView(
+             { behavior: "smooth" })}/>
 
       <InfiniteScroll
         pageStart={0}
@@ -83,9 +85,11 @@ function ListView() {
           },
         })}
         hasMore={data.bills.pageInfo.hasNextPage}
-        loader={<div className="Entry text-center" key="0">Loading...</div>}
+        loader={<div className="Entry text-center"
+                     key="loading">Loading...</div>}
         useWindow={false}
       >
+        <div key="top" ref={topRef}/>
         {components}
       </InfiniteScroll>
     </Wrapper>
