@@ -31,8 +31,8 @@ function Summary() {
   }
 
   return (
-    <Row className="Summary text-center">
-      <Col md={2}>
+    <Row className="Summary text-center align-items-center">
+      <Col className="d-none d-lg-block" md={2}>
         <TimeDate/>
       </Col>
 

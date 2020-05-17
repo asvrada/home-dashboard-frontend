@@ -1,6 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
+
 import { getColor } from "../../helpers/Utils";
 
 const ResizeDiv = styled.div`
@@ -8,7 +11,7 @@ const ResizeDiv = styled.div`
     background-color: ${props => props.textColor};
   `;
 
-function Bar(text, current, total) {
+function Bar({ text, current, total }) {
   let range = 0;
   if (current >= 0 && total > 0) {
     range = Math.round(current / total * 100);
@@ -35,7 +38,7 @@ function Bar(text, current, total) {
 
   return (
     <div className={"Bar"}>
-      <div className={"text"}>
+      <div>
         {text}
       </div>
 
@@ -77,24 +80,30 @@ function Bar(text, current, total) {
  *   savingMonth, incomeMonthTotal
  */
 function BudgetGadget({ obj }) {
-  const today = Bar("今日预算", obj.budgetToday, obj.budgetTodayTotal);
-  const month = Bar("本月预算", obj.budgetMonth, obj.budgetMonthTotal);
-  const saving = Bar("本月存款", obj.savingMonth, obj.incomeMonthTotal);
+  const today = <Bar text={"今日预算"}
+                     current={obj.budgetToday}
+                     total={obj.budgetTodayTotal}/>;
+  const month = <Bar text={"本月预算"}
+                     current={obj.budgetMonth}
+                     total={obj.budgetMonthTotal}/>;
+  const saving = <Bar text={"本月存款"}
+                      current={obj.savingMonth}
+                      total={obj.incomeMonthTotal}/>;
 
   return (
-    <div className="BudgeGadget row">
-      <div className={"col-md"}>
+    <Row className="BudgeGadget">
+      <Col md>
         {today}
-      </div>
+      </Col>
 
-      <div className={"col-md"}>
+      <Col md>
         {month}
-      </div>
+      </Col>
 
-      <div className={"col-md"}>
+      <Col md>
         {saving}
-      </div>
-    </div>
+      </Col>
+    </Row>
   );
 }
 
