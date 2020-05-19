@@ -1,19 +1,19 @@
 import React from "react";
 import Container from "react-bootstrap/Container";
-import { useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { useQuery } from "@apollo/react-hooks";
 
 import { GET_BILL } from "../../helpers/graphql";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import Button from "react-bootstrap/Button";
+import BillForm from "./BillForm";
 
 function Wrapper({ children }) {
   return (
     <Container>
       <Row>
-        <Col>
-          {children}
-        </Col>
+        {children}
       </Row>
     </Container>
   );
@@ -26,6 +26,7 @@ function Wrapper({ children }) {
  */
 function BillDetail({ mode }) {
   const { id } = useParams();
+  const history = useHistory();
 
   // get transaction detail
   const { loading, error, data } = useQuery(GET_BILL, {
@@ -47,20 +48,36 @@ function BillDetail({ mode }) {
   }
 
   const bill = data.bill;
-  console.log(bill);
+
+  if (mode === "edit") {
+    return (
+      <Wrapper>
+        <BillForm transaction={bill}/>
+      </Wrapper>
+    );
+  }
 
   return (
     <Wrapper>
-      <p>
-        {bill.amount}
-      </p>
-      <p>
-        {bill.category && bill.category.name}
-      </p>
-      <p>{bill.company && bill.company.name}</p>
-      <p>{bill.card && bill.card.name}</p>
-      <p>{bill.note}</p>
-      <p>{bill.timeCreated}</p>
+      <Col>
+        <p>
+          {bill.amount}
+        </p>
+        <p>
+          {bill.category && bill.category.name}
+        </p>
+        <p>{bill.company && bill.company.name}</p>
+        <p>{bill.card && bill.card.name}</p>
+        <p>{bill.note}</p>
+        <p>{bill.timeCreated}</p>
+
+        <div>
+          <Button className="m-1"
+            onClick={() => history.push(`/`)}>Back</Button>
+          <Button className="m-1"
+            onClick={() => history.push(`/detail/${id}/edit`)}>Edit</Button>
+        </div>
+      </Col>
     </Wrapper>
   );
 }

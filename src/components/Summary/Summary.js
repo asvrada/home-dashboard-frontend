@@ -20,13 +20,13 @@ import "./Summary.scss";
  */
 function Summary() {
   // GET summary/
-  const { data: objSummary } = useGet({
+  const { data: objSummary, loading } = useGet({
     path: "summary/",
   });
 
   // Generate <BudgetGadget>
   let componentBudgetGadget = <span>Loading...</span>;
-  if (objSummary !== null) {
+  if (!loading) {
     componentBudgetGadget = <BudgetGadget obj={objSummary}/>;
   }
 
