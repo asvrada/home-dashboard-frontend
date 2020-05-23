@@ -1,28 +1,26 @@
 import React, {ChangeEvent, FormEvent} from "react";
-import {DEFAULT_TRANSACTION, ITransaction} from "../../helpers/type";
+import {DEFAULT_TRANSACTION, ITransaction} from "../../helpers/graphql";
 
 type Props = {
-    transaction?: ITransaction
+    transaction: ITransaction | undefined
 }
 
 class BillForm extends React.Component<Props> {
-    state: ITransaction;
-    isCreate: boolean;
+    state = DEFAULT_TRANSACTION;
+    isCreate = true;
 
     constructor(props: Props) {
         super(props);
 
         this.isCreate = props.transaction === undefined;
 
-        this.state = DEFAULT_TRANSACTION;
-
-        if (!this.isCreate) {
-            this.state.amount = props.transaction!.amount;
-            this.state.category = props.transaction!.category;
-            this.state.card = props.transaction!.card;
-            this.state.company = props.transaction!.company;
-            this.state.note = props.transaction!.note;
-            this.state.timeCreated = props.transaction!.timeCreated;
+        if (props.transaction) {
+            this.state.amount = props.transaction.amount;
+            this.state.category = props.transaction.category;
+            this.state.card = props.transaction.card;
+            this.state.company = props.transaction.company;
+            this.state.note = props.transaction.note;
+            this.state.timeCreated = props.transaction.timeCreated;
         }
 
         this.handleSubmit = this.handleSubmit.bind(this);

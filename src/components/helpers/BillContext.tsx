@@ -4,7 +4,7 @@ import {useParams} from "react-router-dom";
 
 import {useQuery} from "@apollo/react-hooks";
 import {GET_BILL} from "../../helpers/graphql";
-import {DEFAULT_TRANSACTION} from "../../helpers/type";
+import {DEFAULT_TRANSACTION} from "../../helpers/graphql";
 
 type Props = {
     children: any

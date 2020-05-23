@@ -1,7 +1,44 @@
-import ApolloClient, { gql } from "apollo-boost";
+import ApolloClient, {gql} from "apollo-boost";
+
+enum EnumType {
+    Card = "Card",
+    Company = "Company",
+    Category = "Category",
+}
+
+interface IIcon {
+    keyword: string,
+    path: string
+}
+
+interface IEnumCategory {
+    category: EnumType,
+    name: string,
+    icon: IIcon | null
+}
+
+interface ITransaction {
+    amount: number,
+
+    category: IEnumCategory | null,
+    card: IEnumCategory | null,
+    company: IEnumCategory | null,
+
+    note: string,
+    timeCreated: string
+}
+
+const DEFAULT_TRANSACTION: ITransaction = {
+    amount: 0,
+    note: '',
+    category: null,
+    card: null,
+    company: null,
+    timeCreated: ''
+};
 
 const client = new ApolloClient({
-  uri: "http://127.0.0.1:4444/graphql/",
+    uri: "http://127.0.0.1:4444/graphql/",
 });
 
 const GET_BILL = gql`query getBill($id: ID!) {
@@ -75,4 +112,7 @@ const ALL_TRANSACTIONS = gql`query getBills($cursor: String, $limit: Int) {
   } 
 }`;
 
-export { client, ALL_TRANSACTIONS, GET_BILL };
+export {client, ALL_TRANSACTIONS, GET_BILL, DEFAULT_TRANSACTION};
+
+// @ts-ignore
+export type {EnumType, IIcon, IEnumCategory, ITransaction};
