@@ -1,6 +1,5 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import "./App.scss";
 
 import { RestfulProvider } from "restful-react";
 import { ApolloProvider } from "@apollo/react-hooks";
@@ -9,15 +8,17 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 
 import Summary from "./components/Summary/Summary";
-import PieChart from "./components/views/PieChart/PieChart";
-import ListView from "./components/views/ListView/ListView";
-import BillDetail from "./pages/BillDetail";
+import PieChart from "./components/Views/PieChart/PieChart";
+import ListView from "./components/Views/ListView/ListView";
+import BillDetail from "./components/Bill/BillDetail";
+import BillUpdate from "./components/Bill/BillUpdate";
+import BillCreate from "./components/Bill/BillCreate";
+import { TransactionProvider } from "./components/Bill/BillContext";
 
 import { isDevEnv } from "./helpers/utils";
 import { client } from "./helpers/graphql";
-import BillUpdate from "./pages/BillUpdate";
-import BillCreate from "./pages/BillCreate";
-import { ProviderTransaction } from "./components/helpers/BillContext";
+
+import "./App.scss";
 
 function App() {
   let baseURL = null;
@@ -41,16 +42,16 @@ function App() {
 
             {/* Update ID */}
             <Route path="/detail/:id/edit">
-              <ProviderTransaction>
+              <TransactionProvider>
                 <BillUpdate/>
-              </ProviderTransaction>
+              </TransactionProvider>
             </Route>
 
             {/* Retrieve/Delete ID */}
             <Route path="/detail/:id">
-              <ProviderTransaction>
+              <TransactionProvider>
                 <BillDetail/>
-              </ProviderTransaction>
+              </TransactionProvider>
             </Route>
 
             <Route path="/detail">

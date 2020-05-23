@@ -1,7 +1,7 @@
 import React from "react";
 
-import {Wrapper} from "../components/helpers/wrappers";
-import BillForm from "../components/Bill/BillForm";
+import Wrapper from "./Wrappers";
+import BillForm from "./BillForm";
 
 /**
  * For Create

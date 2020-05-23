@@ -1,6 +1,7 @@
+import React from "react";
+
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
-import React from "react";
 
 type Props = {
     children: any
@@ -16,4 +17,4 @@ function Wrapper({children}: Props) {
   );
 }
 
-export { Wrapper };
+export default Wrapper;

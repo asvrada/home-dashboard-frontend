@@ -1,8 +1,8 @@
 import React from "react";
 // @ts-ignore
 import {useParams} from "react-router-dom";
-
 import {useQuery} from "@apollo/react-hooks";
+
 import {GET_BILL} from "../../helpers/graphql";
 import {DEFAULT_TRANSACTION} from "../../helpers/graphql";
 
@@ -12,7 +12,7 @@ type Props = {
 
 const BillContext = React.createContext(DEFAULT_TRANSACTION);
 
-function ProviderTransaction({children}: Props) {
+function TransactionProvider({children}: Props) {
     const {id} = useParams();
 
     // get transaction detail
@@ -45,4 +45,4 @@ function ProviderTransaction({children}: Props) {
 }
 
 
-export {ProviderTransaction, BillContext};
+export {TransactionProvider, BillContext};

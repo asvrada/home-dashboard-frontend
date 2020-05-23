@@ -1,10 +1,10 @@
 import React, { useContext } from "react";
 import { useHistory, useParams } from "react-router-dom";
+import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 
-import { BillContext } from "../components/helpers/BillContext";
-import { Wrapper } from "../components/helpers/wrappers";
-import Col from "react-bootstrap/Col";
+import { BillContext } from "./BillContext";
+import Wrapper from "./Wrappers";
 
 /**
  * For Retrieve and Delete

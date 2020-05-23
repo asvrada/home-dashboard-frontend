@@ -2,9 +2,9 @@ import React, {useContext} from "react";
 // @ts-ignore
 import {useParams} from "react-router-dom";
 
-import {BillContext} from "../components/helpers/BillContext";
-import BillForm from "../components/Bill/BillForm";
-import {Wrapper} from "../components/helpers/wrappers";
+import {BillContext} from "./BillContext";
+import BillForm from "./BillForm";
+import Wrapper from "./Wrappers";
 
 /**
  * For Update
