@@ -4,7 +4,7 @@ import styled from "styled-components";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 
-import { getColor } from "../../helpers/Utils";
+import { getColor } from "../../helpers/utils";
 
 const ResizeDiv = styled.div`
     width: ${props => props.textWidth};

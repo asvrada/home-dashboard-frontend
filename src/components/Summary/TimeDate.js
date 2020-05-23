@@ -4,7 +4,7 @@ import Clock from "react-live-clock";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
-import { getDate, getDay, getMonth } from "../../helpers/TimeDateRelated";
+import { getDate, getDay, getMonth } from "../../helpers/utils";
 
 /**
  * Display time and date

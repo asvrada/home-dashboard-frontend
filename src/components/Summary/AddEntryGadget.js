@@ -8,7 +8,7 @@ import Button from "react-bootstrap/Button";
 function AddEntryGadget() {
   return (
     <Row className="AddEntryGadget justify-content-center m-1">
-      <Button variant="primary">
+      <Button variant="primary" href="/detail/new">
         New
       </Button>
     </Row>

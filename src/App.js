@@ -11,10 +11,13 @@ import Row from "react-bootstrap/Row";
 import Summary from "./components/Summary/Summary";
 import PieChart from "./components/views/PieChart/PieChart";
 import ListView from "./components/views/ListView/ListView";
-import BillDetail from "./components/detail/BillDetail";
+import BillDetail from "./pages/BillDetail";
 
-import { isDevEnv } from "./helpers/Utils";
+import { isDevEnv } from "./helpers/utils";
 import { client } from "./helpers/graphql";
+import BillUpdate from "./pages/BillUpdate";
+import BillCreate from "./pages/BillCreate";
+import { ProviderTransaction } from "./components/helpers/BillContext";
 
 function App() {
   let baseURL = null;
@@ -31,19 +34,28 @@ function App() {
         <RestfulProvider base={baseURL}>
 
           <Switch>
-            {/* Edit ID */}
+            {/* Create */}
+            <Route exact path="/detail/new">
+              <BillCreate/>
+            </Route>
+
+            {/* Update ID */}
             <Route path="/detail/:id/edit">
-              <BillDetail mode="edit"/>
+              <ProviderTransaction>
+                <BillUpdate/>
+              </ProviderTransaction>
             </Route>
 
-            {/* View/Delete ID */}
+            {/* Retrieve/Delete ID */}
             <Route path="/detail/:id">
-              <BillDetail/>
+              <ProviderTransaction>
+                <BillDetail/>
+              </ProviderTransaction>
             </Route>
 
-            {/* Show 404 */}
             <Route path="/detail">
-              <BillDetail/>
+              {/* todo: redirect to /detail/new */}
+              <p>todo</p>
             </Route>
 
             <Route path="/">

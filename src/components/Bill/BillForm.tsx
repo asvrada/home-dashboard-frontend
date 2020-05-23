@@ -1,24 +1,36 @@
 import React, {ChangeEvent, FormEvent} from "react";
-import {ITransaction} from "../../helpers/type";
-import Button from "react-bootstrap/Button";
+import {DEFAULT_TRANSACTION, ITransaction} from "../../helpers/type";
 
+type Props = {
+    transaction?: ITransaction
+}
 
-class BillForm extends React.Component {
-    transaction: ITransaction;
+class BillForm extends React.Component<Props> {
     state: ITransaction;
+    isCreate: boolean;
 
-    constructor(props: { transaction: any; }) {
+    constructor(props: Props) {
         super(props);
 
-        // save the original object just in case
-        // eslint-disable-next-line react/prop-types
-        this.transaction = props.transaction;
+        this.isCreate = props.transaction === undefined;
 
-        // state of this component
-        this.state = {...this.transaction};
+        this.state = DEFAULT_TRANSACTION;
+
+        if (!this.isCreate) {
+            this.state.amount = props.transaction!.amount;
+            this.state.category = props.transaction!.category;
+            this.state.card = props.transaction!.card;
+            this.state.company = props.transaction!.company;
+            this.state.note = props.transaction!.note;
+            this.state.timeCreated = props.transaction!.timeCreated;
+        }
+
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     handleSubmit(event: FormEvent<HTMLFormElement>) {
+        console.log(this.isCreate);
+
         event.preventDefault();
     }
 
@@ -63,15 +75,22 @@ class BillForm extends React.Component {
                 <form onSubmit={this.handleSubmit}>
                     <label>Amount</label>
                     <input type="number" value={this.state.amount}
-                           onChange={(event) => this.handleChange("amount", event)}/>
+                           onChange={(event) => this.handleChange("amount", event)}
+                    />
+
                     <br/>
                     <label>Note</label>
-                    <input type="text" value={this.state.note} onChange={e => this.handleChange('note', e)}/>
+                    <input type="text" value={this.state.note} onChange={e => this.handleChange('note', e)}
+                    />
 
                     <br/>
                     <label>Time Created</label>
                     <input type="text" value={this.state.timeCreated}
-                           onChange={e => this.handleChange('timeCreated', e)}/>
+                           onChange={e => this.handleChange('timeCreated', e)}
+                    />
+
+                    <br/>
+                    <button type="submit">Submit</button>
                 </form>
             </>
         );

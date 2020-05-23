@@ -5,7 +5,7 @@ import Row from "react-bootstrap/Row";
 
 import className from "classnames";
 
-import { NaturalCurrency } from "../../../helpers/Utils";
+import { NaturalCurrency } from "../../../helpers/utils";
 
 import CompanyAndCard from "./CompanyAndCard";
 import Category from "./Category";

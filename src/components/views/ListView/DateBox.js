@@ -1,5 +1,5 @@
 import React from "react";
-import { formatCurrency } from "../../../helpers/Utils";
+import { formatCurrency } from "../../../helpers/utils";
 
 function isCurrentYear(year) {
   const currentYear = (new Date()).getFullYear().toString();
