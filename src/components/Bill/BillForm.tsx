@@ -1,98 +1,79 @@
-import React, {ChangeEvent, FormEvent} from "react";
-import {DEFAULT_TRANSACTION, ITransaction} from "../../helpers/graphql";
+import React from "react";
+import { ErrorMessage, Field, Formik } from 'formik';
+
+import { DEFAULT_TRANSACTION, ITransaction } from "../../helpers/graphql";
 
 type Props = {
-    transaction: ITransaction | undefined
+  transaction?: ITransaction
 }
 
 class BillForm extends React.Component<Props> {
-    state = DEFAULT_TRANSACTION;
-    isCreate = true;
+  transaction: ITransaction = DEFAULT_TRANSACTION;
+  isCreate = true;
 
-    constructor(props: Props) {
-        super(props);
+  constructor(props: Props) {
+    super(props);
 
-        this.isCreate = props.transaction === undefined;
+    this.isCreate = props.transaction === undefined;
 
-        if (props.transaction) {
-            this.state.amount = props.transaction.amount;
-            this.state.category = props.transaction.category;
-            this.state.card = props.transaction.card;
-            this.state.company = props.transaction.company;
-            this.state.note = props.transaction.note;
-            this.state.timeCreated = props.transaction.timeCreated;
-        }
-
-        this.handleSubmit = this.handleSubmit.bind(this);
+    if (props.transaction) {
+      this.transaction = props.transaction;
     }
+  }
 
-    handleSubmit(event: FormEvent<HTMLFormElement>) {
-        console.log(this.isCreate);
+  render() {
+    return (
+      <div>
+        <Formik
+          initialValues={this.transaction}
+          onSubmit={(values, {setSubmitting}) => {
+            setTimeout(() => {
+              console.log(values);
+              setSubmitting(false);
+            }, 400);
+          }}
+        >
+          {({
+              values,
+              errors,
+              touched,
+              handleChange,
+              handleBlur,
+              handleSubmit,
+              isSubmitting,
+              /* and other goodies */
+            }) => (
+            <form onSubmit={handleSubmit}>
 
-        event.preventDefault();
-    }
+              <label>Amount</label>
+              <Field type="number" name="amount" />
+              <ErrorMessage name="amount" component="div" />
+              <br />
 
-    handleChange(field: string, event: ChangeEvent<HTMLInputElement>) {
-        const newVal = event.target.value;
-        switch (field) {
-            case 'amount':
-                this.handleAmount(parseFloat(newVal));
-                break;
-            case 'note':
-                this.handleNote(newVal);
-                break;
-            case 'timeCreated':
-                this.handleTimeCreated(newVal);
-                break;
-            default:
-                break;
-        }
-    }
+              <label>Note</label>
+              <Field type="text" name="note" />
+              <ErrorMessage name="note" component="div" />
+              <br />
 
-    handleAmount(newVal: number) {
-        this.setState({
-            amount: newVal,
-        });
-    }
+              <label className="cursor-pointer" htmlFor="idSkipSummary">Skip Summary</label>
+              <Field id="idSkipSummary" name="skipSummary" component="input" type="checkbox"
+                     checked={values.skipSummary} />
+              <br />
 
-    handleNote(newVal: string) {
-        this.setState({
-            note: newVal
-        });
-    }
+              <label>Time Created</label>
+              <Field type="text" name="timeCreated" />
+              <br />
 
-    handleTimeCreated(newVal: string) {
-        // this.setState({
-        //     timeCreated: newVal
-        // });
-    }
+              <button type="submit" disabled={isSubmitting}>
+                Submit
+              </button>
 
-    render() {
-        return (
-            <>
-                <form onSubmit={this.handleSubmit}>
-                    <label>Amount</label>
-                    <input type="number" value={this.state.amount}
-                           onChange={(event) => this.handleChange("amount", event)}
-                    />
-
-                    <br/>
-                    <label>Note</label>
-                    <input type="text" value={this.state.note} onChange={e => this.handleChange('note', e)}
-                    />
-
-                    <br/>
-                    <label>Time Created</label>
-                    <input type="text" value={this.state.timeCreated}
-                           onChange={e => this.handleChange('timeCreated', e)}
-                    />
-
-                    <br/>
-                    <button type="submit">Submit</button>
-                </form>
-            </>
-        );
-    }
+            </form>
+          )}
+        </Formik>
+      </div>
+    );
+  }
 }
 
 export default BillForm;

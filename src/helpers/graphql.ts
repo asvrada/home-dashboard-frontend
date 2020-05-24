@@ -14,27 +14,24 @@ interface IIcon {
 interface IEnumCategory {
     category: EnumType,
     name: string,
-    icon: IIcon | null
+    icon?: string
 }
 
 interface ITransaction {
     amount: number,
 
-    category: IEnumCategory | null,
-    card: IEnumCategory | null,
-    company: IEnumCategory | null,
+    category?: IEnumCategory,
+    card?: IEnumCategory,
+    company?: IEnumCategory,
 
-    note: string,
-    timeCreated: string
+    skipSummary?: boolean,
+
+    note?: string,
+    timeCreated?: string
 }
 
 const DEFAULT_TRANSACTION: ITransaction = {
-    amount: 0,
-    note: '',
-    category: null,
-    card: null,
-    company: null,
-    timeCreated: ''
+    amount: 0
 };
 
 const client = new ApolloClient({
