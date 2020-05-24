@@ -7,11 +7,11 @@ import BillForm from "./BillForm";
  * For Create
  */
 function BillCreate() {
-    return (
-        <Wrapper>
-            <BillForm transaction={undefined}/>
-        </Wrapper>
-    );
+  return (
+    <Wrapper>
+      <BillForm transaction={undefined} />
+    </Wrapper>
+  );
 }
 
 export default BillCreate;

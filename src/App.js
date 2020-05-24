@@ -37,20 +37,20 @@ function App() {
           <Switch>
             {/* Create */}
             <Route exact path="/detail/new">
-              <BillCreate/>
+              <BillCreate />
             </Route>
 
             {/* Update ID */}
             <Route path="/detail/:id/edit">
               <TransactionProvider>
-                <BillUpdate/>
+                <BillUpdate />
               </TransactionProvider>
             </Route>
 
             {/* Retrieve/Delete ID */}
             <Route path="/detail/:id">
               <TransactionProvider>
-                <BillDetail/>
+                <BillDetail />
               </TransactionProvider>
             </Route>
 
@@ -61,11 +61,11 @@ function App() {
 
             <Route path="/">
               <Container className="App" fluid>
-                <Summary/>
+                <Summary />
 
                 <Row id="graph-container">
-                  <ListView/>
-                  <PieChart/>
+                  <ListView />
+                  <PieChart />
                 </Row>
 
               </Container>

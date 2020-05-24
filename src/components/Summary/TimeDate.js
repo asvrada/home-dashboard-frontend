@@ -21,7 +21,7 @@ function TimeDate() {
           {getDay()}
         </Col>
 
-        <div className={"w-100"}/>
+        <div className={"w-100"} />
 
         <Col id="date">
           {month}/{date}
@@ -29,7 +29,7 @@ function TimeDate() {
       </Col>
 
       <Col id="clock" xs={8}>
-        <Clock format={"HH:mm"} ticking={true} timezone={"US/Pacific"}/>
+        <Clock format={"HH:mm"} ticking={true} timezone={"US/Pacific"} />
       </Col>
     </Row>
   );

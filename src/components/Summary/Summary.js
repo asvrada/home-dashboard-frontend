@@ -27,13 +27,13 @@ function Summary() {
   // Generate <BudgetGadget>
   let componentBudgetGadget = <span>Loading...</span>;
   if (objSummary) {
-    componentBudgetGadget = <BudgetGadget obj={objSummary}/>;
+    componentBudgetGadget = <BudgetGadget obj={objSummary} />;
   }
 
   return (
     <Row className="Summary text-center align-items-center">
       <Col className="d-none d-lg-block" md={2}>
-        <TimeDate/>
+        <TimeDate />
       </Col>
 
       <Col>
@@ -41,7 +41,7 @@ function Summary() {
       </Col>
 
       <Col md={1}>
-        <AddEntryGadget/>
+        <AddEntryGadget />
       </Col>
     </Row>
   );

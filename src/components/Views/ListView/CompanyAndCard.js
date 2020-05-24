@@ -7,7 +7,7 @@ function CompanyAndCard({ node }) {
     <Row className="align-items-center mb-2">
       <img className="other-icon"
            src={process.env.PUBLIC_URL + "/static/test_icon.jpeg"}
-           alt="icon for company"/>
+           alt="icon for company" />
       <span>{node.company.name}</span>
     </Row>
   ) : null;
@@ -15,7 +15,7 @@ function CompanyAndCard({ node }) {
     <Row className="align-items-center">
       <img className="other-icon"
            src={process.env.PUBLIC_URL + "/static/test_icon.jpeg"}
-           alt="icon for card"/>
+           alt="icon for card" />
       <span>{node.card.name}</span>
     </Row>
   ) : null;

@@ -15,14 +15,14 @@ import { NaturalCurrency } from "../../../helpers/utils";
  */
 function Entry({ isIncome, node }) {
   const history = useHistory();
-  const componentCurrency = <NaturalCurrency amount={node.amount}/>;
+  const componentCurrency = <NaturalCurrency amount={node.amount} />;
 
-  const componentCategory = <Category node={node}/>;
-  const componentCompanyCard = <CompanyAndCard node={node}/>;
+  const componentCategory = <Category node={node} />;
+  const componentCompanyCard = <CompanyAndCard node={node} />;
   const componentNote = node.note
     ? (
       <>
-        <div className="h-separator"/>
+        <div className="h-separator" />
         <div className="word-break">- {node.note}</div>
       </>
     )

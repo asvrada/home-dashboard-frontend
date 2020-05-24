@@ -50,13 +50,13 @@ function ListView() {
     if (node.hasOwnProperty("type")) {
 
       return (
-        <DateBox key={String(node.date)} date={node.date} sum={node.sum}/>
+        <DateBox key={String(node.date)} date={node.date} sum={node.sum} />
       );
     }
 
     const isIncome = node.amount > 0;
     return (
-      <Entry isIncome={isIncome} key={node.id} node={node}/>
+      <Entry isIncome={isIncome} key={node.id} node={node} />
     );
   });
 
@@ -64,7 +64,7 @@ function ListView() {
     <Wrapper>
       <div className="scroll-top"
            onClick={() => topRef.current.scrollIntoView(
-             { behavior: "smooth" })}/>
+             { behavior: "smooth" })} />
 
       <InfiniteScroll
         pageStart={0}
@@ -94,7 +94,7 @@ function ListView() {
                      key="loading">Loading...</div>}
         useWindow={false}
       >
-        <div key="top" ref={topRef}/>
+        <div key="top" ref={topRef} />
         {components}
       </InfiniteScroll>
     </Wrapper>

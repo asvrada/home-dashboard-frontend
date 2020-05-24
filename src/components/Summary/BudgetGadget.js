@@ -52,18 +52,18 @@ function Bar({ text, current, total }) {
         {/* overlay bar */}
         <ResizeDiv className={"bar-overlay"}
                    textWidth={textWidth}
-                   textColor={textColor}/>
+                   textColor={textColor} />
 
         {/* separator */}
-        <div className={"bar-separator bar-separator-1"}/>
-        <div className={"bar-separator bar-separator-2"}/>
-        <div className={"bar-separator bar-separator-3"}/>
+        <div className={"bar-separator bar-separator-1"} />
+        <div className={"bar-separator bar-separator-2"} />
+        <div className={"bar-separator bar-separator-3"} />
 
         {/* background bar */}
-        <div className={"bar-background"}/>
+        <div className={"bar-background"} />
 
         {/* Take up space */}
-        <div className={"placeholder"}/>
+        <div className={"placeholder"} />
       </div>
     </div>
   );
@@ -82,13 +82,13 @@ function Bar({ text, current, total }) {
 function BudgetGadget({ obj }) {
   const today = <Bar text={"今日预算"}
                      current={obj.budgetToday}
-                     total={obj.budgetTodayTotal}/>;
+                     total={obj.budgetTodayTotal} />;
   const month = <Bar text={"本月预算"}
                      current={obj.budgetMonth}
-                     total={obj.budgetMonthTotal}/>;
+                     total={obj.budgetMonthTotal} />;
   const saving = <Bar text={"本月存款"}
                       current={obj.savingMonth}
-                      total={obj.incomeMonthTotal}/>;
+                      total={obj.incomeMonthTotal} />;
 
   return (
     <Row className="BudgeGadget">

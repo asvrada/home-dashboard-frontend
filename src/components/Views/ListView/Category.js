@@ -8,7 +8,7 @@ function Category({ node }) {
       <span>
         <img className="category-icon"
              src={process.env.PUBLIC_URL + "/static/test_icon.jpeg"}
-             alt="icon for category"/>
+             alt="icon for category" />
         <div className="category-name">
           {node.category.name}
         </div>

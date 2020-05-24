@@ -4,7 +4,7 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 
 type Props = {
-    children: any
+  children: any
 }
 
 function Wrapper({children}: Props) {
