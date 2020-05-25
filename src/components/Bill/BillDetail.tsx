@@ -5,13 +5,14 @@ import Button from "react-bootstrap/Button";
 
 import { BillContext } from "./BillContext";
 import Wrapper from "./Wrappers";
+import { getBill_bill } from "../../helpers/types/getBill";
 
 /**
  * For Retrieve and Delete
  */
 function BillDetail() {
-  const { id } = useParams();
-  const bill = useContext(BillContext);
+  const {id} = useParams();
+  const bill = useContext(BillContext) as getBill_bill;
   const history = useHistory();
 
   return (

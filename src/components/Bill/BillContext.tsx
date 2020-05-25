@@ -3,13 +3,13 @@ import React from "react";
 import {useParams} from "react-router-dom";
 import {useQuery} from "@apollo/react-hooks";
 
-import {DEFAULT_TRANSACTION, GET_BILL} from "../../helpers/graphql";
+import {GET_BILL} from "../../helpers/graphql";
 
 type Props = {
     children: any
 }
 
-const BillContext = React.createContext(DEFAULT_TRANSACTION);
+const BillContext = React.createContext({});
 
 function TransactionProvider({children}: Props) {
     const {id} = useParams();

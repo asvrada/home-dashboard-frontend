@@ -6,7 +6,7 @@ import Col from "react-bootstrap/Col";
 import Entry from "./Entry";
 import DateBox from "./DateBox";
 
-import { ALL_TRANSACTIONS } from "../../../helpers/graphql";
+import { GET_TRANSACTIONS } from "../../../helpers/graphql";
 import { insertDate } from "../../../helpers/utils";
 
 function Wrapper({ children }) {
@@ -22,7 +22,7 @@ function Wrapper({ children }) {
  */
 function ListView() {
   const topRef = useRef(null);
-  const { loading, error, data, fetchMore } = useQuery(ALL_TRANSACTIONS, {
+  const { loading, error, data, fetchMore } = useQuery(GET_TRANSACTIONS, {
     variables: {
       limit: 30,
     },

@@ -219,6 +219,10 @@ function getDaysLeft() {
     1 + daysInMonth(getDateObj().getFullYear(), getMonth()) - getDate());
 }
 
+function getCurrentISOString() {
+  return (new Date()).toISOString();
+}
+
 export {
   isDevEnv,
   formatCurrency,
@@ -228,4 +232,5 @@ export {
   convertDate,
   insertDate,
   getMonth, getDate, getDay, getDaysLeft,
+  getCurrentISOString
 };

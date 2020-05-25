@@ -1,47 +1,33 @@
-import ApolloClient, {gql} from "apollo-boost";
-
-enum EnumType {
-    Card = "Card",
-    Company = "Company",
-    Category = "Category",
-}
-
-interface IIcon {
-    keyword: string,
-    path: string
-}
-
-interface IEnumCategory {
-    category: EnumType,
-    name: string,
-    icon?: string
-}
-
-interface ITransaction {
-    amount: number,
-
-    category?: IEnumCategory,
-    card?: IEnumCategory,
-    company?: IEnumCategory,
-
-    skipSummary?: boolean,
-
-    note?: string,
-    timeCreated?: string
-}
-
-const DEFAULT_TRANSACTION: ITransaction = {
-    amount: 0
-};
+import ApolloClient, { gql } from "apollo-boost";
 
 const client = new ApolloClient({
-    uri: "http://127.0.0.1:4444/graphql/",
+  uri: "http://127.0.0.1:4444/graphql/",
 });
+
+///////////
+// Query //
+///////////
+const GET_ENUMS = gql`query getEnums {
+  enums {
+    edges {
+      node {
+        id,
+        name,
+        category,
+        icon {
+          id
+        }
+      }
+    }
+  }
+}`;
 
 const GET_BILL = gql`query getBill($id: ID!) {
   bill(id: $id) {
+    id,
     amount,
     category {
+      id,
       icon {
         id,
         path,
@@ -51,6 +37,7 @@ const GET_BILL = gql`query getBill($id: ID!) {
       category
     },
     company{
+      id,
       icon {
         id,
         path,
@@ -60,6 +47,7 @@ const GET_BILL = gql`query getBill($id: ID!) {
       category
     },
     card{
+      id,
       icon {
         id,
         path,
@@ -69,11 +57,15 @@ const GET_BILL = gql`query getBill($id: ID!) {
       category
     },
     note,
+    creator {
+      id
+    },
+    skipSummary,
     timeCreated
   }
 }`;
 
-const ALL_TRANSACTIONS = gql`query getBills($cursor: String, $limit: Int) {
+const GET_TRANSACTIONS = gql`query getBills($cursor: String, $limit: Int) {
   bills(after: $cursor, first: $limit) {
     pageInfo {
       startCursor
@@ -103,13 +95,117 @@ const ALL_TRANSACTIONS = gql`query getBills($cursor: String, $limit: Int) {
           }
         },
         note,
+        creator {
+          id
+        },
+        skipSummary,
         timeCreated
       }
     }
   } 
 }`;
 
-export {client, ALL_TRANSACTIONS, GET_BILL, DEFAULT_TRANSACTION};
+//////////////
+// Mutation //
+//////////////
+const CREATE_TRANSACTION = gql`
+mutation createTransaction($input:CreateTransactionInput!) {
+  createTransaction(input: $input) {
+    transaction {
+      id,
+      amount,
+      category {
+        id,
+        name,
+        category,
+        icon {
+          id,
+          keyword,
+          path
+        }
+      },
+      company {
+        id, 
+        name,
+        category,
+        icon {
+          id,
+          keyword,
+          path
+        }
+      },
+      card {
+        id,
+        name,
+        category,
+        icon {
+          id,
+          keyword,
+          path
+        }
+      },
+      
+      skipSummary,
+      creator {
+        id
+      }
+      note,
+      timeCreated
+    }
+  }
+}`;
 
-// @ts-ignore
-export type {EnumType, IIcon, IEnumCategory, ITransaction};
+const UPDATE_TRANSACTION = gql`
+mutation updateTransaction($input:UpdateTransactionInput!) {
+  updateTransaction(input: $input) {
+    transaction {
+      id,
+      amount,
+      category {
+        id,
+        name,
+        category,
+        icon {
+          id,
+          keyword,
+          path
+        }
+      },
+      company {
+        id, 
+        name,
+        category,
+        icon {
+          id,
+          keyword,
+          path
+        }
+      },
+      card {
+        id,
+        name,
+        category,
+        icon {
+          id,
+          keyword,
+          path
+        }
+      },
+      
+      skipSummary,
+      creator {
+        id
+      }
+      note,
+      timeCreated
+    }
+  }
+}
+`;
+
+export {
+  client, GET_TRANSACTIONS,
+  GET_BILL, GET_ENUMS,
+  CREATE_TRANSACTION,
+  UPDATE_TRANSACTION
+};
