@@ -1,5 +1,10 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Redirect,
+  Route,
+  Switch,
+} from "react-router-dom";
 
 import { RestfulProvider } from "restful-react";
 import { ApolloProvider } from "@apollo/react-hooks";
@@ -55,8 +60,7 @@ function App() {
             </Route>
 
             <Route path="/detail">
-              {/* todo: redirect to /detail/new */}
-              <p>todo</p>
+              <Redirect to="/detail/new" />
             </Route>
 
             <Route path="/">

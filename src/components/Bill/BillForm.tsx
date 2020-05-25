@@ -71,17 +71,19 @@ class BillForm extends React.Component<Props> {
   }
 
   prepareValueBeforeSubmit(transaction: any) {
-    if (transaction.category === 'null') {
-      transaction.category = null;
+    const input = {...transaction};
+
+    if (input.category === 'null' || input.category === null) {
+      input.category = undefined;
     }
-    if (transaction.company === 'null') {
-      transaction.company = null;
+    if (input.company === 'null' || input.company === null) {
+      input.company = undefined;
     }
-    if (transaction.card === 'null') {
-      transaction.card = null;
+    if (input.card === 'null' || input.card === null) {
+      input.card = undefined;
     }
 
-    return transaction;
+    return input;
   }
 
   handleSubmit(value: any) {

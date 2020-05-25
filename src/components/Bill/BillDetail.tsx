@@ -1,19 +1,32 @@
 import React, { useContext } from "react";
-import { useHistory, useParams } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 
 import { BillContext } from "./BillContext";
 import Wrapper from "./Wrappers";
 import { getBill_bill } from "../../helpers/types/getBill";
+import { useMutation } from "@apollo/react-hooks";
+import { DELETE } from "../../helpers/graphql";
 
 /**
  * For Retrieve and Delete
  */
 function BillDetail() {
-  const {id} = useParams();
   const bill = useContext(BillContext) as getBill_bill;
   const history = useHistory();
+  const id = bill.id;
+
+  const [deleteObj] = useMutation(DELETE);
+
+  const handleDelete = () => {
+    deleteObj({
+      variables: {
+        id: id
+      }
+      // todo: redirect to homepage
+    }).then(ret => console.log(ret));
+  };
 
   return (
     <Wrapper>
@@ -35,6 +48,8 @@ function BillDetail() {
           <Button className="m-1"
                   onClick={() => history.push(
                     `/detail/${id}/edit`)}>Edit</Button>
+          <Button className="m-1"
+                  onClick={handleDelete}>Delete</Button>
         </div>
       </Col>
     </Wrapper>

@@ -203,9 +203,20 @@ mutation updateTransaction($input:UpdateTransactionInput!) {
 }
 `;
 
+const DELETE = gql`
+mutation delete($id: ID!) {
+  delete(input: {
+    id: $id
+  }) {
+    ok
+  }
+}
+`;
+
 export {
-  client, GET_TRANSACTIONS,
-  GET_BILL, GET_ENUMS,
+  client,
+  GET_TRANSACTIONS, GET_BILL, GET_ENUMS,
   CREATE_TRANSACTION,
-  UPDATE_TRANSACTION
+  UPDATE_TRANSACTION,
+  DELETE
 };

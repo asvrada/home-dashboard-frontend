@@ -13,5 +13,3 @@ echo "${DOCKER_PASSWORD}" | docker login -u "${DOCKER_USERNAME}" --password-stdi
 docker push ${IMAGE}
 
 echo "Docker image pushed to Hub"
-
-# todo: Notifica server to pull the latest Docker image
