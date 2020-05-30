@@ -76,7 +76,7 @@ export interface getBills_bills_edges_node {
   card: getBills_bills_edges_node_card | null;
   note: string | null;
   creator: getBills_bills_edges_node_creator | null;
-  skipSummary: boolean;
+  skipSummaryFlag: number;
   timeCreated: any;
 }
 

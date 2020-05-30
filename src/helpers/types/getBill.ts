@@ -92,7 +92,7 @@ export interface getBill_bill {
   card: getBill_bill_card | null;
   note: string | null;
   creator: getBill_bill_creator | null;
-  skipSummary: boolean;
+  skipSummaryFlag: number;
   timeCreated: any;
 }
 

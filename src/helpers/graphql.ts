@@ -60,7 +60,7 @@ const GET_BILL = gql`query getBill($id: ID!) {
     creator {
       id
     },
-    skipSummary,
+    skipSummaryFlag,
     timeCreated
   }
 }`;
@@ -98,7 +98,7 @@ const GET_TRANSACTIONS = gql`query getBills($cursor: String, $limit: Int) {
         creator {
           id
         },
-        skipSummary,
+        skipSummaryFlag,
         timeCreated
       }
     }
@@ -144,8 +144,7 @@ mutation createTransaction($input:CreateTransactionInput!) {
           path
         }
       },
-      
-      skipSummary,
+      skipSummaryFlag,
       creator {
         id
       }
@@ -191,8 +190,7 @@ mutation updateTransaction($input:UpdateTransactionInput!) {
           path
         }
       },
-      
-      skipSummary,
+      skipSummaryFlag,
       creator {
         id
       }
@@ -204,8 +202,8 @@ mutation updateTransaction($input:UpdateTransactionInput!) {
 `;
 
 const DELETE = gql`
-mutation delete($id: ID!) {
-  delete(input: {
+mutation deleteObj($id: ID!) {
+  deleteObj(input: {
     id: $id
   }) {
     ok

@@ -51,7 +51,7 @@ class BillForm extends React.Component<Props> {
         company: null,
         card: null,
         note: "",
-        skipSummary: false,
+        skipSummaryFlag: 0,
         timeCreated: getCurrentISOString()
       }
     } else {
@@ -64,7 +64,7 @@ class BillForm extends React.Component<Props> {
         company: getIDorNull(payload.company),
         card: getIDorNull(payload.card),
         note: payload.note,
-        skipSummary: payload.skipSummary,
+        skipSummaryFlag: payload.skipSummaryFlag,
         timeCreated: payload.timeCreated
       };
     }
@@ -210,9 +210,8 @@ class BillForm extends React.Component<Props> {
               <ErrorMessage name="note" component="div" />
               <br />
 
-              <label className="cursor-pointer" htmlFor="idSkipSummary">Skip Summary</label>
-              <Field id="idSkipSummary" name="skipSummary" component="input" type="checkbox"
-                     checked={(values as {skipSummary: boolean}).skipSummary} />
+              <label>Skip Summary Flag</label>
+              <Field type="number" name="skipSummaryFlag" />
               <br />
 
               <label>Time Created</label>

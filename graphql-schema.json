@@ -938,11 +938,11 @@
                 "defaultValue": null
               },
               {
-                "name": "skipSummary",
+                "name": "skipSummaryFlag",
                 "description": null,
                 "type": {
                   "kind": "SCALAR",
-                  "name": "Boolean",
+                  "name": "Int",
                   "ofType": null
                 },
                 "defaultValue": null
@@ -1105,11 +1105,11 @@
                 "defaultValue": null
               },
               {
-                "name": "skipSummary",
+                "name": "skipSummaryFlag",
                 "description": null,
                 "type": {
                   "kind": "SCALAR",
-                  "name": "Boolean",
+                  "name": "Int",
                   "ofType": null
                 },
                 "defaultValue": null
@@ -1272,11 +1272,11 @@
                 "defaultValue": null
               },
               {
-                "name": "skipSummary",
+                "name": "skipSummaryFlag",
                 "description": null,
                 "type": {
                   "kind": "SCALAR",
-                  "name": "Boolean",
+                  "name": "Int",
                   "ofType": null
                 },
                 "defaultValue": null
@@ -1409,11 +1409,11 @@
                 "defaultValue": null
               },
               {
-                "name": "skipSummary",
+                "name": "skipSummaryFlag",
                 "description": null,
                 "type": {
                   "kind": "SCALAR",
-                  "name": "Boolean",
+                  "name": "Int",
                   "ofType": null
                 },
                 "defaultValue": null
@@ -1556,11 +1556,11 @@
                 "defaultValue": null
               },
               {
-                "name": "skipSummary",
+                "name": "skipSummaryFlag",
                 "description": null,
                 "type": {
                   "kind": "SCALAR",
-                  "name": "Boolean",
+                  "name": "Int",
                   "ofType": null
                 },
                 "defaultValue": null
@@ -1703,11 +1703,11 @@
                 "defaultValue": null
               },
               {
-                "name": "skipSummary",
+                "name": "skipSummaryFlag",
                 "description": null,
                 "type": {
                   "kind": "SCALAR",
-                  "name": "Boolean",
+                  "name": "Int",
                   "ofType": null
                 },
                 "defaultValue": null
@@ -2028,7 +2028,7 @@
             "deprecationReason": null
           },
           {
-            "name": "skipSummary",
+            "name": "skipSummaryFlag",
             "description": "",
             "args": [],
             "type": {
@@ -2036,7 +2036,7 @@
               "name": null,
               "ofType": {
                 "kind": "SCALAR",
-                "name": "Boolean",
+                "name": "Int",
                 "ofType": null
               }
             },
@@ -2164,11 +2164,11 @@
                 "defaultValue": null
               },
               {
-                "name": "skipSummary",
+                "name": "skipSummaryFlag",
                 "description": null,
                 "type": {
                   "kind": "SCALAR",
-                  "name": "Boolean",
+                  "name": "Int",
                   "ofType": null
                 },
                 "defaultValue": null
@@ -2413,7 +2413,7 @@
             "deprecationReason": null
           },
           {
-            "name": "skipSummary",
+            "name": "skipSummaryFlag",
             "description": "",
             "args": [],
             "type": {
@@ -2421,7 +2421,7 @@
               "name": null,
               "ofType": {
                 "kind": "SCALAR",
-                "name": "Boolean",
+                "name": "Int",
                 "ofType": null
               }
             },
@@ -2668,7 +2668,7 @@
             "deprecationReason": null
           },
           {
-            "name": "delete",
+            "name": "deleteObj",
             "description": null,
             "args": [
               {
@@ -3089,11 +3089,11 @@
             "defaultValue": null
           },
           {
-            "name": "skipSummary",
+            "name": "skipSummaryFlag",
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "Boolean",
+              "name": "Int",
               "ofType": null
             },
             "defaultValue": null
@@ -3209,11 +3209,11 @@
             "defaultValue": null
           },
           {
-            "name": "skipSummary",
+            "name": "skipSummaryFlag",
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "Boolean",
+              "name": "Int",
               "ofType": null
             },
             "defaultValue": null
@@ -3639,11 +3639,11 @@
             "defaultValue": null
           },
           {
-            "name": "skipSummary",
+            "name": "skipSummaryFlag",
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "Boolean",
+              "name": "Int",
               "ofType": null
             },
             "defaultValue": null
@@ -3769,11 +3769,11 @@
             "defaultValue": null
           },
           {
-            "name": "skipSummary",
+            "name": "skipSummaryFlag",
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "Boolean",
+              "name": "Int",
               "ofType": null
             },
             "defaultValue": null

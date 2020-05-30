@@ -90,7 +90,7 @@ export interface updateTransaction_updateTransaction_transaction {
   category: updateTransaction_updateTransaction_transaction_category | null;
   company: updateTransaction_updateTransaction_transaction_company | null;
   card: updateTransaction_updateTransaction_transaction_card | null;
-  skipSummary: boolean;
+  skipSummaryFlag: number;
   creator: updateTransaction_updateTransaction_transaction_creator | null;
   note: string | null;
   timeCreated: any;

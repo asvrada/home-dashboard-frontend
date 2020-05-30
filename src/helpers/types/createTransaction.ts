@@ -90,7 +90,7 @@ export interface createTransaction_createTransaction_transaction {
   category: createTransaction_createTransaction_transaction_category | null;
   company: createTransaction_createTransaction_transaction_company | null;
   card: createTransaction_createTransaction_transaction_card | null;
-  skipSummary: boolean;
+  skipSummaryFlag: number;
   creator: createTransaction_createTransaction_transaction_creator | null;
   note: string | null;
   timeCreated: any;

@@ -20,7 +20,7 @@ export interface CreateTransactionInput {
   company?: string | null;
   card?: string | null;
   note?: string | null;
-  skipSummary?: boolean | null;
+  skipSummaryFlag?: number | null;
   timeCreated?: string | null;
   clientMutationId?: string | null;
 }
@@ -32,7 +32,7 @@ export interface UpdateTransactionInput {
   company?: string | null;
   card?: string | null;
   note?: string | null;
-  skipSummary?: boolean | null;
+  skipSummaryFlag?: number | null;
   timeCreated?: string | null;
   clientMutationId?: string | null;
 }
