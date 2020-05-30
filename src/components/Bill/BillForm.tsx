@@ -1,4 +1,5 @@
 import React from "react";
+import { Redirect } from "react-router-dom";
 import { ErrorMessage, Field, Formik } from 'formik';
 
 import { client, CREATE_TRANSACTION, GET_ENUMS, UPDATE_TRANSACTION } from "../../helpers/graphql";
@@ -11,7 +12,7 @@ import { CreateTransactionInput, EnumEnumCategory, UpdateTransactionInput } from
 import { getCurrentISOString } from "../../helpers/utils";
 
 type Props = {
-  transaction?: getBill_bill
+  transaction?: getBill_bill,
 }
 
 class BillForm extends React.Component<Props> {
@@ -23,7 +24,8 @@ class BillForm extends React.Component<Props> {
       category: getEnums_enums_edges_node[],
       company: getEnums_enums_edges_node[],
       card: getEnums_enums_edges_node[]
-    }
+    },
+    redirectURL?: string
   } = {
     enums: {
       category: [],
@@ -89,16 +91,16 @@ class BillForm extends React.Component<Props> {
   handleSubmit(value: any) {
     const transaction = this.prepareValueBeforeSubmit(value);
 
-    console.log(transaction);
+    console.log("Query", transaction);
 
     const mutation = this.isCreate ? CREATE_TRANSACTION : UPDATE_TRANSACTION;
 
-    client.mutate({
+    return client.mutate({
       mutation: mutation,
       variables: {
         input: transaction
       }
-    }).then((res) => console.log(res));
+    });
   }
 
   componentDidMount(): void {
@@ -145,6 +147,10 @@ class BillForm extends React.Component<Props> {
   }
 
   render() {
+    if (this.state.redirectURL) {
+      return <Redirect to={this.state.redirectURL} />;
+    }
+
     const optionsCategory = [<option key="default" value={"null"}>-------</option>]
       .concat(this.state.enums.category.map((obj) =>
         <option key={obj.id} value={obj.id}>{obj.name}</option>
@@ -166,19 +172,29 @@ class BillForm extends React.Component<Props> {
         <Formik
           initialValues={this.transaction}
           onSubmit={(values, {setSubmitting}) => {
-            this.handleSubmit(values);
-            setSubmitting(false);
+            this.handleSubmit(values).then(res => {
+              console.log("Response", res);
+              let id = '/';
+              if (this.isCreate) {
+                id = res.data.createTransaction.transaction.id;
+              } else {
+                id = res.data.updateTransaction.transaction.id;
+              }
+
+              setSubmitting(false);
+
+              this.setState({redirectURL: `/detail/${id}/`});
+            });
           }}
         >
           {({
-              values,
+              // values,
               // errors,
               // touched,
               // handleChange,
               // handleBlur,
               handleSubmit,
               isSubmitting,
-              /* and other goodies */
             }) => (
             <form onSubmit={handleSubmit}>
 

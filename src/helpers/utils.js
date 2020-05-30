@@ -80,20 +80,6 @@ function DateTime({ time }) {
   );
 }
 
-function NaturalCurrency({ amount }) {
-  amount = Math.abs(amount);
-  const strAmount = formatCurrency(amount);
-
-  return (
-    <div className="amount">
-      <span className="dollar-sign">$</span>
-      <span>{strAmount[0]}</span>
-      <span>.</span>
-      <span className="amount-decimal">{strAmount[1]}</span>
-    </div>
-  );
-}
-
 function convertDate(str_datetime) {
   const day = new Date(str_datetime);
   return [day.getFullYear(), day.getMonth() + 1, day.getDate()];
@@ -228,7 +214,6 @@ export {
   formatCurrency,
   getColor,
   DateTime,
-  NaturalCurrency,
   convertDate,
   insertDate,
   getMonth, getDate, getDay, getDaysLeft,

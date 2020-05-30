@@ -8,7 +8,21 @@ import className from "classnames";
 import CompanyAndCard from "./CompanyAndCard";
 import Category from "./Category";
 
-import { NaturalCurrency } from "../../../helpers/utils";
+import { formatCurrency } from "../../../helpers/utils";
+
+function NaturalCurrency({ amount }) {
+  amount = Math.abs(amount);
+  const strAmount = formatCurrency(amount);
+
+  return (
+    <div className="amount">
+      <span className="dollar-sign">$</span>
+      <span>{strAmount[0]}</span>
+      <span>.</span>
+      <span className="amount-decimal">{strAmount[1]}</span>
+    </div>
+  );
+}
 
 /**
  * Display a single entry of log

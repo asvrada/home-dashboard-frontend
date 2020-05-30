@@ -24,8 +24,10 @@ function BillDetail() {
       variables: {
         id: id
       }
-      // todo: redirect to homepage
-    }).then(ret => console.log(ret));
+    }).then(res => {
+      console.log("Response", res);
+      history.push("/");
+    });
   };
 
   return (

@@ -5,15 +5,8 @@
   .TimeDate {
 
     #day-date {
-
       > div {
         padding: 0;
-      }
-
-      #day {
-      }
-
-      #date {
       }
     }
 
@@ -87,7 +80,6 @@
       .bar-separator-3 {
         left: 75%;
       }
-
 
       .bar-background {
         z-index: $z-index-default;
