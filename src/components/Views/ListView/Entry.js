@@ -23,7 +23,7 @@ function Entry({ isIncome, node }) {
     ? (
       <>
         <div className="h-separator" />
-        <div className="word-break">- {node.note}</div>
+        <div className="word-break">{isIncome ? '+' : '-'} {node.note}</div>
       </>
     )
     : null;
