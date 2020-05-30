@@ -25,7 +25,22 @@ function Summary() {
   });
 
   // Generate <BudgetGadget>
-  let componentBudgetGadget = <span>Loading...</span>;
+  let componentBudgetGadget = (
+    <Row style={{
+      height: "86px",
+    }}>
+      <Col>
+        <span style={{
+          display: "inline-block",
+          height: "100%",
+          "verticalAlign": "middle",
+        }} />
+        <span style={{
+          display: "inline-block"
+        }}>Loading...</span>
+      </Col>
+    </Row>)
+  ;
   if (objSummary) {
     componentBudgetGadget = <BudgetGadget obj={objSummary} />;
   }
