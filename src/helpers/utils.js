@@ -57,10 +57,7 @@ function getColor(config, percentage) {
 }
 
 function formatCurrency(amount) {
-  return amount
-    .toFixed(2)
-    .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")
-    .split(".");
+  return amount.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,").split(".");
 
 }
 
@@ -209,6 +206,10 @@ function getCurrentISOString() {
   return (new Date()).toISOString();
 }
 
+function booleanToInt(flag) {
+  return flag ? 1 : 0;
+}
+
 export {
   isDevEnv,
   formatCurrency,
@@ -217,5 +218,6 @@ export {
   convertDate,
   insertDate,
   getMonth, getDate, getDay, getDaysLeft,
-  getCurrentISOString
+  getCurrentISOString,
+  booleanToInt
 };

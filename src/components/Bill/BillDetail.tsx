@@ -42,6 +42,7 @@ function BillDetail() {
         <p>{bill.company && bill.company.name}</p>
         <p>{bill.card && bill.card.name}</p>
         <p>{bill.note}</p>
+        <p>{bill.skipSummaryFlag}</p>
         <p>{bill.timeCreated}</p>
 
         <div>

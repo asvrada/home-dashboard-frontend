@@ -8,15 +8,57 @@ import { getBill_bill } from "../../helpers/types/getBill";
 // eslint-disable-next-line no-unused-vars
 import { getEnums_enums_edges_node } from "../../helpers/types/getEnums";
 // eslint-disable-next-line no-unused-vars
-import { CreateTransactionInput, EnumEnumCategory, UpdateTransactionInput } from "../../types/graphql-global-types";
-import { getCurrentISOString } from "../../helpers/utils";
+import { EnumEnumCategory } from "../../types/graphql-global-types";
+import { booleanToInt, getCurrentISOString } from "../../helpers/utils";
 
-type Props = {
-  transaction?: getBill_bill,
+const getIDorNull = (obj: any) => {
+  if (obj === undefined || obj === null) {
+    return null;
+  }
+  return obj.id;
+};
+
+interface Props {
+  transaction?: getBill_bill
+}
+
+// Type of object sent to GraphQL
+interface Payload {
+  id?: string,
+  amount: number;
+  category?: string | null,
+  company?: string | null,
+  card?: string | null,
+  note?: string | null,
+  skipSummaryFlag?: number | null,
+  timeCreated?: string | null,
+}
+
+interface FormValue {
+  amount: number;
+  category: string | null,
+  company: string | null,
+  card: string | null,
+  note: string,
+  isSkipBudget: boolean,
+  isSkipTotal: boolean,
+  timeCreated: string,
 }
 
 class BillForm extends React.Component<Props> {
-  transaction: CreateTransactionInput | UpdateTransactionInput | {} = {};
+  formValue: FormValue = {
+    amount: 0,
+    note: '',
+    category: null,
+    company: null,
+    card: null,
+    // _______x
+    isSkipBudget: false,
+    // ______x_
+    isSkipTotal: false,
+    // todo: creator
+    timeCreated: getCurrentISOString()
+  };
   isCreate = true;
 
   state: {
@@ -25,7 +67,8 @@ class BillForm extends React.Component<Props> {
       company: getEnums_enums_edges_node[],
       card: getEnums_enums_edges_node[]
     },
-    redirectURL?: string
+    redirectURL?: string,
+    idToUpdate?: string
   } = {
     enums: {
       category: [],
@@ -39,41 +82,41 @@ class BillForm extends React.Component<Props> {
 
     this.isCreate = props.transaction === undefined;
 
-    const getIDorNull = (obj: any) => {
-      if (obj === undefined || obj === null) {
-        return null;
-      }
-      return obj.id;
-    };
-
-    if (this.isCreate) {
-      this.transaction = {
-        amount: 0,
-        category: null,
-        company: null,
-        card: null,
-        note: "",
-        skipSummaryFlag: 0,
-        timeCreated: getCurrentISOString()
-      }
-    } else {
+    // Is a update form
+    if (!this.isCreate) {
       const payload = props.transaction!;
+
+      // store id of object to update
+      this.state.idToUpdate = payload.id;
+
       // convert type Payload to Input
-      this.transaction = {
-        id: payload.id,
+      this.formValue = {
         amount: payload.amount,
         category: getIDorNull(payload.category),
         company: getIDorNull(payload.company),
         card: getIDorNull(payload.card),
-        note: payload.note,
-        skipSummaryFlag: payload.skipSummaryFlag,
+        note: payload.note === undefined ? '' : (payload.note || ''),
+        isSkipBudget: !!(payload.skipSummaryFlag & 1),
+        isSkipTotal: !!(payload.skipSummaryFlag & 2),
         timeCreated: payload.timeCreated
       };
     }
   }
 
-  prepareValueBeforeSubmit(transaction: any) {
-    const input = {...transaction};
+  prepareValueBeforeSubmit(values: FormValue) {
+
+    const skipSummaryFlag: number = booleanToInt(values.isSkipBudget) | (booleanToInt(values.isSkipTotal) * 2);
+
+    let input: Payload = {
+      id: this.state.idToUpdate,
+      amount: values.amount,
+      category: values.category,
+      company: values.company,
+      card: values.card,
+      note: values.note,
+      skipSummaryFlag: skipSummaryFlag,
+      timeCreated: values.timeCreated
+    };
 
     if (input.category === 'null' || input.category === null) {
       input.category = undefined;
@@ -88,17 +131,17 @@ class BillForm extends React.Component<Props> {
     return input;
   }
 
-  handleSubmit(value: any) {
-    const transaction = this.prepareValueBeforeSubmit(value);
+  handleSubmit(value: FormValue) {
+    const payload: Payload = this.prepareValueBeforeSubmit(value);
 
-    console.log("Query", transaction);
+    console.log("Query", payload);
 
     const mutation = this.isCreate ? CREATE_TRANSACTION : UPDATE_TRANSACTION;
 
     return client.mutate({
       mutation: mutation,
       variables: {
-        input: transaction
+        input: payload
       }
     });
   }
@@ -170,11 +213,12 @@ class BillForm extends React.Component<Props> {
     return (
       <div>
         <Formik
-          initialValues={this.transaction}
-          onSubmit={(values, {setSubmitting}) => {
+          initialValues={this.formValue}
+          onSubmit={(values: FormValue, {setSubmitting}) => {
             this.handleSubmit(values).then(res => {
               console.log("Response", res);
-              let id = '/';
+
+              let id: string;
               if (this.isCreate) {
                 id = res.data.createTransaction.transaction.id;
               } else {
@@ -188,7 +232,7 @@ class BillForm extends React.Component<Props> {
           }}
         >
           {({
-              // values,
+              values,
               // errors,
               // touched,
               // handleChange,
@@ -226,8 +270,14 @@ class BillForm extends React.Component<Props> {
               <ErrorMessage name="note" component="div" />
               <br />
 
-              <label>Skip Summary Flag</label>
-              <Field type="number" name="skipSummaryFlag" />
+              <label className="cursor-pointer" htmlFor="idSkipBudget">Don&lsquo;t count in Budget</label>
+              <Field id="idSkipBudget" name="isSkipBudget" component="input" type="checkbox"
+                     checked={(values as { isSkipBudget: boolean }).isSkipBudget} />
+              <br />
+
+              <label className="cursor-pointer" htmlFor="idSkipTotal">Don&lsquo;t count in Total</label>
+              <Field id="idSkipTotal" name="isSkipTotal" component="input" type="checkbox"
+                     checked={(values as { isSkipTotal: boolean }).isSkipTotal} />
               <br />
 
               <label>Time Created</label>
