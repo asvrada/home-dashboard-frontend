@@ -210,6 +210,29 @@ function booleanToInt(flag) {
   return flag ? 1 : 0;
 }
 
+/**
+ * isSkipBudget: ____x
+ * isSkipTotal: ___x_
+ * @param flag: number
+ * @returns {{isSkipTotal: boolean, isSkipBudget: boolean}}
+ */
+function unpackSummaryFlag(flag) {
+  return {
+    isSkipBudget: !!(flag & 1),
+    isSkipTotal: !!(flag & 2),
+  };
+}
+
+/**
+ *
+ * @param isSkipBudget: boolean
+ * @param isSkipTotal: boolean
+ * @returns {number}
+ */
+function packSummaryFlag(isSkipBudget, isSkipTotal) {
+  return booleanToInt(isSkipBudget) | (booleanToInt(isSkipTotal) * 2);
+}
+
 export {
   isDevEnv,
   formatCurrency,
@@ -219,5 +242,6 @@ export {
   insertDate,
   getMonth, getDate, getDay, getDaysLeft,
   getCurrentISOString,
-  booleanToInt
+  booleanToInt,
+  packSummaryFlag, unpackSummaryFlag,
 };

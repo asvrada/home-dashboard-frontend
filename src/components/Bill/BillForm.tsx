@@ -9,7 +9,7 @@ import { getBill_bill } from "../../helpers/types/getBill";
 import { getEnums_enums_edges_node } from "../../helpers/types/getEnums";
 // eslint-disable-next-line no-unused-vars
 import { EnumEnumCategory } from "../../types/graphql-global-types";
-import { booleanToInt, getCurrentISOString } from "../../helpers/utils";
+import { booleanToInt, getCurrentISOString, packSummaryFlag, unpackSummaryFlag } from "../../helpers/utils";
 
 const getIDorNull = (obj: any) => {
   if (obj === undefined || obj === null) {
@@ -52,9 +52,8 @@ class BillForm extends React.Component<Props> {
     category: null,
     company: null,
     card: null,
-    // _______x
+
     isSkipBudget: false,
-    // ______x_
     isSkipTotal: false,
     // todo: creator
     timeCreated: getCurrentISOString()
@@ -96,16 +95,15 @@ class BillForm extends React.Component<Props> {
         company: getIDorNull(payload.company),
         card: getIDorNull(payload.card),
         note: payload.note === undefined ? '' : (payload.note || ''),
-        isSkipBudget: !!(payload.skipSummaryFlag & 1),
-        isSkipTotal: !!(payload.skipSummaryFlag & 2),
-        timeCreated: payload.timeCreated
+        timeCreated: payload.timeCreated,
+        ...unpackSummaryFlag(payload.skipSummaryFlag)
       };
     }
   }
 
   prepareValueBeforeSubmit(values: FormValue) {
 
-    const skipSummaryFlag: number = booleanToInt(values.isSkipBudget) | (booleanToInt(values.isSkipTotal) * 2);
+    const skipSummaryFlag: number = packSummaryFlag(values.isSkipBudget, values.isSkipTotal);
 
     let input: Payload = {
       id: this.state.idToUpdate,

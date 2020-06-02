@@ -8,6 +8,7 @@ import Wrapper from "./Wrappers";
 import { getBill_bill } from "../../helpers/types/getBill";
 import { useMutation } from "@apollo/react-hooks";
 import { DELETE } from "../../helpers/graphql";
+import { unpackSummaryFlag } from "../../helpers/utils";
 
 /**
  * For Retrieve and Delete
@@ -15,9 +16,10 @@ import { DELETE } from "../../helpers/graphql";
 function BillDetail() {
   const bill = useContext(BillContext) as getBill_bill;
   const history = useHistory();
-  const id = bill.id;
-
   const [deleteObj] = useMutation(DELETE);
+
+  const id: string = bill.id;
+  const {isSkipBudget, isSkipTotal} = unpackSummaryFlag(bill.skipSummaryFlag);
 
   const handleDelete = () => {
     deleteObj({
@@ -29,6 +31,14 @@ function BillDetail() {
       history.push("/");
     });
   };
+
+  const componentSummaryFlag = (
+    <div>
+      <p>Summary Flag:</p>
+      {isSkipBudget ? <p>Skip Budget</p> : null}
+      {isSkipTotal ? <p>Skip Total</p> : null}
+    </div>
+  );
 
   return (
     <Wrapper>
@@ -42,7 +52,9 @@ function BillDetail() {
         <p>{bill.company && bill.company.name}</p>
         <p>{bill.card && bill.card.name}</p>
         <p>{bill.note}</p>
-        <p>{bill.skipSummaryFlag}</p>
+
+        {componentSummaryFlag}
+
         <p>{bill.timeCreated}</p>
 
         <div>
