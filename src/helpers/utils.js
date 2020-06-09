@@ -243,7 +243,7 @@ function getBaseURL() {
 }
 
 export {
-  isDevEnv, getBaseURL
+  isDevEnv, getBaseURL,
   formatCurrency,
   getColor,
   DateTime,
