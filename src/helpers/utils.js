@@ -233,8 +233,17 @@ function packSummaryFlag(isSkipBudget, isSkipTotal) {
   return booleanToInt(isSkipBudget) | (booleanToInt(isSkipTotal) * 2);
 }
 
+function getBaseURL() {
+  if (isDevEnv()) {
+    // mock server URL
+    return "http://localhost:4444/";
+  } else {
+    return "https://api.kksk.biz/dashboard/";
+  }
+}
+
 export {
-  isDevEnv,
+  isDevEnv, getBaseURL
   formatCurrency,
   getColor,
   DateTime,

@@ -1,7 +1,8 @@
 import ApolloClient, { gql } from "apollo-boost";
+import { getBaseURL } from "./utils";
 
 const client = new ApolloClient({
-  uri: "https://api.kksk.biz/dashboard/graphql/",
+  uri: getBaseURL() + "graphql/",
 });
 
 ///////////

@@ -20,19 +20,13 @@ import BillUpdate from "./components/Bill/BillUpdate";
 import BillCreate from "./components/Bill/BillCreate";
 import { TransactionProvider } from "./components/Bill/BillContext";
 
-import { isDevEnv } from "./helpers/utils";
+import { getBaseURL } from "./helpers/utils";
 import { client } from "./helpers/graphql";
 
 import "./App.scss";
 
 function App() {
-  let baseURL = null;
-  if (isDevEnv()) {
-    // mock server URL
-    baseURL = "http://localhost:4444";
-  } else {
-    baseURL = "https://api.kksk.biz/dashboard/";
-  }
+  let baseURL = getBaseURL();
 
   return (
     <Router>
