@@ -31,7 +31,7 @@ function App() {
     // mock server URL
     baseURL = "http://localhost:4444";
   } else {
-    baseURL = "http://localhost:4444";
+    baseURL = "https://api.kksk.biz";
   }
 
   return (
