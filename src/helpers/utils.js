@@ -91,6 +91,10 @@ function insertDate(edges) {
     return a[0] === b[0] && a[1] === b[1] && a[2] === b[2];
   }
 
+  if (edges.length === 0) {
+    return edges;
+  }
+
   const today = new Date();
   let newEdges = [];
 
