@@ -9,7 +9,7 @@ import { getBill_bill } from "../../helpers/types/getBill";
 import { getEnums_enums_edges_node } from "../../helpers/types/getEnums";
 // eslint-disable-next-line no-unused-vars
 import { EnumEnumCategory } from "../../types/graphql-global-types";
-import { booleanToInt, getCurrentISOString, packSummaryFlag, unpackSummaryFlag } from "../../helpers/utils";
+import { getCurrentISOString, packSummaryFlag, unpackSummaryFlag } from "../../helpers/utils";
 
 const getIDorNull = (obj: any) => {
   if (obj === undefined || obj === null) {

@@ -19,11 +19,14 @@ import BillDetail from "./components/Bill/BillDetail";
 import BillUpdate from "./components/Bill/BillUpdate";
 import BillCreate from "./components/Bill/BillCreate";
 import { TransactionProvider } from "./components/Bill/BillContext";
+import { UserProvider } from "./components/User/UserContext";
 
 import { getBaseURL } from "./helpers/utils";
 import { client } from "./helpers/graphql";
 
 import "./App.scss";
+import Login from "./components/User/Login";
+import User from "./components/User/User";
 
 function App() {
   let baseURL = getBaseURL();
@@ -33,42 +36,60 @@ function App() {
       <ApolloProvider client={client}>
         <RestfulProvider base={baseURL}>
 
-          <Switch>
-            {/* Create */}
-            <Route exact path="/detail/new">
-              <BillCreate />
-            </Route>
+          <UserProvider>
 
-            {/* Update ID */}
-            <Route path="/detail/:id/edit">
-              <TransactionProvider>
-                <BillUpdate />
-              </TransactionProvider>
-            </Route>
+            <Switch>
+              {/* Bill Detail pages */}
+              {/* Create */}
+              <Route exact path="/detail/new">
+                <BillCreate />
+              </Route>
 
-            {/* Retrieve/Delete ID */}
-            <Route path="/detail/:id">
-              <TransactionProvider>
-                <BillDetail />
-              </TransactionProvider>
-            </Route>
+              {/* Update ID */}
+              <Route path="/detail/:id/edit">
+                <TransactionProvider>
+                  <BillUpdate />
+                </TransactionProvider>
+              </Route>
 
-            <Route path="/detail">
-              <Redirect to="/detail/new" />
-            </Route>
+              {/* Retrieve/Delete ID */}
+              <Route path="/detail/:id">
+                <TransactionProvider>
+                  <BillDetail />
+                </TransactionProvider>
+              </Route>
 
-            <Route path="/">
-              <Container className="App" fluid>
-                <Summary />
+              <Route path="/detail">
+                <Redirect to="/detail/new" />
+              </Route>
 
-                <Row id="graph-container">
-                  <ListView />
-                  <PieChart />
-                </Row>
+              {/* User related */}
+              <Route path="/login/">
+                <Login />
+              </Route>
 
-              </Container>
-            </Route>
-          </Switch>
+              <Route path="/logout/">
+                <div>/logout/</div>
+              </Route>
+
+              <Route path="/user/">
+                <User />
+              </Route>
+
+              <Route path="/">
+                <Container className="App" fluid>
+                  <Summary />
+
+                  <Row id="graph-container">
+                    <ListView />
+                    <PieChart />
+                  </Row>
+
+                </Container>
+              </Route>
+            </Switch>
+
+          </UserProvider>
 
         </RestfulProvider>
       </ApolloProvider>
