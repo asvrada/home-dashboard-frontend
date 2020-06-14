@@ -242,7 +242,7 @@ function getBaseURL() {
     // mock server URL
     return "http://localhost:4444/";
   } else {
-    return "https://api.kksk.biz/dashboard/";
+    return "https://api.kksk.biz/";
   }
 }
 
