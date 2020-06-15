@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
@@ -9,6 +9,7 @@ import BudgetGadget from "./BudgetGadget";
 import TimeDate from "./TimeDate";
 
 import "./Summary.scss";
+import { UserContext } from "../User/UserContext";
 
 /**
  * Display a summary of information at the top of window
@@ -19,9 +20,12 @@ import "./Summary.scss";
  *  Add new entry
  */
 function Summary() {
+  const userContext = useContext(UserContext);
+
   // GET summary/
   const { data: objSummary } = useGet({
-    path: "summary/",
+    path: "/bill/summary/",
+    requestOptions: { headers: { Authorization: `Bearer ${userContext.tokenAccess}` } },
   });
 
   // Generate <BudgetGadget>
@@ -36,7 +40,7 @@ function Summary() {
           "verticalAlign": "middle",
         }} />
         <span style={{
-          display: "inline-block"
+          display: "inline-block",
         }}>Loading...</span>
       </Col>
     </Row>)

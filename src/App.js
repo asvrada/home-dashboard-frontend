@@ -27,9 +27,10 @@ import { client } from "./helpers/graphql";
 import "./App.scss";
 import Login from "./components/User/Login";
 import User from "./components/User/User";
+import UserNavbar from "./components/User/Navbar";
 
 function App() {
-  let baseURL = getBaseURL();
+  const baseURL = getBaseURL();
 
   return (
     <Router>
@@ -64,16 +65,23 @@ function App() {
               </Route>
 
               {/* User related */}
+
               <Route path="/login/">
-                <Login />
+                <UserNavbar>
+                  <Login />
+                </UserNavbar>
               </Route>
 
               <Route path="/logout/">
-                <div>/logout/</div>
+                <UserNavbar>
+                  <div>/logout/</div>
+                </UserNavbar>
               </Route>
 
               <Route path="/user/">
-                <User />
+                <UserNavbar>
+                  <User />
+                </UserNavbar>
               </Route>
 
               <Route path="/">

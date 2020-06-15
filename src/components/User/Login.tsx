@@ -21,8 +21,7 @@ function Login() {
         password
       }).then(res => {
         console.log(res);
-        userContext.updateTokenAccess(res.access);
-        userContext.updateTokenRefresh(res.refresh);
+        userContext.login(res.access, res.refresh);
       });
     }}>Login</button>
 

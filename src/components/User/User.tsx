@@ -4,9 +4,12 @@ import { IUserContext, UserContext } from "./UserContext";
 function User() {
   const user = useContext(UserContext) as IUserContext;
 
-  console.log(user);
-
-  return <div>/user/</div>;
+  return (
+    <div>
+      <div>{user.tokenAccess}</div>
+      <div>{user.tokenRefresh}</div>
+    </div>
+  );
 }
 
 export default User;
