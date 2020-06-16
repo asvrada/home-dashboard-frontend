@@ -15,7 +15,7 @@ function UserNavbar({children}: any) {
           <Nav.Link href="/user/">user</Nav.Link>
         </Nav>
 
-        {userContext.tokenAccess}
+        {userContext.getAccessToken()}
       </Navbar>
 
       {children}

@@ -25,7 +25,7 @@ function Summary() {
   // GET summary/
   const { data: objSummary } = useGet({
     path: "/bill/summary/",
-    requestOptions: { headers: { Authorization: `Bearer ${userContext.tokenAccess}` } },
+    requestOptions: { headers: { Authorization: `Bearer ${userContext.getAccessToken()}` } },
   });
 
   // Generate <BudgetGadget>

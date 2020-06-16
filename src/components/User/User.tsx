@@ -6,8 +6,7 @@ function User() {
 
   return (
     <div>
-      <div>{user.tokenAccess}</div>
-      <div>{user.tokenRefresh}</div>
+      <div>{user.getAccessToken()}</div>
     </div>
   );
 }
