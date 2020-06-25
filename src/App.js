@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   BrowserRouter as Router,
   Redirect,
@@ -18,89 +18,94 @@ import ListView from "./components/Views/ListView/ListView";
 import BillDetail from "./components/Bill/BillDetail";
 import BillUpdate from "./components/Bill/BillUpdate";
 import BillCreate from "./components/Bill/BillCreate";
-import { TransactionProvider } from "./components/Bill/BillContext";
-import { UserProvider } from "./components/User/UserContext";
-
-import { getBaseURL } from "./helpers/utils";
-import { client } from "./helpers/graphql";
-
-import "./App.scss";
 import Login from "./components/User/Login";
+import { UserContext, UserProvider } from "./components/User/UserContext";
 import User from "./components/User/User";
 import UserNavbar from "./components/User/Navbar";
+import { TransactionProvider } from "./components/Bill/BillContext";
+import { getBaseURL } from "./helpers/utils";
+import { getApolloClient } from "./helpers/graphql";
+
+import "./App.scss";
+
+function ApolloWrapper() {
+  const userContext = useContext(UserContext);
+
+  return (
+    <ApolloProvider client={getApolloClient(userContext.getAccessToken())}>
+
+      <Switch>
+        {/* Bill Detail pages */}
+        {/* Create */}
+        <Route exact path="/detail/new">
+          <BillCreate />
+        </Route>
+
+        {/* Update ID */}
+        <Route path="/detail/:id/edit">
+          <TransactionProvider>
+            <BillUpdate />
+          </TransactionProvider>
+        </Route>
+
+        {/* Retrieve/Delete ID */}
+        <Route path="/detail/:id">
+          <TransactionProvider>
+            <BillDetail />
+          </TransactionProvider>
+        </Route>
+
+        <Route path="/detail">
+          <Redirect to="/detail/new" />
+        </Route>
+
+        {/* User related */}
+
+        <Route path="/login/">
+          <UserNavbar>
+            <Login />
+          </UserNavbar>
+        </Route>
+
+        <Route path="/logout/">
+          <UserNavbar>
+            <div>/logout/</div>
+          </UserNavbar>
+        </Route>
+
+        <Route path="/user/">
+          <UserNavbar>
+            <User />
+          </UserNavbar>
+        </Route>
+
+        <Route path="/">
+          <Container className="App" fluid>
+            <Summary />
+
+            <Row id="graph-container">
+              <ListView />
+              <PieChart />
+            </Row>
+
+          </Container>
+        </Route>
+      </Switch>
+
+    </ApolloProvider>
+  );
+}
 
 function App() {
   const baseURL = getBaseURL();
 
   return (
     <Router>
-      <ApolloProvider client={client}>
-        <RestfulProvider base={baseURL}>
-
-          <UserProvider>
-
-            <Switch>
-              {/* Bill Detail pages */}
-              {/* Create */}
-              <Route exact path="/detail/new">
-                <BillCreate />
-              </Route>
-
-              {/* Update ID */}
-              <Route path="/detail/:id/edit">
-                <TransactionProvider>
-                  <BillUpdate />
-                </TransactionProvider>
-              </Route>
-
-              {/* Retrieve/Delete ID */}
-              <Route path="/detail/:id">
-                <TransactionProvider>
-                  <BillDetail />
-                </TransactionProvider>
-              </Route>
-
-              <Route path="/detail">
-                <Redirect to="/detail/new" />
-              </Route>
-
-              {/* User related */}
-
-              <Route path="/login/">
-                <UserNavbar>
-                  <Login />
-                </UserNavbar>
-              </Route>
-
-              <Route path="/logout/">
-                <UserNavbar>
-                  <div>/logout/</div>
-                </UserNavbar>
-              </Route>
-
-              <Route path="/user/">
-                <UserNavbar>
-                  <User />
-                </UserNavbar>
-              </Route>
-
-              <Route path="/">
-                <Container className="App" fluid>
-                  <Summary />
-
-                  <Row id="graph-container">
-                    <ListView />
-                    <PieChart />
-                  </Row>
-
-                </Container>
-              </Route>
-            </Switch>
-
-          </UserProvider>
-
-        </RestfulProvider>
-      </ApolloProvider>
+      <RestfulProvider base={baseURL}>
+        <UserProvider>
+          <ApolloWrapper />
+        </UserProvider>
+      </RestfulProvider>
     </Router>
   );
 }

@@ -1,9 +1,32 @@
-import ApolloClient, { gql } from "apollo-boost";
+import { gql } from "apollo-boost";
+import { ApolloClient } from 'apollo-client';
+import { setContext } from 'apollo-link-context';
+import { createHttpLink } from 'apollo-link-http';
+import { InMemoryCache } from 'apollo-cache-inmemory';
 import { getBaseURL } from "./utils";
 
-const client = new ApolloClient({
-  uri: getBaseURL() + "graphql/",
-});
+
+function getApolloClient(token: string) {
+  const httpLink = createHttpLink({
+    uri: getBaseURL() + "graphql/"
+  });
+
+  const authLink = setContext((_, {headers}) => {
+    // return the headers to the context so httpLink can read them
+    return {
+      headers: {
+        ...headers,
+        authorization: token ? `Bearer ${token}` : "",
+      }
+    }
+  });
+
+  return new ApolloClient({
+    link: authLink.concat(httpLink),
+    cache: new InMemoryCache()
+  });
+}
+
 
 ///////////
 // Query //
@@ -213,7 +236,7 @@ mutation deleteObj($id: ID!) {
 `;
 
 export {
-  client,
+  getApolloClient,
   GET_TRANSACTIONS, GET_BILL, GET_ENUMS,
   CREATE_TRANSACTION,
   UPDATE_TRANSACTION,

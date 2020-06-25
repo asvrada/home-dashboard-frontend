@@ -2,7 +2,7 @@ import React from "react";
 import { Redirect } from "react-router-dom";
 import { ErrorMessage, Field, Formik } from 'formik';
 
-import { client, CREATE_TRANSACTION, GET_ENUMS, UPDATE_TRANSACTION } from "../../helpers/graphql";
+import { CREATE_TRANSACTION, GET_ENUMS, UPDATE_TRANSACTION } from "../../helpers/graphql";
 // eslint-disable-next-line no-unused-vars
 import { getBill_bill } from "../../helpers/types/getBill";
 // eslint-disable-next-line no-unused-vars
@@ -10,6 +10,8 @@ import { getEnums_enums_edges_node } from "../../helpers/types/getEnums";
 // eslint-disable-next-line no-unused-vars
 import { EnumEnumCategory } from "../../types/graphql-global-types";
 import { getCurrentISOString, packSummaryFlag, unpackSummaryFlag } from "../../helpers/utils";
+
+const client:any = undefined;
 
 const getIDorNull = (obj: any) => {
   if (obj === undefined || obj === null) {
@@ -148,7 +150,7 @@ class BillForm extends React.Component<Props> {
     // Query all the enums
     client.query({
       query: GET_ENUMS
-    }).then(({data}) => {
+    }).then(({data}: any) => {
       let listCategory: getEnums_enums_edges_node[] = [];
       let listCompany: getEnums_enums_edges_node[] = [];
       let listCard: getEnums_enums_edges_node[] = [];
@@ -213,7 +215,7 @@ class BillForm extends React.Component<Props> {
         <Formik
           initialValues={this.formValue}
           onSubmit={(values: FormValue, {setSubmitting}) => {
-            this.handleSubmit(values).then(res => {
+            this.handleSubmit(values).then((res: any) => {
               console.log("Response", res);
 
               let id: string;
