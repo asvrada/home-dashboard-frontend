@@ -21,7 +21,7 @@ const UserContext = React.createContext({});
  * 2. login(username, password)
  * 3. logout()
  */
-class UserProvider extends React.Component {
+class UserProvider extends React.Component<Props> {
 
   state: {
     tokenAccess: null | string,
@@ -112,8 +112,8 @@ class UserProvider extends React.Component {
       body: JSON.stringify({
         token: token
       })
-    }).then(res => {
-      console.log("apiTokenVerify success", res);
+    }).then(() => {
+      console.log("apiTokenVerify success");
       return true;
     }).catch(err => {
       console.log("apiTokenVerify failed", err);
