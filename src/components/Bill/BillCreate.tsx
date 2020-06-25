@@ -1,7 +1,7 @@
 import React from "react";
 
 import Wrapper from "./Wrappers";
-import BillForm from "./BillForm";
+import BillFormFunc from "./BillFormFunc";
 
 /**
  * For Create
@@ -9,7 +9,7 @@ import BillForm from "./BillForm";
 function BillCreate() {
   return (
     <Wrapper>
-      <BillForm transaction={undefined} />
+      <BillFormFunc transaction={undefined} />
     </Wrapper>
   );
 }

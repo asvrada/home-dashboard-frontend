@@ -2,9 +2,9 @@ import React, { useContext } from "react";
 // @ts-ignore
 
 import { BillContext } from "./BillContext";
-import BillForm from "./BillForm";
 import Wrapper from "./Wrappers";
 import { getBill_bill } from "../../helpers/types/getBill";
+import BillFormFunc from "./BillFormFunc";
 
 /**
  * For Update
@@ -14,7 +14,7 @@ function BillUpdate() {
 
   return (
     <Wrapper>
-      <BillForm transaction={bill} />
+      <BillFormFunc transaction={bill} />
     </Wrapper>
   );
 }

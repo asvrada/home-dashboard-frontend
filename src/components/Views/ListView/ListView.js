@@ -35,7 +35,7 @@ function ListView() {
   }
 
   if (error) {
-    console.log(error);
+    console.log("ListView Error");
     return <Wrapper>
       <div className="Entry text-center">An error occurred</div>
     </Wrapper>;
