@@ -49,7 +49,7 @@ function Entry({ isIncome, node }) {
 
   return (
     <Row className={classname}
-         onClick={() => history.push(`/detail/${node.id}`)}>
+         onClick={() => history.push(`/detail/${node.id}/`)}>
       {componentCategory}
 
       {/* Amount Note */}

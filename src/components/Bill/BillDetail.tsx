@@ -62,7 +62,7 @@ function BillDetail() {
                   onClick={() => history.push(`/`)}>Back</Button>
           <Button className="m-1"
                   onClick={() => history.push(
-                    `/detail/${id}/edit`)}>Edit</Button>
+                    `/detail/${id}/edit/`)}>Edit</Button>
           <Button className="m-1"
                   onClick={handleDelete}>Delete</Button>
         </div>

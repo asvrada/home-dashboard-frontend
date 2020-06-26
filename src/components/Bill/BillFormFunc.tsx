@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Redirect } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { useApolloClient, useQuery } from "@apollo/react-hooks";
 import { ErrorMessage, Field, Formik } from "formik";
 
@@ -39,8 +39,7 @@ interface FormValue {
 
 interface State {
   idToUpdate?: string,
-  isCreate: boolean,
-  redirectURL: string
+  isCreate: boolean
 }
 
 const getIDorNull = (obj: any) => {
@@ -145,17 +144,13 @@ function generateInitialFormValue({transaction}: Props) {
 }
 
 function BillFormFunc({transaction}: Props) {
+  const history = useHistory();
   const client = useApolloClient();
   const [state, setState]: [State, any] = useState({
     idToUpdate: transaction?.id,
-    isCreate: transaction === undefined,
-    redirectURL: ""
+    isCreate: transaction === undefined
   });
   const {loading, error, data} = useQuery(GET_ENUMS);
-
-  if (state.redirectURL) {
-    return <Redirect to={state.redirectURL} />;
-  }
 
   if (loading) {
     return (
@@ -212,10 +207,8 @@ function BillFormFunc({transaction}: Props) {
 
             setSubmitting(false);
 
-            setState({
-              ...state,
-              redirectURL: `/detail/${id}/`
-            });
+            // Redirect
+            history.replace(`/detail/${id}/`);
           });
         }}
       >
