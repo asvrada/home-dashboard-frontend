@@ -3,6 +3,7 @@ import { IUserContext, UserContext } from "./UserContext";
 import GoogleLogin from "react-google-login";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import { isDevEnv } from "../../helpers/utils";
 
 
 function handleGoogleLoginSuccess(res: any, userContext: IUserContext) {
@@ -18,8 +19,8 @@ function Login() {
   const email = "noojeff@gmail.com";
   const password = "4980";
 
-  return (
-    <Col>
+  const componentEmailLogin = (
+    <>
       <Row>
         <h4>Login with username and password</h4>
       </Row>
@@ -30,6 +31,12 @@ function Login() {
         }}>Login
         </button>
       </Row>
+    </>
+  );
+
+  return (
+    <Col>
+      {isDevEnv() ? componentEmailLogin : null}
 
       <Row>
         <h4>Login with Google Account</h4>

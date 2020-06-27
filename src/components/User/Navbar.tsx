@@ -11,6 +11,8 @@ function UserNavbar({children}: any) {
     <>
       <Navbar bg="light" expand="lg">
         <Nav className="mr-auto">
+          <Nav.Link href="/">Main Page</Nav.Link>
+
           <Nav.Link href="/login/">Login</Nav.Link>
 
           <Nav.Link onClick={() => {
