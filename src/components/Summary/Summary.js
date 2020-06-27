@@ -24,7 +24,7 @@ function Summary() {
 
   // GET summary/
   const { data: objSummary } = useGet({
-    path: "/bill/summary/",
+    path: "/restful/summary/",
     requestOptions: { headers: { Authorization: `Bearer ${userContext.getAccessToken()}` } },
   });
 

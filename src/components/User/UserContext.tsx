@@ -8,7 +8,8 @@ interface Props {
 interface IUserContext {
   isAuthenticated: boolean,
   getAccessToken: () => string,
-  login: (username: string, password: string) => void
+  login: (email: string, password: string) => void
+  googleLogin: (token: string) => void
   logout: () => void
 }
 
@@ -82,16 +83,33 @@ class UserProvider extends React.Component<Props> {
     this.clearLocalStorage();
   }
 
-  apiTokenAuth(username: string, password: string) {
-    fetch(this.base + "token-auth/", {
+  apiGoogleLogin(token: string) {
+    fetch(this.base + "google-login/", {
       method: "POST",
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({
-        username: username,
+        "token": token
+      })
+    }).then(res => res.json())
+      .then(data => this.handleLoginSuccessful(data.access, data.refresh))
+      .catch(err => {
+        console.log(err);
+      });
+  }
+
+  apiTokenAuth(email: string, password: string) {
+    fetch(this.base + "email-login/", {
+      method: "POST",
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        email: email,
         password: password
       })
     }).then(res => res.json())
-      .then(data => this.handleLoginSuccessful(data.access, data.refresh));
+      .then(data => this.handleLoginSuccessful(data.access, data.refresh))
+      .catch(err => {
+        console.log(err);
+      });
   }
 
   apiTokenRefresh(refresh: string) {
@@ -140,8 +158,12 @@ class UserProvider extends React.Component<Props> {
     return this.state.tokenAccess;
   }
 
-  contextLogin(username: string, password: string) {
-    this.apiTokenAuth(username, password);
+  contextLogin(email: string, password: string) {
+    this.apiTokenAuth(email, password);
+  }
+
+  contextGoogleLogin(token: string) {
+    this.apiGoogleLogin(token);
   }
 
   render() {
@@ -149,7 +171,8 @@ class UserProvider extends React.Component<Props> {
       <UserContext.Provider value={{
         isAuthenticated: this.state.isAuthenticated,
         getAccessToken: () => this.contextGetAccessToken(),
-        login: (username: string, password: string) => this.contextLogin(username, password),
+        login: (email: string, password: string) => this.contextLogin(email, password),
+        googleLogin: (token: string) => this.contextGoogleLogin(token),
         logout: () => this.handleLogout()
       }}>
         {this.props.children}

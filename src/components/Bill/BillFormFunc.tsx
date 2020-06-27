@@ -146,6 +146,7 @@ function generateInitialFormValue({transaction}: Props) {
 function BillFormFunc({transaction}: Props) {
   const history = useHistory();
   const client = useApolloClient();
+  // eslint-disable-next-line no-unused-vars
   const [state, setState]: [State, any] = useState({
     idToUpdate: transaction?.id,
     isCreate: transaction === undefined
