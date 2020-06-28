@@ -25,7 +25,7 @@ function Summary() {
   // GET summary/
   const { data: objSummary } = useGet({
     path: "/restful/summary/",
-    requestOptions: { headers: { Authorization: `Bearer ${userContext.getAccessToken()}` } },
+    requestOptions: { headers: { Authorization: `Bearer ${userContext.accessToken}` } },
   });
 
   // Generate <BudgetGadget>

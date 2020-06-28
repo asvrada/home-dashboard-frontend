@@ -6,7 +6,8 @@ function User() {
 
   return (
     <div>
-      <div>{user.getAccessToken()}</div>
+      <div>{user.userAuthState}</div>
+      <div>{user.accessToken}</div>
     </div>
   );
 }

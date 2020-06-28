@@ -1,47 +1,75 @@
 import React from "react";
 import { getBaseURL } from "../../helpers/utils";
 
+enum UserAuthState {
+  UNAUTHED = "Unauthorized",
+  AUTHED = "Authorized",
+  PROCESSING = "Processing"
+}
+
 interface Props {
   children: any
 }
 
 interface IUserContext {
-  isAuthenticated: boolean,
-  getAccessToken: () => string,
-  login: (email: string, password: string) => void
+  userAuthState: UserAuthState,
+  accessToken?: string,
+  emailLogin: (email: string, password: string) => void
   googleLogin: (token: string) => void
   logout: () => void
 }
 
 const UserContext = React.createContext({});
 
-/**
- * Context exposes:
- * 1. getAccessToken()
- * 2. isAuthenticated
- * 2. login(username, password)
- * 3. logout()
- */
 class UserProvider extends React.Component<Props> {
 
   state: {
-    tokenAccess: null | string,
+    tokenAccess?: string,
     tokenRefresh: null | string,
-    isAuthenticated: boolean
+    userAuthState: UserAuthState
   } = {
-    tokenAccess: null,
+    tokenAccess: undefined,
     tokenRefresh: null,
-    isAuthenticated: false
+    userAuthState: UserAuthState.UNAUTHED
   };
 
   base = getBaseURL();
 
+  /////////////////////
+  // React component //
+  // Life Cycle      //
+  ////////////////////
   componentDidMount(): void {
-    console.log("componentDidMount - loadLocalStorage");
+    console.log("Dashboard - componentDidMount - loadLocalStorage");
 
+    this.handleAppStartup();
+  }
+
+  componentWillUnmount(): void {
+    console.log("Dashboard - componentWillUnmount - setLocalStorage");
+
+    this.setLocalStorage();
+  }
+
+  ////////////
+  // helper //
+  ///////////
+  setAuthState(state: UserAuthState) {
+    this.setState({
+      ...this.state,
+      userAuthState: state
+    });
+  }
+
+  ///////////
+  // Logic //
+  ///////////
+  handleAppStartup() {
+    this.setAuthState(UserAuthState.PROCESSING);
     const tokenRefresh = this.loadLocalStorage();
 
     if (tokenRefresh === null) {
+      this.setAuthState(UserAuthState.UNAUTHED);
       return;
     }
 
@@ -57,17 +85,11 @@ class UserProvider extends React.Component<Props> {
     });
   }
 
-  componentWillUnmount(): void {
-    console.log("componentWillUnmount - setLocalStorage");
-
-    this.setLocalStorage();
-  }
-
   handleLoginSuccessful(access: string, refresh: string) {
     this.setState({
       tokenAccess: access,
       tokenRefresh: refresh,
-      isAuthenticated: true
+      userAuthState: UserAuthState.AUTHED
     });
 
     this.setLocalStorage();
@@ -77,12 +99,15 @@ class UserProvider extends React.Component<Props> {
     this.setState({
       tokenAccess: null,
       tokenRefresh: null,
-      isAuthenticated: false
+      userAuthState: UserAuthState.UNAUTHED
     });
 
     this.clearLocalStorage();
   }
 
+  //////////////
+  // API call //
+  //////////////
   apiGoogleLogin(token: string) {
     fetch(this.base + "google-login/", {
       method: "POST",
@@ -97,7 +122,7 @@ class UserProvider extends React.Component<Props> {
       });
   }
 
-  apiTokenAuth(email: string, password: string) {
+  apiEmailLogin(email: string, password: string) {
     fetch(this.base + "email-login/", {
       method: "POST",
       headers: {'Content-Type': 'application/json'},
@@ -139,6 +164,9 @@ class UserProvider extends React.Component<Props> {
     });
   }
 
+  //////////////////
+  // localStorage //
+  //////////////////
   setLocalStorage() {
     // only store if user logged in
     if (this.state.tokenRefresh) {
@@ -154,12 +182,11 @@ class UserProvider extends React.Component<Props> {
     localStorage.clear();
   }
 
-  contextGetAccessToken() {
-    return this.state.tokenAccess;
-  }
-
-  contextLogin(email: string, password: string) {
-    this.apiTokenAuth(email, password);
+  /////////////////
+  // UserContext //
+  /////////////////
+  contextEmailLogin(email: string, password: string) {
+    this.apiEmailLogin(email, password);
   }
 
   contextGoogleLogin(token: string) {
@@ -167,14 +194,16 @@ class UserProvider extends React.Component<Props> {
   }
 
   render() {
+    const userContext: IUserContext = {
+      userAuthState: this.state.userAuthState,
+      accessToken: this.state.tokenAccess,
+      emailLogin: (email: string, password: string) => this.contextEmailLogin(email, password),
+      googleLogin: (token: string) => this.contextGoogleLogin(token),
+      logout: () => this.handleLogout()
+    };
+
     return (
-      <UserContext.Provider value={{
-        isAuthenticated: this.state.isAuthenticated,
-        getAccessToken: () => this.contextGetAccessToken(),
-        login: (email: string, password: string) => this.contextLogin(email, password),
-        googleLogin: (token: string) => this.contextGoogleLogin(token),
-        logout: () => this.handleLogout()
-      }}>
+      <UserContext.Provider value={userContext}>
         {this.props.children}
       </UserContext.Provider>
     )

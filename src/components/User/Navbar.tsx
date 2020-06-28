@@ -22,7 +22,7 @@ function UserNavbar({children}: any) {
           <Nav.Link href="/user/">user</Nav.Link>
         </Nav>
 
-        {userContext.getAccessToken()}
+        {userContext.userAuthState}
       </Navbar>
 
       <Container fluid>

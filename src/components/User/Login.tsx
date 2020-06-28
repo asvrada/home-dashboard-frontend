@@ -27,7 +27,7 @@ function Login() {
 
       <Row>
         <button onClick={() => {
-          userContext.login(email, password)
+          userContext.emailLogin(email, password)
         }}>Login
         </button>
       </Row>

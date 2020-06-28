@@ -19,7 +19,10 @@ import BillDetail from "./components/Bill/BillDetail";
 import BillUpdate from "./components/Bill/BillUpdate";
 import BillCreate from "./components/Bill/BillCreate";
 import Login from "./components/User/Login";
-import { UserContext, UserProvider } from "./components/User/UserContext";
+import {
+  UserContext,
+  UserProvider,
+} from "./components/User/UserContext";
 import User from "./components/User/User";
 import UserNavbar from "./components/User/Navbar";
 import { TransactionProvider } from "./components/Bill/BillContext";
@@ -32,7 +35,7 @@ function ApolloWrapper() {
   const userContext = useContext(UserContext);
 
   return (
-    <ApolloProvider client={getApolloClient(userContext.getAccessToken())}>
+    <ApolloProvider client={getApolloClient(userContext.accessToken)}>
 
       <Switch>
         {/* Bill Detail pages */}
