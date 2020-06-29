@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { useHistory, Redirect } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
 import GoogleLogin from "react-google-login";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -8,6 +8,9 @@ import Button from "react-bootstrap/Button";
 import { IUserContext, UserAuthState, UserContext } from "./UserContext";
 import { isDevEnv } from "../../helpers/utils";
 
+interface Props {
+  redirect?: string
+}
 
 function handleGoogleLoginSuccess(res: any, userContext: IUserContext) {
   console.log("Google User object", res);
@@ -16,12 +19,14 @@ function handleGoogleLoginSuccess(res: any, userContext: IUserContext) {
   userContext.googleLogin(token);
 }
 
-function Login() {
+function Login({redirect}: Props) {
+  redirect = redirect ? redirect : "/";
+
   const userContext = useContext(UserContext) as IUserContext;
   const history = useHistory();
 
   if (userContext.userAuthState === UserAuthState.AUTHED) {
-    return <Redirect to={"/"} />;
+    return <Redirect to={redirect} />;
   }
 
   const email = "noojeff@gmail.com";
@@ -35,11 +40,12 @@ function Login() {
 
       <Row>
         <Button onClick={() => {
-          userContext.emailLogin(email, password).then(res => {
-            if (res) {
-              history.push("/");
-            }
-          });
+          userContext.emailLogin(email, password)
+            .then(res => {
+              if (res) {
+                history.push(redirect!);
+              }
+            });
         }}>
           Login
         </Button>
@@ -66,7 +72,6 @@ function Login() {
 
           }}
           cookiePolicy={'single_host_origin'}
-          // responseType={"code"}
         />
       </Row>
     </Col>

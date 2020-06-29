@@ -25,12 +25,12 @@ class UserProvider extends React.Component<Props> {
 
   state: {
     tokenAccess?: string,
-    tokenRefresh: null | string,
+    tokenRefresh?: string,
     userAuthState: UserAuthState
   } = {
     tokenAccess: undefined,
-    tokenRefresh: null,
-    userAuthState: UserAuthState.UNAUTHED
+    tokenRefresh: undefined,
+    userAuthState: UserAuthState.PROCESSING
   };
 
   base = getBaseURL();
@@ -40,7 +40,7 @@ class UserProvider extends React.Component<Props> {
   // Life Cycle      //
   ////////////////////
   componentDidMount(): void {
-    console.log("Dashboard - componentDidMount - loadLocalStorage");
+    console.log("Dashboard - UserProvider - componentDidMount - loadLocalStorage");
 
     this.handleAppStartup();
   }
@@ -65,7 +65,6 @@ class UserProvider extends React.Component<Props> {
   // Logic //
   ///////////
   handleAppStartup() {
-    this.setAuthState(UserAuthState.PROCESSING);
     const tokenRefresh = this.loadLocalStorage();
 
     if (tokenRefresh === null) {
@@ -99,8 +98,8 @@ class UserProvider extends React.Component<Props> {
 
   handleLogout() {
     this.setState({
-      tokenAccess: null,
-      tokenRefresh: null,
+      tokenAccess: undefined,
+      tokenRefresh: undefined,
       userAuthState: UserAuthState.UNAUTHED
     });
 

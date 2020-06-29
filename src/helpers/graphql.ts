@@ -6,7 +6,7 @@ import { InMemoryCache } from 'apollo-cache-inmemory';
 import { getBaseURL } from "./utils";
 
 
-function getApolloClient(token: string) {
+function getApolloClient(token?: string) {
   const httpLink = createHttpLink({
     uri: getBaseURL() + "graphql/"
   });
