@@ -6,7 +6,6 @@ import { useGet } from "restful-react";
 
 import AddEntryGadget from "./AddEntryGadget";
 import BudgetGadget from "./BudgetGadget";
-import TimeDate from "./TimeDate";
 
 import "./Summary.scss";
 import { UserContext } from "../User/UserContext";
@@ -51,10 +50,6 @@ function Summary() {
 
   return (
     <Row className="Summary text-center align-items-center">
-      <Col className="d-none d-lg-block" md={2}>
-        <TimeDate />
-      </Col>
-
       <Col>
         {componentBudgetGadget}
       </Col>

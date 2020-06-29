@@ -14,7 +14,7 @@ interface Props {
 interface IUserContext {
   userAuthState: UserAuthState,
   accessToken?: string,
-  emailLogin: (email: string, password: string) => void
+  emailLogin: (email: string, password: string) => Promise<Boolean>
   googleLogin: (token: string) => void
   logout: () => void
 }
@@ -93,6 +93,8 @@ class UserProvider extends React.Component<Props> {
     });
 
     this.setLocalStorage();
+
+    return true;
   }
 
   handleLogout() {
@@ -123,7 +125,7 @@ class UserProvider extends React.Component<Props> {
   }
 
   apiEmailLogin(email: string, password: string) {
-    fetch(this.base + "email-login/", {
+    return fetch(this.base + "email-login/", {
       method: "POST",
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({
@@ -134,6 +136,7 @@ class UserProvider extends React.Component<Props> {
       .then(data => this.handleLoginSuccessful(data.access, data.refresh))
       .catch(err => {
         console.log(err);
+        return false;
       });
   }
 
@@ -156,10 +159,10 @@ class UserProvider extends React.Component<Props> {
         token: token
       })
     }).then(() => {
-      console.log("apiTokenVerify success");
+      console.log("Dashboard - apiTokenVerify success");
       return true;
     }).catch(err => {
-      console.log("apiTokenVerify failed", err);
+      console.log("Dashboard - apiTokenVerify failed", err);
       return false;
     });
   }
@@ -186,7 +189,7 @@ class UserProvider extends React.Component<Props> {
   // UserContext //
   /////////////////
   contextEmailLogin(email: string, password: string) {
-    this.apiEmailLogin(email, password);
+    return this.apiEmailLogin(email, password);
   }
 
   contextGoogleLogin(token: string) {
@@ -211,4 +214,4 @@ class UserProvider extends React.Component<Props> {
 }
 
 export type { IUserContext };
-export { UserProvider, UserContext };
+export { UserProvider, UserContext,UserAuthState };

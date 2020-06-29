@@ -2,6 +2,7 @@ import React from "react";
 
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
+import SiteHeader from "../SiteHeader";
 
 type Props = {
   children: any
@@ -9,11 +10,14 @@ type Props = {
 
 function Wrapper({children}: Props) {
   return (
-    <Container>
-      <Row>
-        {children}
-      </Row>
-    </Container>
+    <div>
+      <SiteHeader />
+      <Container>
+        <Row>
+          {children}
+        </Row>
+      </Container>
+    </div>
   );
 }
 

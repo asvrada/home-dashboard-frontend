@@ -1,8 +1,11 @@
 import React, { useContext } from "react";
-import { IUserContext, UserContext } from "./UserContext";
+import { useHistory, Redirect } from "react-router-dom";
 import GoogleLogin from "react-google-login";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import Button from "react-bootstrap/Button";
+
+import { IUserContext, UserAuthState, UserContext } from "./UserContext";
 import { isDevEnv } from "../../helpers/utils";
 
 
@@ -15,6 +18,11 @@ function handleGoogleLoginSuccess(res: any, userContext: IUserContext) {
 
 function Login() {
   const userContext = useContext(UserContext) as IUserContext;
+  const history = useHistory();
+
+  if (userContext.userAuthState === UserAuthState.AUTHED) {
+    return <Redirect to={"/"} />;
+  }
 
   const email = "noojeff@gmail.com";
   const password = "4980";
@@ -26,10 +34,15 @@ function Login() {
       </Row>
 
       <Row>
-        <button onClick={() => {
-          userContext.emailLogin(email, password)
-        }}>Login
-        </button>
+        <Button onClick={() => {
+          userContext.emailLogin(email, password).then(res => {
+            if (res) {
+              history.push("/");
+            }
+          });
+        }}>
+          Login
+        </Button>
       </Row>
     </>
   );

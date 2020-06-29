@@ -8,28 +8,19 @@ import {
 
 import { RestfulProvider } from "restful-react";
 import { ApolloProvider } from "@apollo/react-hooks";
-
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-
-import Summary from "./components/Summary/Summary";
-import PieChart from "./components/Views/PieChart/PieChart";
-import ListView from "./components/Views/ListView/ListView";
 import BillDetail from "./components/Bill/BillDetail";
 import BillUpdate from "./components/Bill/BillUpdate";
 import BillCreate from "./components/Bill/BillCreate";
 import Login from "./components/User/Login";
-import {
-  UserContext,
-  UserProvider,
-} from "./components/User/UserContext";
-import User from "./components/User/User";
-import UserNavbar from "./components/User/Navbar";
+import { UserContext, UserProvider } from "./components/User/UserContext";
+import UserProfile from "./components/User/UserProfile";
+import SiteHeader from "./components/SiteHeader";
 import { TransactionProvider } from "./components/Bill/BillContext";
 import { getBaseURL } from "./helpers/utils";
 import { getApolloClient } from "./helpers/graphql";
 
 import "./App.scss";
+import LandingPage from "./components/LandingPage";
 
 function ApolloWrapper() {
   const userContext = useContext(UserContext);
@@ -63,35 +54,20 @@ function ApolloWrapper() {
         </Route>
 
         {/* User related */}
-
         <Route path="/login/">
-          <UserNavbar>
+          <SiteHeader>
             <Login />
-          </UserNavbar>
+          </SiteHeader>
         </Route>
 
-        <Route path="/logout/">
-          <UserNavbar>
-            <div>/logout/</div>
-          </UserNavbar>
-        </Route>
-
-        <Route path="/user/">
-          <UserNavbar>
-            <User />
-          </UserNavbar>
+        <Route path="/profile/">
+          <SiteHeader>
+            <UserProfile />
+          </SiteHeader>
         </Route>
 
         <Route path="/">
-          <Container className="App" fluid>
-            <Summary />
-
-            <Row id="graph-container">
-              <ListView />
-              <PieChart />
-            </Row>
-
-          </Container>
+          <LandingPage/>
         </Route>
       </Switch>
 

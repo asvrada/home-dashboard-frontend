@@ -1,10 +1,10 @@
 import React, { useContext } from "react";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import { IUserContext, UserContext } from "./UserContext";
+import { IUserContext, UserContext } from "./User/UserContext";
 import Container from "react-bootstrap/Container";
 
-function UserNavbar({children}: any) {
+function SiteHeader({children}: any) {
   const userContext = useContext(UserContext) as IUserContext;
 
   return (
@@ -15,11 +15,7 @@ function UserNavbar({children}: any) {
 
           <Nav.Link href="/login/">Login</Nav.Link>
 
-          <Nav.Link onClick={() => {
-            userContext.logout()
-          }}>Logout</Nav.Link>
-
-          <Nav.Link href="/user/">user</Nav.Link>
+          <Nav.Link href="/profile/">Profile</Nav.Link>
         </Nav>
 
         {userContext.userAuthState}
@@ -32,4 +28,4 @@ function UserNavbar({children}: any) {
   );
 }
 
-export default UserNavbar;
+export default SiteHeader;

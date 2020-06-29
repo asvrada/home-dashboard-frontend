@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useHistory } from "react-router-dom";
 import { useApolloClient, useQuery } from "@apollo/react-hooks";
 import { ErrorMessage, Field, Formik } from "formik";
@@ -146,12 +146,12 @@ function generateInitialFormValue({transaction}: Props) {
 function BillFormFunc({transaction}: Props) {
   const history = useHistory();
   const client = useApolloClient();
-  // eslint-disable-next-line no-unused-vars
-  const [state, setState]: [State, any] = useState({
+  const {loading, error, data} = useQuery(GET_ENUMS);
+
+  const state: State = {
     idToUpdate: transaction?.id,
     isCreate: transaction === undefined
-  });
-  const {loading, error, data} = useQuery(GET_ENUMS);
+  };
 
   if (loading) {
     return (
