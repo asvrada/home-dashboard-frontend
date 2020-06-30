@@ -17,7 +17,7 @@ function LandingPage() {
   const userContext = useContext(UserContext) as IUserContext;
 
   if (userContext.userAuthState === UserAuthState.PROCESSING) {
-    return <div>Processing</div>;
+    return <div>Authenticating...</div>;
   }
 
   if (userContext.userAuthState === UserAuthState.AUTHED) {
@@ -32,7 +32,7 @@ function LandingPage() {
     <WrapperContainer>
       <Col>
         <Row>
-          <h1>Login to see your personalize dashboard</h1>
+          <h1>Login to see your personalized dashboard</h1>
         </Row>
         <Row>
           <LinkContainer to="/login/">
