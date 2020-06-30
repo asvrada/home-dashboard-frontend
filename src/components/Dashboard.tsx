@@ -1,6 +1,4 @@
 import React from "react";
-
-import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 
 import Summary from "./Summary/Summary";
@@ -10,15 +8,14 @@ import PieChart from "./Views/PieChart/PieChart";
 
 function Dashboard() {
   return (
-    <Container className="Dashboard" fluid>
+    <Row className="Dashboard fake-col">
       <Summary />
 
       <Row id="graph-container">
         <ListView />
         <PieChart />
       </Row>
-
-    </Container>
+    </Row>
   );
 
 }

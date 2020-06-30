@@ -1,24 +1,23 @@
+import { ApolloProvider } from "@apollo/react-hooks";
 import React, { useContext } from "react";
 import { BrowserRouter as Router, Redirect, Route, Switch, } from "react-router-dom";
 
 import { RestfulProvider } from "restful-react";
-import { ApolloProvider } from "@apollo/react-hooks";
 
-import PrivateRoute from "./components/PrivateRoute";
+import "./App.scss";
+import { TransactionProvider } from "./components/Bill/BillContext";
+import BillCreate from "./components/Bill/BillCreate";
 
 import BillDetail from "./components/Bill/BillDetail";
 import BillUpdate from "./components/Bill/BillUpdate";
-import BillCreate from "./components/Bill/BillCreate";
+import LandingPage from "./components/LandingPage";
+
+import PrivateRoute from "./components/PrivateRoute";
 import Login from "./components/User/Login";
 import { IUserContext, UserContext, UserProvider } from "./components/User/UserContext";
 import UserProfile from "./components/User/UserProfile";
-import SiteHeader from "./components/SiteHeader";
-import LandingPage from "./components/LandingPage";
-import { TransactionProvider } from "./components/Bill/BillContext";
-import { getBaseURL } from "./helpers/utils";
 import { getApolloClient } from "./helpers/graphql";
-
-import "./App.scss";
+import { getBaseURL } from "./helpers/utils";
 
 function LoginPage({location}: any) {
   // from.pathname
@@ -27,9 +26,7 @@ function LoginPage({location}: any) {
   console.log(pathname);
 
   return (
-    <SiteHeader>
-      <Login redirect={pathname} />
-    </SiteHeader>
+    <Login redirect={pathname} />
   );
 }
 
@@ -68,9 +65,7 @@ function ApolloWrapper() {
         <Route path="/login/" component={LoginPage} />
 
         <PrivateRoute path="/profile/">
-          <SiteHeader>
-            <UserProfile />
-          </SiteHeader>
+          <UserProfile />
         </PrivateRoute>
 
         <Route path="/" component={LandingPage} />

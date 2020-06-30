@@ -1,15 +1,18 @@
 import React from "react";
 import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
+import SiteHeader from "../SiteHeader";
 
 
-function WrapperContainer({children}: any) {
+function WrapperContainer({fluid, children}: any) {
   return (
-    <Container>
-      <Row className={"justify-content-around"}>
+    <div className="App">
+      <SiteHeader />
+
+      <Container fluid={!!fluid}>
         {children}
-      </Row>
-    </Container>
+      </Container>
+    </div>
+
   );
 }
 

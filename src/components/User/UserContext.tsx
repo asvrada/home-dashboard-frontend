@@ -14,8 +14,8 @@ interface Props {
 interface IUserContext {
   userAuthState: UserAuthState,
   accessToken?: string,
-  emailLogin: (email: string, password: string) => Promise<Boolean>
-  googleLogin: (token: string) => void
+  emailLogin: (email: string, password: string) => Promise<boolean>,
+  googleLogin: (token: string) => Promise<boolean>,
   logout: () => void
 }
 
@@ -110,7 +110,7 @@ class UserProvider extends React.Component<Props> {
   // API call //
   //////////////
   apiGoogleLogin(token: string) {
-    fetch(this.base + "google-login/", {
+    return fetch(this.base + "google-login/", {
       method: "POST",
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({
@@ -120,6 +120,7 @@ class UserProvider extends React.Component<Props> {
       .then(data => this.handleLoginSuccessful(data.access, data.refresh))
       .catch(err => {
         console.log(err);
+        return false;
       });
   }
 
@@ -192,7 +193,7 @@ class UserProvider extends React.Component<Props> {
   }
 
   contextGoogleLogin(token: string) {
-    this.apiGoogleLogin(token);
+    return this.apiGoogleLogin(token);
   }
 
   render() {

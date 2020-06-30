@@ -18,7 +18,7 @@ function handleGoogleLoginSuccess(res: any, userContext: IUserContext) {
   console.log("Google User object", res);
   const token = res.getAuthResponse().id_token;
 
-  userContext.googleLogin(token);
+  return userContext.googleLogin(token);
 }
 
 function Login({redirect}: Props) {
@@ -34,6 +34,12 @@ function Login({redirect}: Props) {
   const email = "noojeff@gmail.com";
   const password = "4980";
 
+  const handleLoginResponse = (succeed: boolean) => {
+    if (succeed) {
+      history.push(redirect!);
+    }
+  };
+
   const componentEmailLogin = (
     <>
       <Row>
@@ -43,11 +49,7 @@ function Login({redirect}: Props) {
       <Row>
         <Button onClick={() => {
           userContext.emailLogin(email, password)
-            .then(res => {
-              if (res) {
-                history.push(redirect!);
-              }
-            });
+            .then(handleLoginResponse);
         }}>
           Login
         </Button>
@@ -57,27 +59,29 @@ function Login({redirect}: Props) {
 
   return (
     <WrapperContainer>
-      <Col>
-        {isDevEnv() ? componentEmailLogin : null}
+      <Row>
+        <Col>
+          {isDevEnv() ? componentEmailLogin : null}
 
-        <Row>
-          <h4>Login with Google Account</h4>
-        </Row>
+          <Row>
+            <h4>Login with Google Account</h4>
+          </Row>
 
-        <Row>
-          <GoogleLogin
-            clientId="508553430731-3sjtbacd9na89labelop5fii28h4ho1m.apps.googleusercontent.com"
-            buttonText="Login"
-            onSuccess={(res: any) => {
-              handleGoogleLoginSuccess(res, userContext);
-            }}
-            onFailure={(res: any) => {
-
-            }}
-            cookiePolicy={'single_host_origin'}
-          />
-        </Row>
-      </Col>
+          <Row>
+            <GoogleLogin
+              clientId="508553430731-3sjtbacd9na89labelop5fii28h4ho1m.apps.googleusercontent.com"
+              buttonText="Login"
+              onSuccess={(res: any) => {
+                handleGoogleLoginSuccess(res, userContext).then(handleLoginResponse);
+              }}
+              onFailure={(res: any) => {
+                console.log("Google login failed", res);
+              }}
+              cookiePolicy={'single_host_origin'}
+            />
+          </Row>
+        </Col>
+      </Row>
     </WrapperContainer>
   );
 }

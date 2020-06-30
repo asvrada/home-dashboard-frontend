@@ -1,13 +1,12 @@
 import React, { useContext } from "react";
-import { LinkContainer } from "react-router-bootstrap";
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
+import { LinkContainer } from "react-router-bootstrap";
+import Dashboard from "./Dashboard";
+import WrapperContainer from "./Layout/WrapperContainer";
 
 import { IUserContext, UserAuthState, UserContext } from "./User/UserContext";
-import Dashboard from "./Dashboard";
-import SiteHeader from "./SiteHeader";
 
 
 /**
@@ -23,31 +22,25 @@ function LandingPage() {
 
   if (userContext.userAuthState === UserAuthState.AUTHED) {
     return (
-      <div>
-        <SiteHeader />
+      <WrapperContainer fluid={true}>
         <Dashboard />
-      </div>
+      </WrapperContainer>
     );
   }
 
   return (
-    <div className="App">
-      <SiteHeader />
-      <Container>
+    <WrapperContainer>
+      <Col>
         <Row>
-          <Col>
-            <Row>
-              <h1>Login to see your personalize dashboard</h1>
-            </Row>
-            <Row>
-              <LinkContainer to="/">
-                <Button>Login</Button>
-              </LinkContainer>
-            </Row>
-          </Col>
+          <h1>Login to see your personalize dashboard</h1>
         </Row>
-      </Container>
-    </div>
+        <Row>
+          <LinkContainer to="/">
+            <Button>Login</Button>
+          </LinkContainer>
+        </Row>
+      </Col>
+    </WrapperContainer>
   );
 
 }
