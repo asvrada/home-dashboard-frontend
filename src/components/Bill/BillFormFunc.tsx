@@ -183,97 +183,95 @@ function BillFormFunc({transaction}: Props) {
     ));
 
   return (
-    <div>
-      <Formik
-        initialValues={generateInitialFormValue({transaction})}
-        onSubmit={(values: FormValue, {setSubmitting}) => {
-          const payload: Payload = prepareValueBeforeSubmit(values, state);
-          const mutation = state.isCreate ? CREATE_TRANSACTION : UPDATE_TRANSACTION;
+    <Formik
+      initialValues={generateInitialFormValue({transaction})}
+      onSubmit={(values: FormValue, {setSubmitting}) => {
+        const payload: Payload = prepareValueBeforeSubmit(values, state);
+        const mutation = state.isCreate ? CREATE_TRANSACTION : UPDATE_TRANSACTION;
 
-          console.log("Mutate", payload);
-          client.mutate({
-            mutation: mutation,
-            variables: {
-              input: payload
-            }
-          }).then((res: any) => {
-            console.log("Response", res);
+        console.log("Mutate", payload);
+        client.mutate({
+          mutation: mutation,
+          variables: {
+            input: payload
+          }
+        }).then((res: any) => {
+          console.log("Response", res);
 
-            let id: string;
-            if (state.isCreate) {
-              id = res.data.createTransaction.transaction.id;
-            } else {
-              id = res.data.updateTransaction.transaction.id;
-            }
+          let id: string;
+          if (state.isCreate) {
+            id = res.data.createTransaction.transaction.id;
+          } else {
+            id = res.data.updateTransaction.transaction.id;
+          }
 
-            setSubmitting(false);
+          setSubmitting(false);
 
-            // Redirect
-            history.replace(`/detail/${id}/`);
-          });
-        }}
-      >
-        {({
-            values,
-            // errors,
-            // touched,
-            // handleChange,
-            // handleBlur,
-            handleSubmit,
-            isSubmitting,
-          }) => (
-          <form onSubmit={handleSubmit}>
+          // Redirect
+          history.replace(`/detail/${id}/`);
+        });
+      }}
+    >
+      {({
+          values,
+          // errors,
+          // touched,
+          // handleChange,
+          // handleBlur,
+          handleSubmit,
+          isSubmitting,
+        }) => (
+        <form onSubmit={handleSubmit}>
 
-            <label>Amount</label>
-            <Field type="number" name="amount" />
-            <ErrorMessage name="amount" component="div" />
-            <br />
+          <label>Amount</label>
+          <Field type="number" name="amount" />
+          <ErrorMessage name="amount" component="div" />
+          <br />
 
-            <label>Category</label>
-            <Field component="select" name="category">
-              {optionsCategory}
-            </Field>
-            <br />
+          <label>Category</label>
+          <Field component="select" name="category">
+            {optionsCategory}
+          </Field>
+          <br />
 
-            <label>Company</label>
-            <Field component="select" name="company">
-              {optionsCompany}
-            </Field>
-            <br />
+          <label>Company</label>
+          <Field component="select" name="company">
+            {optionsCompany}
+          </Field>
+          <br />
 
-            <label>Card</label>
-            <Field component="select" name="card">
-              {optionsCard}
-            </Field>
-            <br />
+          <label>Card</label>
+          <Field component="select" name="card">
+            {optionsCard}
+          </Field>
+          <br />
 
-            <label>Note</label>
-            <Field type="text" name="note" />
-            <ErrorMessage name="note" component="div" />
-            <br />
+          <label>Note</label>
+          <Field type="text" name="note" />
+          <ErrorMessage name="note" component="div" />
+          <br />
 
-            <label className="cursor-pointer" htmlFor="idSkipBudget">Don&lsquo;t count in Budget</label>
-            <Field id="idSkipBudget" name="isSkipBudget" component="input" type="checkbox"
-                   checked={(values as { isSkipBudget: boolean }).isSkipBudget} />
-            <br />
+          <label className="cursor-pointer" htmlFor="idSkipBudget">Don&lsquo;t count in Budget</label>
+          <Field id="idSkipBudget" name="isSkipBudget" component="input" type="checkbox"
+                 checked={(values as { isSkipBudget: boolean }).isSkipBudget} />
+          <br />
 
-            <label className="cursor-pointer" htmlFor="idSkipTotal">Don&lsquo;t count in Total</label>
-            <Field id="idSkipTotal" name="isSkipTotal" component="input" type="checkbox"
-                   checked={(values as { isSkipTotal: boolean }).isSkipTotal} />
-            <br />
+          <label className="cursor-pointer" htmlFor="idSkipTotal">Don&lsquo;t count in Total</label>
+          <Field id="idSkipTotal" name="isSkipTotal" component="input" type="checkbox"
+                 checked={(values as { isSkipTotal: boolean }).isSkipTotal} />
+          <br />
 
-            <label>Time Created</label>
-            <Field type="text" name="timeCreated" />
-            <br />
+          <label>Time Created</label>
+          <Field type="text" name="timeCreated" />
+          <br />
 
-            <button type="submit" disabled={isSubmitting}>
-              Submit
-            </button>
+          <button type="submit" disabled={isSubmitting}>
+            Submit
+          </button>
 
-          </form>
-        )}
-      </Formik>
-    </div>
+        </form>
+      )}
+    </Formik>
   );
 }
 

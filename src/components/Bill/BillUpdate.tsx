@@ -1,10 +1,13 @@
 import React, { useContext } from "react";
-// @ts-ignore
+import Col from "react-bootstrap/Col";
 
 import { BillContext } from "./BillContext";
-import Wrapper from "./Wrappers";
-import { getBill_bill } from "../../helpers/types/getBill";
+import WrapperForm from "./WrapperForm";
 import BillFormFunc from "./BillFormFunc";
+
+import { getBill_bill } from "../../helpers/types/getBill";
+
+// @ts-ignore
 
 /**
  * For Update
@@ -13,9 +16,11 @@ function BillUpdate() {
   const bill = useContext(BillContext) as getBill_bill;
 
   return (
-    <Wrapper>
-      <BillFormFunc transaction={bill} />
-    </Wrapper>
+    <WrapperForm>
+      <Col>
+        <BillFormFunc transaction={bill} />
+      </Col>
+    </WrapperForm>
   );
 }
 

@@ -1,6 +1,8 @@
 import React, { useContext } from "react";
 import { IUserContext, UserAuthState, UserContext } from "./UserContext";
 import Button from "react-bootstrap/Button";
+import WrapperContainer from "../WrapperContainer";
+import Col from "react-bootstrap/Col";
 
 function UserProfile() {
   const userContext = useContext(UserContext) as IUserContext;
@@ -14,14 +16,15 @@ function UserProfile() {
   }
 
   return (
-    <div>
-      <div>{userContext.userAuthState}</div>
-      <div>{userContext.accessToken}</div>
+    <WrapperContainer>
+      <Col>
+        <div>{userContext.userAuthState}</div>
 
-      <Button onClick={() => {
-        userContext.logout()
-      }}>Logout</Button>
-    </div>
+        <Button onClick={() => {
+          userContext.logout()
+        }}>Logout</Button>
+      </Col>
+    </WrapperContainer>
   );
 }
 

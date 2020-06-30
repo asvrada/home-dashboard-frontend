@@ -1,6 +1,7 @@
 import React from "react";
+import Col from "react-bootstrap/Col";
 
-import Wrapper from "./Wrappers";
+import WrapperForm from "./WrapperForm";
 import BillFormFunc from "./BillFormFunc";
 
 /**
@@ -8,9 +9,11 @@ import BillFormFunc from "./BillFormFunc";
  */
 function BillCreate() {
   return (
-    <Wrapper>
-      <BillFormFunc transaction={undefined} />
-    </Wrapper>
+    <WrapperForm>
+      <Col>
+        <BillFormFunc transaction={undefined} />
+      </Col>
+    </WrapperForm>
   );
 }
 

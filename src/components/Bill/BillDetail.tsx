@@ -1,12 +1,13 @@
 import React, { useContext } from "react";
 import { useHistory } from "react-router-dom";
+import { useMutation } from "@apollo/react-hooks";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 
 import { BillContext } from "./BillContext";
-import Wrapper from "./Wrappers";
+import WrapperForm from "./WrapperForm";
+
 import { getBill_bill } from "../../helpers/types/getBill";
-import { useMutation } from "@apollo/react-hooks";
 import { DELETE } from "../../helpers/graphql";
 import { unpackSummaryFlag } from "../../helpers/utils";
 
@@ -41,7 +42,7 @@ function BillDetail() {
   );
 
   return (
-    <Wrapper>
+    <WrapperForm>
       <Col>
         <p>
           {bill.amount}
@@ -67,7 +68,7 @@ function BillDetail() {
                   onClick={handleDelete}>Delete</Button>
         </div>
       </Col>
-    </Wrapper>
+    </WrapperForm>
   );
 }
 

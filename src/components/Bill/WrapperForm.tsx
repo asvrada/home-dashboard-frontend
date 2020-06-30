@@ -8,17 +8,17 @@ type Props = {
   children: any
 }
 
-function Wrapper({children}: Props) {
+function WrapperForm({children}: Props) {
   return (
-    <div>
+    <>
       <SiteHeader />
       <Container>
         <Row>
           {children}
         </Row>
       </Container>
-    </div>
+    </>
   );
 }
 
-export default Wrapper;
+export default WrapperForm;

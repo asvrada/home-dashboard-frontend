@@ -7,6 +7,7 @@ import Button from "react-bootstrap/Button";
 
 import { IUserContext, UserAuthState, UserContext } from "./UserContext";
 import { isDevEnv } from "../../helpers/utils";
+import WrapperContainer from "../WrapperContainer";
 
 interface Props {
   redirect?: string
@@ -54,27 +55,31 @@ function Login({redirect}: Props) {
   );
 
   return (
-    <Col>
-      {isDevEnv() ? componentEmailLogin : null}
-
+    <WrapperContainer>
       <Row>
-        <h4>Login with Google Account</h4>
-      </Row>
+        <Col>
+          {isDevEnv() ? componentEmailLogin : null}
 
-      <Row>
-        <GoogleLogin
-          clientId="508553430731-3sjtbacd9na89labelop5fii28h4ho1m.apps.googleusercontent.com"
-          buttonText="Login"
-          onSuccess={(res: any) => {
-            handleGoogleLoginSuccess(res, userContext);
-          }}
-          onFailure={(res: any) => {
+          <Row>
+            <h4>Login with Google Account</h4>
+          </Row>
 
-          }}
-          cookiePolicy={'single_host_origin'}
-        />
+          <Row>
+            <GoogleLogin
+              clientId="508553430731-3sjtbacd9na89labelop5fii28h4ho1m.apps.googleusercontent.com"
+              buttonText="Login"
+              onSuccess={(res: any) => {
+                handleGoogleLoginSuccess(res, userContext);
+              }}
+              onFailure={(res: any) => {
+
+              }}
+              cookiePolicy={'single_host_origin'}
+            />
+          </Row>
+        </Col>
       </Row>
-    </Col>
+    </WrapperContainer>
   );
 }
 
