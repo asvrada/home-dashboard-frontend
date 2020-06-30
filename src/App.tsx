@@ -1,7 +1,6 @@
 import { ApolloProvider } from "@apollo/react-hooks";
 import React, { useContext } from "react";
 import { BrowserRouter as Router, Redirect, Route, Switch, } from "react-router-dom";
-import ReactGA from 'react-ga';
 import { RestfulProvider } from "restful-react";
 
 import "./App.scss";
@@ -83,8 +82,6 @@ function ApolloWrapper() {
 
 function App() {
   const baseURL = getBaseURL();
-  ReactGA.initialize('UA-114654492-5');
-  ReactGA.pageview(window.location.pathname + window.location.search);
 
   return (
     <Router>
