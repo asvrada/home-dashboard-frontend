@@ -12,7 +12,6 @@ function WrapperContainer({fluid, children}: any) {
         {children}
       </Container>
     </div>
-
   );
 }
 

@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
+import { LinkContainer } from "react-router-bootstrap";
 
 import WrapperContainer from "../Layout/WrapperContainer";
 import { IUserContext, UserAuthState, UserContext } from "./UserContext";
@@ -20,9 +21,19 @@ function UserProfile() {
   return (
     <WrapperContainer>
       <Row>
+        <div>{userContext.userAuthState}</div>
+      </Row>
+      <Row>
         <Col>
-          <div>{userContext.userAuthState}</div>
-
+          <LinkContainer to="/setting/">
+            <Button>
+              Change Budget
+            </Button>
+          </LinkContainer>
+        </Col>
+      </Row>
+      <Row>
+        <Col>
           <Button onClick={() => {
             userContext.logout()
           }}>Logout</Button>

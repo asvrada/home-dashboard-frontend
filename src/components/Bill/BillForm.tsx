@@ -143,7 +143,7 @@ function generateInitialFormValue({transaction}: Props) {
   return initialFormValue;
 }
 
-function BillFormFunc({transaction}: Props) {
+function BillForm({transaction}: Props) {
   const history = useHistory();
   const client = useApolloClient();
   const {loading, error, data} = useQuery(GET_ENUMS);
@@ -275,4 +275,4 @@ function BillFormFunc({transaction}: Props) {
   );
 }
 
-export default BillFormFunc;
+export default BillForm;

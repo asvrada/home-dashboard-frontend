@@ -2,7 +2,7 @@ import React from "react";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import WrapperContainer from "../Layout/WrapperContainer";
-import BillFormFunc from "./BillFormFunc";
+import BillForm from "./BillForm";
 
 /**
  * For Create
@@ -12,7 +12,7 @@ function BillCreate() {
     <WrapperContainer>
       <Row>
         <Col>
-          <BillFormFunc transaction={undefined} />
+          <BillForm transaction={undefined} />
         </Col>
       </Row>
     </WrapperContainer>

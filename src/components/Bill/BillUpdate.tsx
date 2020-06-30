@@ -6,7 +6,7 @@ import { getBill_bill } from "../../helpers/types/getBill";
 import WrapperContainer from "../Layout/WrapperContainer";
 
 import { BillContext } from "./BillContext";
-import BillFormFunc from "./BillFormFunc";
+import BillForm from "./BillForm";
 
 // @ts-ignore
 
@@ -20,7 +20,7 @@ function BillUpdate() {
     <WrapperContainer>
       <Row>
         <Col>
-          <BillFormFunc transaction={bill} />
+          <BillForm transaction={bill} />
         </Col>
       </Row>
     </WrapperContainer>
