@@ -1,7 +1,6 @@
 import React from "react";
 
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
+import WrapperContainer from "../Layout/WrapperContainer";
 import SiteHeader from "../SiteHeader";
 
 type Props = {
@@ -12,11 +11,9 @@ function WrapperForm({children}: Props) {
   return (
     <>
       <SiteHeader />
-      <Container>
-        <Row>
-          {children}
-        </Row>
-      </Container>
+      <WrapperContainer>
+        {children}
+      </WrapperContainer>
     </>
   );
 }

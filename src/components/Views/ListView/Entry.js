@@ -1,14 +1,12 @@
+import className from "classnames";
 import React from "react";
-import { useHistory } from "react-router-dom";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-
-import className from "classnames";
-
-import CompanyAndCard from "./CompanyAndCard";
-import Category from "./Category";
+import { useHistory } from "react-router-dom";
 
 import { formatCurrency } from "../../../helpers/utils";
+import Category from "./Category";
+import CompanyAndCard from "./CompanyAndCard";
 
 function NaturalCurrency({ amount }) {
   amount = Math.abs(amount);
@@ -37,7 +35,7 @@ function Entry({ isIncome, node }) {
     ? (
       <>
         <div className="h-separator" />
-        <div className="word-break">{isIncome ? '+' : '-'} {node.note}</div>
+        <div className="word-break">{isIncome ? "+" : "-"} {node.note}</div>
       </>
     )
     : null;

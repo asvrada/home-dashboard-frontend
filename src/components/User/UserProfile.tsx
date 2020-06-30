@@ -1,8 +1,9 @@
 import React, { useContext } from "react";
-import { IUserContext, UserAuthState, UserContext } from "./UserContext";
 import Button from "react-bootstrap/Button";
-import WrapperContainer from "../WrapperContainer";
 import Col from "react-bootstrap/Col";
+
+import WrapperContainer from "../Layout/WrapperContainer";
+import { IUserContext, UserAuthState, UserContext } from "./UserContext";
 
 function UserProfile() {
   const userContext = useContext(UserContext) as IUserContext;

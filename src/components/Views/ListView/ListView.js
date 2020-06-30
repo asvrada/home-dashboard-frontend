@@ -1,13 +1,12 @@
-import React, { useRef } from "react";
-import InfiniteScroll from "react-infinite-scroller";
 import { useQuery } from "@apollo/react-hooks";
+import React, { useRef } from "react";
 import Col from "react-bootstrap/Col";
-
-import Entry from "./Entry";
-import DateBox from "./DateBox";
+import InfiniteScroll from "react-infinite-scroller";
 
 import { GET_TRANSACTIONS } from "../../../helpers/graphql";
 import { insertDate } from "../../../helpers/utils";
+import DateBox from "./DateBox";
+import Entry from "./Entry";
 
 function Wrapper({ children }) {
   return (

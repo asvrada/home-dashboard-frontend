@@ -1,13 +1,14 @@
 import React, { useContext } from "react";
-import { Redirect, useHistory } from "react-router-dom";
-import GoogleLogin from "react-google-login";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
+import GoogleLogin from "react-google-login";
+import { Redirect, useHistory } from "react-router-dom";
+
+import { isDevEnv } from "../../helpers/utils";
+import WrapperContainer from "../Layout/WrapperContainer";
 
 import { IUserContext, UserAuthState, UserContext } from "./UserContext";
-import { isDevEnv } from "../../helpers/utils";
-import WrapperContainer from "../WrapperContainer";
 
 interface Props {
   redirect?: string
@@ -56,29 +57,27 @@ function Login({redirect}: Props) {
 
   return (
     <WrapperContainer>
-      <Row>
-        <Col>
-          {isDevEnv() ? componentEmailLogin : null}
+      <Col>
+        {isDevEnv() ? componentEmailLogin : null}
 
-          <Row>
-            <h4>Login with Google Account</h4>
-          </Row>
+        <Row>
+          <h4>Login with Google Account</h4>
+        </Row>
 
-          <Row>
-            <GoogleLogin
-              clientId="508553430731-3sjtbacd9na89labelop5fii28h4ho1m.apps.googleusercontent.com"
-              buttonText="Login"
-              onSuccess={(res: any) => {
-                handleGoogleLoginSuccess(res, userContext);
-              }}
-              onFailure={(res: any) => {
+        <Row>
+          <GoogleLogin
+            clientId="508553430731-3sjtbacd9na89labelop5fii28h4ho1m.apps.googleusercontent.com"
+            buttonText="Login"
+            onSuccess={(res: any) => {
+              handleGoogleLoginSuccess(res, userContext);
+            }}
+            onFailure={(res: any) => {
 
-              }}
-              cookiePolicy={'single_host_origin'}
-            />
-          </Row>
-        </Col>
-      </Row>
+            }}
+            cookiePolicy={'single_host_origin'}
+          />
+        </Row>
+      </Col>
     </WrapperContainer>
   );
 }

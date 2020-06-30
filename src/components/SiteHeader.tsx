@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import { LinkContainer } from 'react-router-bootstrap'
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import { IUserContext, UserAuthState, UserContext } from "./User/UserContext";
@@ -8,18 +9,26 @@ function SiteHeader({children}: any) {
 
   const componentNavbar = userContext.userAuthState === UserAuthState.AUTHED ? (
       <Navbar bg="light" expand="lg">
-        <Navbar.Brand href="/">Dashboard</Navbar.Brand>
+        <LinkContainer to="/">
+          <Navbar.Brand>Dashboard</Navbar.Brand>
+        </LinkContainer>
         <Nav className="ml-auto">
-          <Nav.Link href="/profile/">Profile</Nav.Link>
+          <LinkContainer to="/profile/">
+            <Nav.Link>Profile</Nav.Link>
+          </LinkContainer>
         </Nav>
       </Navbar>
     ) :
     // Navbar that non-login user see
     (
       <Navbar bg="light" expand="lg">
-        <Navbar.Brand href="/">Dashboard</Navbar.Brand>
+        <LinkContainer to="/">
+          <Navbar.Brand>Dashboard</Navbar.Brand>
+        </LinkContainer>
         <Nav className="ml-auto">
-          <Nav.Link href="/login/">Login</Nav.Link>
+          <LinkContainer to="/login/">
+            <Nav.Link>Login</Nav.Link>
+          </LinkContainer>
         </Nav>
       </Navbar>
     );

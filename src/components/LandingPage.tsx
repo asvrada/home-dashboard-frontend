@@ -1,12 +1,14 @@
 import React, { useContext } from "react";
-
+import { LinkContainer } from "react-router-bootstrap";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import Button from "react-bootstrap/Button";
+
 import { IUserContext, UserAuthState, UserContext } from "./User/UserContext";
 import Dashboard from "./Dashboard";
 import SiteHeader from "./SiteHeader";
-import Button from "react-bootstrap/Button";
+
 
 /**
  * For anonymous user, show welcome page
@@ -22,7 +24,7 @@ function LandingPage() {
   if (userContext.userAuthState === UserAuthState.AUTHED) {
     return (
       <div>
-        <SiteHeader/>
+        <SiteHeader />
         <Dashboard />
       </div>
     );
@@ -35,9 +37,13 @@ function LandingPage() {
         <Row>
           <Col>
             <Row>
-            <h1>Login Please</h1>
+              <h1>Login to see your personalize dashboard</h1>
             </Row>
-            <Row><Button href="/login/">Login</Button></Row>
+            <Row>
+              <LinkContainer to="/">
+                <Button>Login</Button>
+              </LinkContainer>
+            </Row>
           </Col>
         </Row>
       </Container>

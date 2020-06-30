@@ -1,15 +1,16 @@
-import React, { useContext } from "react";
-import { useHistory } from "react-router-dom";
 import { useMutation } from "@apollo/react-hooks";
-import Col from "react-bootstrap/Col";
+import React, { useContext } from "react";
 import Button from "react-bootstrap/Button";
+import Col from "react-bootstrap/Col";
+import { LinkContainer } from "react-router-bootstrap";
+import { useHistory } from "react-router-dom";
+
+import { DELETE } from "../../helpers/graphql";
+import { getBill_bill } from "../../helpers/types/getBill";
+import { unpackSummaryFlag } from "../../helpers/utils";
 
 import { BillContext } from "./BillContext";
 import WrapperForm from "./WrapperForm";
-
-import { getBill_bill } from "../../helpers/types/getBill";
-import { DELETE } from "../../helpers/graphql";
-import { unpackSummaryFlag } from "../../helpers/utils";
 
 /**
  * For Retrieve and Delete
@@ -59,11 +60,14 @@ function BillDetail() {
         <p>{bill.timeCreated}</p>
 
         <div>
-          <Button className="m-1"
-                  onClick={() => history.push(`/`)}>Back</Button>
-          <Button className="m-1"
-                  onClick={() => history.push(
-                    `/detail/${id}/edit/`)}>Edit</Button>
+          <LinkContainer to="/">
+            <Button className="m-1">Back</Button>
+          </LinkContainer>
+
+          <LinkContainer to={`/detail/${id}/edit/`}>
+            <Button className="m-1">Edit</Button>
+          </LinkContainer>
+
           <Button className="m-1"
                   onClick={handleDelete}>Delete</Button>
         </div>

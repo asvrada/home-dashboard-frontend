@@ -1,6 +1,6 @@
+import { useQuery } from "@apollo/react-hooks";
 import React from "react";
 import { useParams } from "react-router-dom";
-import { useQuery } from "@apollo/react-hooks";
 
 import { GET_BILL } from "../../helpers/graphql";
 

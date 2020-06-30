@@ -1,14 +1,13 @@
 import React, { useContext } from "react";
-import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-
+import Row from "react-bootstrap/Row";
 import { useGet } from "restful-react";
 
+import { UserContext } from "../User/UserContext";
 import AddEntryGadget from "./AddEntryGadget";
 import BudgetGadget from "./BudgetGadget";
 
 import "./Summary.scss";
-import { UserContext } from "../User/UserContext";
 
 /**
  * Display a summary of information at the top of window
