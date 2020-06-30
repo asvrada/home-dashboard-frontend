@@ -35,7 +35,7 @@ function LandingPage() {
           <h1>Login to see your personalize dashboard</h1>
         </Row>
         <Row>
-          <LinkContainer to="/">
+          <LinkContainer to="/login/">
             <Button>Login</Button>
           </LinkContainer>
         </Row>
