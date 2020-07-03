@@ -33,7 +33,7 @@ function UpdateBudgetForm({initialBudget, putBudget}: any) {
             console.log("Dashboard - UpdateBudgetForm - error", err);
 
             if (err.status === 400) {
-              setErrors({amount: err.data["amount"].join(". ")});
+              setErrors({amount: err.data.error.amount.join(". ")});
             }
           });
 
