@@ -1,6 +1,7 @@
 import { useApolloClient, useQuery } from "@apollo/react-hooks";
 import { ErrorMessage, Field, Formik } from "formik";
 import React from "react";
+import Button from "react-bootstrap/Button";
 import { useHistory } from "react-router-dom";
 
 import { CREATE_TRANSACTION, GET_ENUMS, UPDATE_TRANSACTION } from "../../helpers/graphql";
@@ -55,7 +56,7 @@ function prepareValueBeforeSubmit(values: FormValue, state: State) {
 
   let input: Payload = {
     id: state.isCreate ? undefined : state.idToUpdate,
-    amount: values.amount,
+    amount: Math.round(values.amount * 100) / 100,
     category: values.category,
     company: values.company,
     card: values.card,
@@ -185,7 +186,7 @@ function BillForm({transaction}: Props) {
   return (
     <Formik
       initialValues={generateInitialFormValue({transaction})}
-      onSubmit={(values: FormValue, {setSubmitting}) => {
+      onSubmit={(values: FormValue, {setSubmitting, setErrors}) => {
         const payload: Payload = prepareValueBeforeSubmit(values, state);
         const mutation = state.isCreate ? CREATE_TRANSACTION : UPDATE_TRANSACTION;
 
@@ -209,6 +210,12 @@ function BillForm({transaction}: Props) {
 
           // Redirect
           history.replace(`/detail/${id}/`);
+        }).catch(err => {
+          let errAmount = err.graphQLErrors.map((errObj: any) => errObj.message);
+
+          setErrors({amount: errAmount.join(". ")});
+
+          setSubmitting(false);
         });
       }}
     >
@@ -265,9 +272,9 @@ function BillForm({transaction}: Props) {
           <Field type="text" name="timeCreated" />
           <br />
 
-          <button type="submit" disabled={isSubmitting}>
+          <Button type="submit" disabled={isSubmitting}>
             Submit
-          </button>
+          </Button>
 
         </form>
       )}

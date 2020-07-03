@@ -1,5 +1,6 @@
 import { ErrorMessage, Field, Formik } from "formik";
 import React, { useContext } from "react";
+import Button from "react-bootstrap/Button";
 import { useGet, useMutate } from "restful-react";
 import WrapperContainer from "./Layout/WrapperContainer";
 import { IUserContext, UserContext } from "./User/UserContext";
@@ -8,13 +9,35 @@ interface FormValue {
   amount: number
 }
 
-function UpdateBudgetForm({budget, setBudget}: any) {
+function UpdateBudgetForm({initialBudget, putBudget}: any) {
   return (
     <Formik
-      initialValues={{amount: budget}}
-      onSubmit={(values: FormValue, {setSubmitting}) => {
+      initialValues={{amount: initialBudget}}
+      onSubmit={(values: FormValue, {setSubmitting, setErrors, setValues}) => {
+
+        const cleanBudget = Math.round(values.amount);
+        setValues({amount: cleanBudget});
+
+        putBudget({amount: cleanBudget})
+          .then((res: any) => {
+            if (res.status && res.status !== 200) {
+              throw res;
+            }
+
+            console.log("Dashboard - UpdateBudgetForm - putBudget HTTP 200", res);
+            // todo: notify user
+            // todo: redirect
+            alert("OK");
+          })
+          .catch((err: any) => {
+            console.log("Dashboard - UpdateBudgetForm - error", err);
+
+            if (err.status === 400) {
+              setErrors({amount: err.data["amount"].join(". ")});
+            }
+          });
+
         setSubmitting(false);
-        setBudget(values.amount);
       }}
     >
       {({
@@ -28,14 +51,15 @@ function UpdateBudgetForm({budget, setBudget}: any) {
         }) => (
         <form onSubmit={handleSubmit}>
 
-          <label>Amount</label>
-          <Field type="number" name="amount" />
-          <ErrorMessage name="amount" component="div" />
-          <br />
+          <div className="form-group">
+            <label>Amount</label>
+            <Field type="number" name="amount" />
+            <ErrorMessage name="amount" component="div" />
+          </div>
 
-          <button type="submit" disabled={isSubmitting}>
+          <Button type="submit" disabled={isSubmitting}>
             Submit
-          </button>
+          </Button>
 
         </form>
       )}
@@ -53,7 +77,7 @@ function Setting() {
   });
 
   // PUT
-  const {mutate: updateBudget} = useMutate({
+  const {mutate: putBudget} = useMutate({
     verb: "PUT",
     path: `/restful/budget/`,
     requestOptions: {headers: {Authorization: `Bearer ${userContext.accessToken}`}},
@@ -70,8 +94,8 @@ function Setting() {
   return (
     <WrapperContainer>
       <h1>Setting</h1>
-      <UpdateBudgetForm budget={objBudget.amount}
-                        setBudget={(amount: number) => updateBudget({amount}).then(() => alert("Succeed!"))} />
+      <UpdateBudgetForm initialBudget={objBudget.amount}
+                        putBudget={putBudget} />
     </WrapperContainer>
   );
 }

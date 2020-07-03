@@ -9,7 +9,6 @@ function PrivateRoute({children, ...rest}: any) {
     <Route
       {...rest}
       render={({location}) => {
-        console.log(`Dashboard - PrivateRoute - ${userContext.userAuthState}`);
         let component = <div>Authenticating...</div>;
 
         switch (userContext.userAuthState) {
