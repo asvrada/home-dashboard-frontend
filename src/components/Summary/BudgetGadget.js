@@ -80,13 +80,16 @@ function Bar({ text, current, total }) {
  *   savingMonth, incomeMonthTotal
  */
 function BudgetGadget({ obj }) {
-  const today = <Bar text={"今日预算"}
+  // 今日预算
+  const today = <Bar text={"Budget Today"}
                      current={obj.budgetToday}
                      total={obj.budgetTodayTotal} />;
-  const month = <Bar text={"本月预算"}
+  // 本月预算
+  const month = <Bar text={"Budget Month"}
                      current={obj.budgetMonth}
                      total={obj.budgetMonthTotal} />;
-  const saving = <Bar text={"本月存款"}
+  // 本月存款
+  const saving = <Bar text={"Saving Month"}
                       current={obj.savingMonth}
                       total={obj.incomeMonthTotal} />;
 
