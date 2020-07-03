@@ -158,7 +158,11 @@ class UserProvider extends React.Component<Props> {
       body: JSON.stringify({
         token: token
       })
-    }).then(() => {
+    }).then((res) => {
+      if (res.status !== 200) {
+        throw res;
+      }
+
       console.log("Dashboard - apiTokenVerify success");
       return true;
     }).catch(err => {
