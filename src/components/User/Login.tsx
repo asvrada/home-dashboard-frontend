@@ -1,12 +1,9 @@
+import { Box, Grid, Typography } from "@material-ui/core";
 import React, { useContext } from "react";
-import Button from "react-bootstrap/Button";
-import Col from "react-bootstrap/Col";
-import Row from "react-bootstrap/Row";
 import GoogleLogin from "react-google-login";
 import { Redirect, useHistory } from "react-router-dom";
 
 import { isDevEnv } from "../../helpers/utils";
-import WrapperContainer from "../Layout/WrapperContainer";
 
 import { IUserContext, UserAuthState, UserContext } from "./UserContext";
 
@@ -15,7 +12,7 @@ interface Props {
 }
 
 function handleGoogleLoginSuccess(res: any, userContext: IUserContext) {
-  console.log("Google User object", res);
+  console.log("dashboard - google login");
   const token = res.getAuthResponse().id_token;
 
   return userContext.googleLogin(token);
@@ -41,33 +38,29 @@ function Login({redirect}: Props) {
   };
 
   const componentEmailLogin = (
-    <>
-      <Row>
-        <h4>Login with username and password</h4>
-      </Row>
-
-      <Row>
-        <Button onClick={() => {
-          userContext.emailLogin(email, password)
-            .then(handleLoginResponse);
-        }}>
-          Login
-        </Button>
-      </Row>
-    </>
+    <Box>
+      <p>Login with username and password</p>
+      <button onClick={() => {
+        userContext.emailLogin(email, password)
+          .then(handleLoginResponse);
+      }}>
+        Login
+      </button>
+    </Box>
   );
 
   return (
-    <WrapperContainer>
-      <Row>
-        <Col>
-          {isDevEnv() ? componentEmailLogin : null}
+    <Box>
+      <Grid container spacing={1}>
+        {isDevEnv() ? componentEmailLogin : null}
 
-          <Row>
-            <h4>Login with Google Account</h4>
-          </Row>
-
-          <Row>
+        <Grid item xs={12}>
+          <Box textAlign="center">
+            <Typography variant="h4">Signup & Login</Typography>
+          </Box>
+        </Grid>
+        <Grid item xs={12}>
+          <Box textAlign="center">
             <GoogleLogin
               clientId="508553430731-3sjtbacd9na89labelop5fii28h4ho1m.apps.googleusercontent.com"
               buttonText="Login"
@@ -79,10 +72,10 @@ function Login({redirect}: Props) {
               }}
               cookiePolicy={'single_host_origin'}
             />
-          </Row>
-        </Col>
-      </Row>
-    </WrapperContainer>
+          </Box>
+        </Grid>
+      </Grid>
+    </Box>
   );
 }
 

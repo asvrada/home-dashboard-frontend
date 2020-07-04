@@ -1,7 +1,6 @@
 import { useApolloClient, useQuery } from "@apollo/react-hooks";
 import { ErrorMessage, Field, Formik } from "formik";
 import React from "react";
-import Button from "react-bootstrap/Button";
 import { useHistory } from "react-router-dom";
 
 import { CREATE_TRANSACTION, GET_ENUMS, UPDATE_TRANSACTION } from "../../helpers/graphql";
@@ -272,9 +271,9 @@ function BillForm({transaction}: Props) {
           <Field type="text" name="timeCreated" />
           <br />
 
-          <Button type="submit" disabled={isSubmitting}>
+          <button type="submit" disabled={isSubmitting}>
             Submit
-          </Button>
+          </button>
 
         </form>
       )}

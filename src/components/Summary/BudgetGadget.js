@@ -1,15 +1,68 @@
+import { Box, Grid, Hidden, Typography } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
 import React from "react";
-import styled from "styled-components";
+import { buildStyles, CircularProgressbar } from "react-circular-progressbar";
 
-import Col from "react-bootstrap/Col";
-import Row from "react-bootstrap/Row";
+import "react-circular-progressbar/dist/styles.css";
 
 import { getColor } from "../../helpers/utils";
 
-const ResizeDiv = styled.div`
-    width: ${props => props.textWidth};
-    background-color: ${props => props.textColor};
-  `;
+const useStylesBar = makeStyles((theme) => ({
+  root: {
+    position: "relative",
+    "height": "35px",
+    "width": "80%",
+    "margin": "0 auto",
+  },
+  barHeight: {
+    "height": "100%",
+  },
+  barPositionAbsolute: {
+    position: "absolute",
+  },
+  barText: {
+    "z-index": props => props.baseZIndex + 3,
+    "margin-left": "-2px",
+    "margin-top": "6px",
+    "left": "50%",
+    "text-shadow": "2px 2px 5px gray",
+    "& .left": {
+      "position": "absolute",
+      "right": "0",
+      "margin-right": "10px",
+    },
+    "& .middle": {
+      "position": "relative",
+    },
+    "& .right": {
+      "position": "absolute",
+      "margin-left": "4px",
+    },
+  },
+  barSeparator: {
+    "z-index": props => props.baseZIndex + 1,
+    "position": "absolute",
+    "width": "2px",
+    "height": "100%",
+    "background-color": "#BDBDBD",
+    "opacity": "0.2",
+  },
+  barOverlay: {
+    width: props => props.textWidth,
+    "background-color": props => props.textColor,
+    "z-index": props => props.baseZIndex + 2,
+    opacity: "0.8",
+  },
+  barBackground: {
+    width: "100%",
+    "z-index": props => props.baseZIndex,
+    "background-color": "grey",
+    "opacity": "0.1"
+  },
+  barRadius: {
+    "border-radius": props => `${props.radius}px`,
+  },
+}));
 
 function Bar({ text, current, total }) {
   let range = 0;
@@ -36,36 +89,76 @@ function Bar({ text, current, total }) {
   // color array to rgb(x,y,z)
   const textColor = `rgb(${colorArray[0]}, ${colorArray[1]}, ${colorArray[2]})`;
 
-  return (
-    <div className={"Bar"}>
-      <div>
-        {text}
-      </div>
+  const classes = useStylesBar({
+    textWidth, textColor, baseZIndex: 10, radius: 5,
+  });
 
-      <div className={"bar"}>
-        <div className={"bar-text"}>
-          <span className={"span-1"}>{current}</span>
-          <span className={"span-2"}>/</span>
-          <span className={"span-3"}>{total}</span>
-        </div>
+  return (
+    <Box>
+      <Typography>
+        {text}
+      </Typography>
+
+      <Box className={`${classes.root} ${classes.barContainer}`}>
+        <Typography
+          className={`${classes.barText} ${classes.barPositionAbsolute} ${classes.barHeight}`}
+        >
+          <span className={"left"}>{current}</span>
+          <span className={"middle"}>/</span>
+          <span className={"right"}>{total}</span>
+        </Typography>
 
         {/* overlay bar */}
-        <ResizeDiv className={"bar-overlay"}
-                   textWidth={textWidth}
-                   textColor={textColor} />
+        <div
+          className={`${classes.barOverlay} ${classes.barRadius} ${classes.barPositionAbsolute} ${classes.barHeight}`}
+        />
 
         {/* separator */}
-        <div className={"bar-separator bar-separator-1"} />
-        <div className={"bar-separator bar-separator-2"} />
-        <div className={"bar-separator bar-separator-3"} />
+        <div className={`${classes.barSeparator}`}
+             style={{ "left": "25%" }} />
+        <div className={`${classes.barSeparator}`}
+             style={{ "left": "50%" }} />
+        <div className={`${classes.barSeparator}`}
+             style={{ "left": "75%" }} />
 
         {/* background bar */}
-        <div className={"bar-background"} />
+        <div
+          className={`${classes.barBackground} ${classes.barRadius} ${classes.barPositionAbsolute} ${classes.barHeight}`}
+        />
+      </Box>
+    </Box>
+  );
+}
 
-        {/* Take up space */}
-        <div className={"placeholder"} />
-      </div>
-    </div>
+const useStylesCircle = makeStyles((theme) => ({
+  progressCircle: {
+    "max-width": "86px",
+  },
+}));
+
+function Circle({ text, current, total }) {
+  const classes = useStylesCircle();
+
+  let percentage = 0;
+  if (current > 0 && total >= 0) {
+    percentage = Math.round(current / total * 100);
+  }
+
+  return (
+    <Box>
+      <Typography>{text}</Typography>
+      <Box px={3}>
+        <CircularProgressbar className={classes.progressCircle}
+                             counterClockwise={true}
+                             value={percentage}
+                             text={`$${current}`}
+                             styles={buildStyles({
+                               // Whether to use rounded or flat corners on the ends - can use 'butt' or 'round'
+                               strokeLinecap: "butt",
+                             })}
+        />
+      </Box>
+    </Box>
   );
 }
 
@@ -80,33 +173,51 @@ function Bar({ text, current, total }) {
  *   savingMonth, incomeMonthTotal
  */
 function BudgetGadget({ obj }) {
-  // 今日预算
-  const today = <Bar text={"Budget Today"}
-                     current={obj.budgetToday}
-                     total={obj.budgetTodayTotal} />;
-  // 本月预算
-  const month = <Bar text={"Budget Month"}
-                     current={obj.budgetMonth}
-                     total={obj.budgetMonthTotal} />;
-  // 本月存款
-  const saving = <Bar text={"Saving Month"}
-                      current={obj.savingMonth}
-                      total={obj.incomeMonthTotal} />;
 
   return (
-    <Row className="BudgeGadget">
-      <Col md>
-        {today}
-      </Col>
+    <Grid container spacing={1}>
+      <Hidden mdUp>
+        <Grid item xs={4}>
+          {/* 今日预算 */}
+          <Circle text={"Budget Today"}
+                  current={obj.budgetToday}
+                  total={obj.budgetTodayTotal} />
+        </Grid>
+        <Grid item xs={4}>
+          {/* 本月预算 */}
+          <Circle text={"Budget Month"}
+                  current={obj.budgetMonth}
+                  total={obj.budgetMonthTotal} />
+        </Grid>
+        {/* 本月存款 */}
+        <Grid item xs={4}>
+          <Circle text={"Saving Month"}
+                  current={obj.savingMonth}
+                  total={obj.incomeMonthTotal} />
+        </Grid>
+      </Hidden>
 
-      <Col md>
-        {month}
-      </Col>
-
-      <Col md>
-        {saving}
-      </Col>
-    </Row>
+      <Hidden smDown>
+        <Grid item xs={4}>
+          {/* 今日预算 */}
+          <Bar text={"Budget Today"}
+               current={obj.budgetToday}
+               total={obj.budgetTodayTotal} />
+        </Grid>
+        <Grid item xs={4}>
+          {/* 本月预算 */}
+          <Bar text={"Budget Month"}
+               current={obj.budgetMonth}
+               total={obj.budgetMonthTotal} />
+        </Grid>
+        {/* 本月存款 */}
+        <Grid item xs={4}>
+          <Bar text={"Saving Month"}
+               current={obj.savingMonth}
+               total={obj.incomeMonthTotal} />
+        </Grid>
+      </Hidden>
+    </Grid>
   );
 }
 

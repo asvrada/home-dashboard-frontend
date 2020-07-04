@@ -1,21 +1,29 @@
+import { Grid } from "@material-ui/core";
 import React from "react";
-import Row from "react-bootstrap/Row";
 
 import Summary from "./Summary/Summary";
 import ListView from "./Views/ListView/ListView";
 import PieChart from "./Views/PieChart/PieChart";
 
-
 function Dashboard() {
   return (
-    <Row className="Dashboard fake-col">
-      <Summary />
+    <Grid container spacing={1}>
+      <Grid item xs={12}>
+        <Summary />
+      </Grid>
 
-      <Row id="graph-container">
-        <ListView />
-        <PieChart />
-      </Row>
-    </Row>
+      <Grid item xs={12}>
+        <Grid container spacing={1}>
+          <Grid item xs={12} md={4}>
+            <ListView />
+          </Grid>
+
+          <Grid item xs={12} md={8}>
+            <PieChart />
+          </Grid>
+        </Grid>
+      </Grid>
+    </Grid>
   );
 
 }

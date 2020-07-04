@@ -1,15 +1,12 @@
 import { useMutation } from "@apollo/react-hooks";
+import { Button, Grid } from "@material-ui/core";
 import React, { useContext } from "react";
-import Button from "react-bootstrap/Button";
-import Col from "react-bootstrap/Col";
-import Row from "react-bootstrap/Row";
 import { LinkContainer } from "react-router-bootstrap";
 import { useHistory } from "react-router-dom";
 
 import { DELETE } from "../../helpers/graphql";
 import { getBill_bill } from "../../helpers/types/getBill";
 import { unpackSummaryFlag } from "../../helpers/utils";
-import WrapperContainer from "../Layout/WrapperContainer";
 
 import { BillContext } from "./BillContext";
 
@@ -37,45 +34,42 @@ function BillDetail() {
 
   const componentSummaryFlag = (
     <div>
-      <p>Summary Flag:</p>
-      {isSkipBudget ? <p>Skip Budget</p> : null}
-      {isSkipTotal ? <p>Skip Total</p> : null}
+      <div>Summary Flag:</div>
+      {isSkipBudget ? <div>Skip Budget</div> : null}
+      {isSkipTotal ? <div>Skip Total</div> : null}
     </div>
   );
 
   return (
-    <WrapperContainer>
-      <Row>
-        <Col>
-          <p>
-            {bill.amount}
-          </p>
-          <p>
-            {bill.category && bill.category.name}
-          </p>
-          <p>{bill.company && bill.company.name}</p>
-          <p>{bill.card && bill.card.name}</p>
-          <p>{bill.note}</p>
+    <Grid container spacing={1}>
+      <Grid item xs={12}>
+        <div>
+          {bill.amount}
+        </div>
+        <div>
+          {bill.category && bill.category.name}
+        </div>
+        <div>{bill.company && bill.company.name}</div>
+        <div>{bill.card && bill.card.name}</div>
+        <div>{bill.note}</div>
 
-          {componentSummaryFlag}
+        {componentSummaryFlag}
 
-          <p>{bill.timeCreated}</p>
+        <p>{bill.timeCreated}</p>
+      </Grid>
 
-          <div>
-            <LinkContainer to="/">
-              <Button className="m-1">Back</Button>
-            </LinkContainer>
+      <Grid item xs={12}>
+        <LinkContainer to="/">
+          <Button variant="contained">Back</Button>
+        </LinkContainer>
 
-            <LinkContainer to={`/detail/${id}/edit/`}>
-              <Button className="m-1">Edit</Button>
-            </LinkContainer>
+        <LinkContainer to={`/detail/${id}/edit/`}>
+          <Button variant="contained">Edit</Button>
+        </LinkContainer>
 
-            <Button className="m-1"
-                    onClick={handleDelete}>Delete</Button>
-          </div>
-        </Col>
-      </Row>
-    </WrapperContainer>
+        <Button variant="contained" onClick={handleDelete}>Delete</Button>
+      </Grid>
+    </Grid>
   );
 }
 

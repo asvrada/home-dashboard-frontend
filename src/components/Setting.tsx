@@ -1,8 +1,7 @@
+import { Paper } from "@material-ui/core";
 import { ErrorMessage, Field, Formik } from "formik";
 import React, { useContext } from "react";
-import Button from "react-bootstrap/Button";
 import { useGet, useMutate } from "restful-react";
-import WrapperContainer from "./Layout/WrapperContainer";
 import { IUserContext, UserContext } from "./User/UserContext";
 
 interface FormValue {
@@ -57,9 +56,9 @@ function UpdateBudgetForm({initialBudget, putBudget}: any) {
             <ErrorMessage name="amount" component="div" />
           </div>
 
-          <Button type="submit" disabled={isSubmitting}>
+          <button type="submit" disabled={isSubmitting}>
             Submit
-          </Button>
+          </button>
 
         </form>
       )}
@@ -85,18 +84,16 @@ function Setting() {
 
   if (loadingGet) {
     return (
-      <WrapperContainer>
-        <div>Loading...</div>
-      </WrapperContainer>
+      <div>Loading...</div>
     );
   }
 
   return (
-    <WrapperContainer>
-      <h1>Setting</h1>
+    <Paper>
+      <h3>Setting</h3>
       <UpdateBudgetForm initialBudget={objBudget.amount}
                         putBudget={putBudget} />
-    </WrapperContainer>
+    </Paper>
   );
 }
 

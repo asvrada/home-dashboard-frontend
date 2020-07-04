@@ -1,10 +1,7 @@
+import { Box, Button, Grid, Typography } from "@material-ui/core";
 import React, { useContext } from "react";
-import Button from "react-bootstrap/Button";
-import Col from "react-bootstrap/Col";
-import Row from "react-bootstrap/Row";
 import { LinkContainer } from "react-router-bootstrap";
 import Dashboard from "./Dashboard";
-import WrapperContainer from "./Layout/WrapperContainer";
 
 import { IUserContext, UserAuthState, UserContext } from "./User/UserContext";
 
@@ -22,25 +19,18 @@ function LandingPage() {
 
   if (userContext.userAuthState === UserAuthState.AUTHED) {
     return (
-      <WrapperContainer fluid={true}>
-        <Dashboard />
-      </WrapperContainer>
+      <Dashboard />
     );
   }
 
   return (
-    <WrapperContainer>
-      <Col>
-        <Row>
-          <h1>Login to see your personalized dashboard</h1>
-        </Row>
-        <Row>
-          <LinkContainer to="/login/">
-            <Button>Login</Button>
-          </LinkContainer>
-        </Row>
-      </Col>
-    </WrapperContainer>
+    <Grid container spacing={1} alignContent="center" alignItems="center">
+      <Grid item xs={12}>
+        <Box textAlign="center">
+          <Typography variant="h3">A different financial dashboard</Typography>
+        </Box>
+      </Grid>
+    </Grid>
   );
 
 }

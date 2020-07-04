@@ -1,6 +1,6 @@
 import { useQuery } from "@apollo/react-hooks";
+import { Box, Grid, Paper } from "@material-ui/core";
 import React, { useRef } from "react";
-import Col from "react-bootstrap/Col";
 import InfiniteScroll from "react-infinite-scroller";
 
 import { GET_TRANSACTIONS } from "../../../helpers/graphql";
@@ -8,18 +8,59 @@ import { insertDate } from "../../../helpers/utils";
 import DateBox from "./DateBox";
 import Entry from "./Entry";
 
+function ListView() {
+  const { loading, error, data } = useQuery(GET_TRANSACTIONS, {
+    variables: {
+      limit: 10,
+    },
+  });
+
+  if (loading) {
+    return <Paper>
+      <div>Loading...</div>
+    </Paper>;
+  }
+
+  if (error) {
+    return <Paper>
+      <div>An error occurred</div>
+    </Paper>;
+  }
+
+  // todo
+  const components = data.bills.edges.map((node) => {
+    node = node.node;
+    const isIncome = node.amount > 0;
+    return (
+      <Grid item xs={12} key={node.id}>
+        <Entry isIncome={isIncome} key={node.id} node={node} />
+      </Grid>
+    );
+  });
+
+  return (
+    <Paper>
+      <Box p={1}>
+        <Grid container spacing={1}>
+          {components}
+        </Grid>
+      </Box>
+    </Paper>
+  );
+}
+
 function Wrapper({ children }) {
   return (
-    <Col className="ListView" xs={4}>
+    <Box className="ListView" xs={4}>
       {children}
-    </Col>
+    </Box>
   );
 }
 
 /**
  * Display a list of most recent transactions
  */
-function ListView() {
+function OldListView() {
   const topRef = useRef(null);
   const { loading, error, data, fetchMore } = useQuery(GET_TRANSACTIONS, {
     variables: {

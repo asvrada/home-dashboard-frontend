@@ -1,11 +1,6 @@
-@import "~bootstrap/scss/bootstrap";
-
-.cursor-pointer {
-  cursor: pointer;
-}
-
-.word-break {
-  word-break: break-word;
+body {
+  padding: 0;
+  margin: 0;
 }
 
 .amount {
@@ -19,23 +14,9 @@
   }
 }
 
-.fake-col {
-  padding-left: 15px;
-  padding-right: 15px;
-}
-
 .Dashboard {
-  $summary-min-height: 10%;
   $icon-category-size: 64px;
   $icon-other-size: 36px;
-
-  height: 100vh;
-
-  display: flex;
-  flex-flow: column;
-
-  .Summary {
-  }
 
   #graph-container {
     // grow shrink basis
@@ -58,26 +39,6 @@
         z-index: 3;
       }
 
-      .h-separator {
-        height: 5px;
-      }
-
-      .category-icon {
-        height: $icon-category-size;
-        width: $icon-category-size;
-
-        border-radius: $icon-category-size;
-      }
-
-      .other-icon {
-        height: $icon-other-size;
-        width: $icon-other-size;
-
-        border-radius: $icon-other-size;
-
-        margin-right: 5px;
-      }
-
       .date-box {
         border-radius: 5px;
         background-color: antiquewhite;
@@ -94,36 +55,11 @@
           font-size: 1.5em;
           font-weight: bold;
         }
-
-        .category-name {
-          font-size: 0.8em;
-        }
       }
 
       .EntryIn {
         background-color: aqua;
       }
-
-      .EntryOut {
-        //background-color: aqua;
-      }
-    }
-
-    .PieChart {
-      background-color: gray;
     }
   }
-}
-
-#detail-page {
-  position: fixed;
-  top: 100px;
-  left: 100px;
-
-  height: 200px;
-  width: 200px;
-
-  z-index: 99;
-
-  background-color: burlywood;
 }

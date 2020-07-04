@@ -1,10 +1,7 @@
+import { Box, Button, Grid, Typography } from "@material-ui/core";
 import React, { useContext } from "react";
-import Button from "react-bootstrap/Button";
-import Col from "react-bootstrap/Col";
-import Row from "react-bootstrap/Row";
 import { LinkContainer } from "react-router-bootstrap";
 
-import WrapperContainer from "../Layout/WrapperContainer";
 import { IUserContext, UserAuthState, UserContext } from "./UserContext";
 
 function UserProfile() {
@@ -19,27 +16,24 @@ function UserProfile() {
   }
 
   return (
-    <WrapperContainer>
-      <Row>
-        <div>{userContext.userAuthState}</div>
-      </Row>
-      <Row>
-        <Col>
+    <Box>
+      <Typography variant="h5">Profile</Typography>
+      <Grid container spacing={2}>
+        <Grid item xs={12}>
           <LinkContainer to="/setting/">
-            <Button>
+            <Button variant="contained">
               Change Budget
             </Button>
           </LinkContainer>
-        </Col>
-      </Row>
-      <Row>
-        <Col>
-          <Button onClick={() => {
+        </Grid>
+
+        <Grid item xs={12}>
+          <Button variant="contained" onClick={() => {
             userContext.logout()
           }}>Logout</Button>
-        </Col>
-      </Row>
-    </WrapperContainer>
+        </Grid>
+      </Grid>
+    </Box>
   );
 }
 
