@@ -12,7 +12,7 @@ function BillCreate() {
     <WrapperContainer>
       <Row>
         <Col>
-          <BillForm transaction={undefined} />
+          <BillForm transaction={undefined} urlToGoBack={'/'} />
         </Col>
       </Row>
     </WrapperContainer>

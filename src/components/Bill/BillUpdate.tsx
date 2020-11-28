@@ -20,7 +20,7 @@ function BillUpdate() {
     <WrapperContainer>
       <Row>
         <Col>
-          <BillForm transaction={bill} />
+          <BillForm transaction={bill} urlToGoBack={`/detail/${bill.id}/`} />
         </Col>
       </Row>
     </WrapperContainer>

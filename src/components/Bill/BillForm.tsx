@@ -12,7 +12,8 @@ import { EnumEnumCategory } from "../../types/graphql-global-types";
 
 
 interface Props {
-  transaction?: getBill_bill
+  transaction?: getBill_bill,
+  urlToGoBack: string
 }
 
 // Type of object sent to GraphQL
@@ -110,7 +111,7 @@ function generateEnumList({enums}: any) {
   return [listCategory, listCompany, listCard];
 }
 
-function generateInitialFormValue({transaction}: Props) {
+function generateInitialFormValue(transaction?: getBill_bill) {
   let initialFormValue: FormValue = {
     amount: 0,
     note: '',
@@ -123,10 +124,11 @@ function generateInitialFormValue({transaction}: Props) {
     isSkipTotal: false,
 
     // todo: creator
+
     timeCreated: getCurrentISOString()
   };
 
-  if (transaction !== undefined) {
+  if (transaction) {
     initialFormValue = {
       amount: transaction.amount,
       note: transaction.note === undefined ? '' : (transaction.note || ''),
@@ -144,7 +146,7 @@ function generateInitialFormValue({transaction}: Props) {
   return initialFormValue;
 }
 
-function BillForm({transaction}: Props) {
+function BillForm({transaction, urlToGoBack}: Props) {
   const history = useHistory();
   const client = useApolloClient();
   const {loading, error, data} = useQuery(GET_ENUMS);
@@ -185,7 +187,7 @@ function BillForm({transaction}: Props) {
 
   return (
     <Formik
-      initialValues={generateInitialFormValue({transaction})}
+      initialValues={generateInitialFormValue(transaction)}
       onSubmit={(values: FormValue, {setSubmitting, setErrors}) => {
         const payload: Payload = prepareValueBeforeSubmit(values, state);
         const mutation = state.isCreate ? CREATE_TRANSACTION : UPDATE_TRANSACTION;
@@ -218,17 +220,18 @@ function BillForm({transaction}: Props) {
           setSubmitting(false);
         });
       }}
+      onReset={() => {
+        // Exit editing page
+        history.push(urlToGoBack);
+      }}
     >
       {({
           values,
-          // errors,
-          // touched,
-          // handleChange,
-          // handleBlur,
           handleSubmit,
+          handleReset,
           isSubmitting,
         }) => (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} onReset={handleReset}>
 
           <label>Amount</label>
           <Field type="number" name="amount" />
@@ -274,6 +277,10 @@ function BillForm({transaction}: Props) {
 
           <Button type="submit" disabled={isSubmitting}>
             Submit
+          </Button>
+
+          <Button type="reset">
+            Cancel
           </Button>
 
         </form>
