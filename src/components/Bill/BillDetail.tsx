@@ -30,7 +30,6 @@ function BillDetail() {
         id: id
       }
     }).then(res => {
-      console.log("Response", res);
       history.push("/");
     });
   };

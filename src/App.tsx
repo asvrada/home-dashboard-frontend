@@ -23,8 +23,6 @@ function LoginPage({location}: any) {
   // from.pathname
   const pathname = location?.state?.from?.pathname;
 
-  console.log(pathname);
-
   return (
     <Login redirect={pathname} />
   );

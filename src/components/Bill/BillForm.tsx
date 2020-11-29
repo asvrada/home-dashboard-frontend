@@ -7,7 +7,7 @@ import { useHistory } from "react-router-dom";
 import { CREATE_TRANSACTION, GET_ENUMS, UPDATE_TRANSACTION } from "../../helpers/graphql";
 import { getBill_bill } from "../../helpers/types/getBill";
 import { getEnums_enums_edges_node } from "../../helpers/types/getEnums";
-import { getCurrentISOString, packSummaryFlag, unpackSummaryFlag } from "../../helpers/utils";
+import { getCurrentISOString, packSummaryFlag, shouldBeUndefined, unpackSummaryFlag } from "../../helpers/utils";
 import { EnumEnumCategory } from "../../types/graphql-global-types";
 
 
@@ -44,15 +44,11 @@ interface State {
   isCreate: boolean
 }
 
-const getIDorNull = (obj: any) => {
-  if (obj === undefined || obj === null) {
-    return null;
-  }
-  return obj.id;
-};
+function getIDorNull(obj: any) {
+  return (obj && obj.id) ?? null;
+}
 
 function prepareValueBeforeSubmit(values: FormValue, state: State) {
-
   const skipSummaryFlag: number = packSummaryFlag(values.isSkipBudget, values.isSkipTotal);
 
   let input: Payload = {
@@ -66,13 +62,13 @@ function prepareValueBeforeSubmit(values: FormValue, state: State) {
     timeCreated: values.timeCreated
   };
 
-  if (input.category === 'null' || input.category === null) {
+  if (shouldBeUndefined(input.category)) {
     input.category = undefined;
   }
-  if (input.company === 'null' || input.company === null) {
+  if (shouldBeUndefined(input.company)) {
     input.company = undefined;
   }
-  if (input.card === 'null' || input.card === null) {
+  if (shouldBeUndefined(input.card)) {
     input.card = undefined;
   }
 
@@ -170,17 +166,17 @@ function BillForm({transaction, urlToGoBack}: Props) {
 
   const [listCategory, listCompany, listCard] = generateEnumList(data);
 
-  const optionsCategory = [<option key="default" value={"null"}>-------</option>]
+  const optionsCategory = [<option key="option-none-category" value="" label="---" />]
     .concat(listCategory.map((obj) =>
       <option key={obj.id} value={obj.id}>{obj.name}</option>
     ));
 
-  const optionsCompany = [<option key="default" value={"null"}>-------</option>]
+  const optionsCompany = [<option key="option-none-company" value="" label="---" />]
     .concat(listCompany.map((obj) =>
       <option key={obj.id} value={obj.id}>{obj.name}</option>
     ));
 
-  const optionsCard = [<option key="default" value={"null"}>-------</option>]
+  const optionsCard = [<option key="option-none-card" value="" label="---" />]
     .concat(listCard.map((obj) =>
       <option key={obj.id} value={obj.id}>{obj.name}</option>
     ));
@@ -239,19 +235,19 @@ function BillForm({transaction, urlToGoBack}: Props) {
           <br />
 
           <label>Category</label>
-          <Field component="select" name="category">
+          <Field component="select" name="category" value={values.category ?? ""}>
             {optionsCategory}
           </Field>
           <br />
 
           <label>Company</label>
-          <Field component="select" name="company">
+          <Field component="select" name="company" value={values.company ?? ""}>
             {optionsCompany}
           </Field>
           <br />
 
           <label>Card</label>
-          <Field component="select" name="card">
+          <Field component="select" name="card" value={values.card ?? ""}>
             {optionsCard}
           </Field>
           <br />

@@ -1,7 +1,7 @@
-import React from "react";
+import React from 'react';
 
 function isDevEnv() {
-  return [process, process.env, process.env.NODE_ENV === "development"].every(
+  return [process, process.env, process.env.NODE_ENV === 'development'].every(
     (each) => each !== null && each !== false,
   );
 }
@@ -57,7 +57,7 @@ function getColor(config, percentage) {
 }
 
 function formatCurrency(amount) {
-  return amount.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,").split(".");
+  return amount.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,').split('.');
 
 }
 
@@ -66,9 +66,9 @@ function DateTime({ time }) {
 
   const year = objDatetime.getFullYear();
   const month = objDatetime.getMonth() + 1;
-  const date = objDatetime.getDate().toString().padStart(2, "0");
+  const date = objDatetime.getDate().toString().padStart(2, '0');
   const hour = objDatetime.getHours();
-  const minute = objDatetime.getMinutes().toString().padStart(2, "0");
+  const minute = objDatetime.getMinutes().toString().padStart(2, '0');
 
   const str = `${hour}:${minute} ${month}/${date}/${year}`;
 
@@ -114,7 +114,7 @@ function insertDate(edges) {
 
     if (!isEqual(prevDay, date)) {
       newEdges.push({
-        type: "metadata",
+        type: 'metadata',
         sum: tempSum,
         date: prevDay,
       });
@@ -132,7 +132,7 @@ function insertDate(edges) {
   const dateLatest = convertDate(edges[0].node.timeCreated);
   if (!isEqual(dateLatest, today)) {
     newEdges.push({
-      type: "metadata",
+      type: 'metadata',
       sum: tempSum,
       date: dateLatest,
     });
@@ -184,13 +184,13 @@ function getDate() {
 
 function getDay() {
   const DAT_TO_STRING = {
-    0: "Sun",
-    1: "Mon",
-    2: "Tue",
-    3: "Wed",
-    4: "Thu",
-    5: "Fri",
-    6: "Sat",
+    0: 'Sun',
+    1: 'Mon',
+    2: 'Tue',
+    3: 'Wed',
+    4: 'Thu',
+    5: 'Fri',
+    6: 'Sat',
   };
 
   return DAT_TO_STRING[getDateObj().getDay()];
@@ -240,10 +240,16 @@ function packSummaryFlag(isSkipBudget, isSkipTotal) {
 function getBaseURL() {
   if (isDevEnv()) {
     // mock server URL
-    return "http://localhost:4444/";
+    return 'http://localhost:4444/';
   } else {
-    return "https://api.kksk.biz/";
+    throw new DOMException('Missing prod server');
   }
+}
+
+const SET_UNDEFINED = new Set(['', 'none', 'null', null, undefined]);
+
+function shouldBeUndefined(val) {
+  return SET_UNDEFINED.has(val);
 }
 
 export {
@@ -257,4 +263,5 @@ export {
   getCurrentISOString,
   booleanToInt,
   packSummaryFlag, unpackSummaryFlag,
+  shouldBeUndefined,
 };
