@@ -8,6 +8,7 @@ function WrapperContainer({fluid, children}: any) {
     <div className="App">
       <SiteHeader />
 
+      {/* If fluid missing, default to false */}
       <Container fluid={!!fluid}>
         {children}
       </Container>

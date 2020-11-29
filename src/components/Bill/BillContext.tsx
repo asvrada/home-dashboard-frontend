@@ -21,18 +21,19 @@ function TransactionProvider({children}: Props) {
   });
 
   if (loading) {
-    return <>Query Loading</>;
+    return <>BillContext: Query is Loading</>;
   }
 
   if (error) {
-    return <>Query Error when useQuery</>;
+    console.log(error);
+    return <>BillContext: Errors occurred, see console</>;
   }
 
   // todo: validate
   const bill = data.bill;
 
   if (!bill) {
-    return <>Query Error when data.bill</>;
+    return <>BillContext: data.bill does not exist</>;
   }
 
   return (

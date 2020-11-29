@@ -275,11 +275,11 @@ function BillForm({transaction, urlToGoBack}: Props) {
           <Field type="text" name="timeCreated" />
           <br />
 
-          <Button type="submit" disabled={isSubmitting}>
+          <Button type="submit" className="m-1" disabled={isSubmitting}>
             Submit
           </Button>
 
-          <Button type="reset">
+          <Button type="reset" className="m-1">
             Cancel
           </Button>
 

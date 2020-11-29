@@ -62,7 +62,7 @@ function BillDetail() {
           <p>{bill.timeCreated}</p>
 
           <div>
-            <LinkContainer to="/">
+            <LinkContainer to={'/'}>
               <Button className="m-1">Back</Button>
             </LinkContainer>
 
