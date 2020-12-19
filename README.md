@@ -4,6 +4,8 @@ Powered by React.
 
 > This is the frontend for home dashboard project, link to backend: https://github.com/asvrada/home-dashboard-backend
 
-### Todo
-1. Refactory UI by using Material-UI
-2. Add Pages about Recurring Bills, Icon and User Profile
+### To fetch GraphQL schema
+`apollo schema:download --endpoint=http://localhost:4444/graphqltest/ graphql-schema.json`
+
+### To generate Typescript types
+`apollo codegen:generate --localSchemaFile=graphql-schema.json --target=typescript --includes=src/helpers/graphql.ts --tagName=gql --addTypename --globalTypesFile=src/types/graphql-global-types.ts types`

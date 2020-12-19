@@ -3,6 +3,7 @@ import { ErrorMessage, Field, Formik } from "formik";
 import React from "react";
 import Button from "react-bootstrap/Button";
 import { useHistory } from "react-router-dom";
+import DatePicker from "react-datepicker";
 
 import { CREATE_TRANSACTION, GET_ENUMS, UPDATE_TRANSACTION } from "../../helpers/graphql";
 import { getBill_bill } from "../../helpers/types/getBill";
@@ -30,10 +31,10 @@ interface Payload {
 
 interface FormValue {
   amount: number;
+  note: string,
   category: string | null,
   company: string | null,
   card: string | null,
-  note: string,
   isSkipBudget: boolean,
   isSkipTotal: boolean,
   timeCreated: string,
@@ -44,35 +45,8 @@ interface State {
   isCreate: boolean
 }
 
-function getIDorNull(obj: any) {
-  return (obj && obj.id) ?? null;
-}
-
-function prepareValueBeforeSubmit(values: FormValue, state: State) {
-  const skipSummaryFlag: number = packSummaryFlag(values.isSkipBudget, values.isSkipTotal);
-
-  let input: Payload = {
-    id: state.isCreate ? undefined : state.idToUpdate,
-    amount: Math.round(values.amount * 100) / 100,
-    category: values.category,
-    company: values.company,
-    card: values.card,
-    note: values.note,
-    skipSummaryFlag: skipSummaryFlag,
-    timeCreated: values.timeCreated
-  };
-
-  if (shouldBeUndefined(input.category)) {
-    input.category = undefined;
-  }
-  if (shouldBeUndefined(input.company)) {
-    input.company = undefined;
-  }
-  if (shouldBeUndefined(input.card)) {
-    input.card = undefined;
-  }
-
-  return input;
+function getIDorNull(obj: any): string | null {
+  return obj?.id ?? null;
 }
 
 function generateEnumList({enums}: any) {
@@ -107,7 +81,7 @@ function generateEnumList({enums}: any) {
   return [listCategory, listCompany, listCard];
 }
 
-function generateInitialFormValue(transaction?: getBill_bill) {
+function generateInitialFormValue(transaction?: getBill_bill): FormValue{
   let initialFormValue: FormValue = {
     amount: 0,
     note: '',
@@ -127,7 +101,7 @@ function generateInitialFormValue(transaction?: getBill_bill) {
   if (transaction) {
     initialFormValue = {
       amount: transaction.amount,
-      note: transaction.note === undefined ? '' : (transaction.note || ''),
+      note: transaction?.note ?? '',
 
       category: getIDorNull(transaction.category),
       company: getIDorNull(transaction.company),
@@ -140,6 +114,33 @@ function generateInitialFormValue(transaction?: getBill_bill) {
   }
 
   return initialFormValue;
+}
+
+function prepareValueBeforeSubmit(values: FormValue, state: State): Payload {
+  const skipSummaryFlag: number = packSummaryFlag(values.isSkipBudget, values.isSkipTotal);
+
+  let payload: Payload = {
+    id: state.isCreate ? undefined : state.idToUpdate,
+    amount: Math.round(values.amount * 100) / 100,
+    category: values.category,
+    company: values.company,
+    card: values.card,
+    note: values.note,
+    skipSummaryFlag: skipSummaryFlag,
+    timeCreated: values.timeCreated
+  };
+
+  if (shouldBeUndefined(payload.category)) {
+    payload.category = undefined;
+  }
+  if (shouldBeUndefined(payload.company)) {
+    payload.company = undefined;
+  }
+  if (shouldBeUndefined(payload.card)) {
+    payload.card = undefined;
+  }
+
+  return payload;
 }
 
 function BillForm({transaction, urlToGoBack}: Props) {
@@ -270,6 +271,9 @@ function BillForm({transaction, urlToGoBack}: Props) {
           <label>Time Created</label>
           <Field type="text" name="timeCreated" />
           <br />
+
+          {/*<DatePicker selected={new Date()} onChange={(v) => console.log(v)}/>*/}
+          {/*<br />*/}
 
           <Button type="submit" className="m-1" disabled={isSubmitting}>
             Submit
