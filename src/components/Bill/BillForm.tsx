@@ -1,16 +1,16 @@
 import { useApolloClient, useQuery } from "@apollo/react-hooks";
+import DateFnsUtils from '@date-io/date-fns';
+import { KeyboardDatePicker, KeyboardTimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import { ErrorMessage, Field, Formik } from "formik";
 import React from "react";
 import Button from "react-bootstrap/Button";
 import { useHistory } from "react-router-dom";
-import DatePicker from "react-datepicker";
 
 import { CREATE_TRANSACTION, GET_ENUMS, UPDATE_TRANSACTION } from "../../helpers/graphql";
 import { getBill_bill } from "../../helpers/types/getBill";
 import { getEnums_enums_edges_node } from "../../helpers/types/getEnums";
-import { getCurrentISOString, packSummaryFlag, shouldBeUndefined, unpackSummaryFlag } from "../../helpers/utils";
+import { packSummaryFlag, shouldBeUndefined, unpackSummaryFlag } from "../../helpers/utils";
 import { EnumEnumCategory } from "../../types/graphql-global-types";
-
 
 interface Props {
   transaction?: getBill_bill,
@@ -37,7 +37,7 @@ interface FormValue {
   card: string | null,
   isSkipBudget: boolean,
   isSkipTotal: boolean,
-  timeCreated: string,
+  timeCreated: Date,
 }
 
 interface State {
@@ -81,7 +81,7 @@ function generateEnumList({enums}: any) {
   return [listCategory, listCompany, listCard];
 }
 
-function generateInitialFormValue(transaction?: getBill_bill): FormValue{
+function generateInitialFormValue(transaction?: getBill_bill): FormValue {
   let initialFormValue: FormValue = {
     amount: 0,
     note: '',
@@ -95,7 +95,7 @@ function generateInitialFormValue(transaction?: getBill_bill): FormValue{
 
     // todo: creator
 
-    timeCreated: getCurrentISOString()
+    timeCreated: new Date() // getCurrentISOString()
   };
 
   if (transaction) {
@@ -109,7 +109,7 @@ function generateInitialFormValue(transaction?: getBill_bill): FormValue{
 
       ...unpackSummaryFlag(transaction.skipSummaryFlag),
 
-      timeCreated: transaction.timeCreated
+      timeCreated: new Date(transaction.timeCreated)
     }
   }
 
@@ -127,7 +127,8 @@ function prepareValueBeforeSubmit(values: FormValue, state: State): Payload {
     card: values.card,
     note: values.note,
     skipSummaryFlag: skipSummaryFlag,
-    timeCreated: values.timeCreated
+    // todo: convert to string
+    timeCreated: values.timeCreated.toISOString()
   };
 
   if (shouldBeUndefined(payload.category)) {
@@ -183,109 +184,163 @@ function BillForm({transaction, urlToGoBack}: Props) {
     ));
 
   return (
-    <Formik
-      initialValues={generateInitialFormValue(transaction)}
-      onSubmit={(values: FormValue, {setSubmitting, setErrors}) => {
-        const payload: Payload = prepareValueBeforeSubmit(values, state);
-        const mutation = state.isCreate ? CREATE_TRANSACTION : UPDATE_TRANSACTION;
+    <MuiPickersUtilsProvider utils={DateFnsUtils}>
+      <Formik
+        initialValues={generateInitialFormValue(transaction)}
+        onSubmit={(values: FormValue, {setSubmitting, setErrors}) => {
+          const payload: Payload = prepareValueBeforeSubmit(values, state);
+          const mutation = state.isCreate ? CREATE_TRANSACTION : UPDATE_TRANSACTION;
 
-        console.log("Mutate", payload);
-        client.mutate({
-          mutation: mutation,
-          variables: {
-            input: payload
-          }
-        }).then((res: any) => {
-          console.log("Response", res);
+          console.log("Mutate", payload);
+          client.mutate({
+            mutation: mutation,
+            variables: {
+              input: payload
+            }
+          }).then((res: any) => {
+            console.log("Response", res);
 
-          let id: string;
-          if (state.isCreate) {
-            id = res.data.createTransaction.transaction.id;
-          } else {
-            id = res.data.updateTransaction.transaction.id;
-          }
+            let id: string;
+            if (state.isCreate) {
+              id = res.data.createTransaction.transaction.id;
+            } else {
+              id = res.data.updateTransaction.transaction.id;
+            }
 
-          setSubmitting(false);
+            setSubmitting(false);
 
-          // Redirect
-          history.replace(`/detail/${id}/`);
-        }).catch(err => {
-          let errAmount = err.graphQLErrors.map((errObj: any) => errObj.message);
+            // Redirect
+            history.replace(`/detail/${id}/`);
+          }).catch(err => {
+            let errAmount = err.graphQLErrors.map((errObj: any) => errObj.message);
 
-          setErrors({amount: errAmount.join(". ")});
+            setErrors({amount: errAmount.join(". ")});
 
-          setSubmitting(false);
-        });
-      }}
-      onReset={() => {
-        // Exit editing page
-        history.push(urlToGoBack);
-      }}
-    >
-      {({
-          values,
-          handleSubmit,
-          handleReset,
-          isSubmitting,
-        }) => (
-        <form onSubmit={handleSubmit} onReset={handleReset}>
+            setSubmitting(false);
+          });
+        }}
+        onReset={() => {
+          // Exit editing page
+          history.push(urlToGoBack);
+        }}
+      >
+        {({
+            values,
+            handleSubmit,
+            handleReset,
+            setFieldValue,
+            isSubmitting,
+          }) => (
+          <form onSubmit={handleSubmit} onReset={handleReset}>
 
-          <label>Amount</label>
-          <Field type="number" name="amount" />
-          <ErrorMessage name="amount" component="div" />
-          <br />
+            <label>Amount</label>
+            <Field type="number" name="amount" />
+            <ErrorMessage name="amount" component="div" />
+            <br />
 
-          <label>Category</label>
-          <Field component="select" name="category" value={values.category ?? ""}>
-            {optionsCategory}
-          </Field>
-          <br />
+            <label>Category</label>
+            <Field component="select" name="category" value={values.category ?? ""}>
+              {optionsCategory}
+            </Field>
+            <br />
 
-          <label>Company</label>
-          <Field component="select" name="company" value={values.company ?? ""}>
-            {optionsCompany}
-          </Field>
-          <br />
+            <label>Company</label>
+            <Field component="select" name="company" value={values.company ?? ""}>
+              {optionsCompany}
+            </Field>
+            <br />
 
-          <label>Card</label>
-          <Field component="select" name="card" value={values.card ?? ""}>
-            {optionsCard}
-          </Field>
-          <br />
+            <label>Card</label>
+            <Field component="select" name="card" value={values.card ?? ""}>
+              {optionsCard}
+            </Field>
+            <br />
 
-          <label>Note</label>
-          <Field type="text" name="note" />
-          <ErrorMessage name="note" component="div" />
-          <br />
+            <label>Note</label>
+            <Field type="text" name="note" />
+            <ErrorMessage name="note" component="div" />
+            <br />
 
-          <label className="cursor-pointer" htmlFor="idSkipBudget">Don&lsquo;t count in Budget</label>
-          <Field id="idSkipBudget" name="isSkipBudget" component="input" type="checkbox"
-                 checked={(values as { isSkipBudget: boolean }).isSkipBudget} />
-          <br />
+            <label className="cursor-pointer" htmlFor="idSkipBudget">Don&lsquo;t count in Budget</label>
+            <Field id="idSkipBudget" name="isSkipBudget" component="input" type="checkbox"
+                   checked={(values as { isSkipBudget: boolean }).isSkipBudget} />
+            <br />
 
-          <label className="cursor-pointer" htmlFor="idSkipTotal">Don&lsquo;t count in Total</label>
-          <Field id="idSkipTotal" name="isSkipTotal" component="input" type="checkbox"
-                 checked={(values as { isSkipTotal: boolean }).isSkipTotal} />
-          <br />
+            <label className="cursor-pointer" htmlFor="idSkipTotal">Don&lsquo;t count in Total</label>
+            <Field id="idSkipTotal" name="isSkipTotal" component="input" type="checkbox"
+                   checked={(values as { isSkipTotal: boolean }).isSkipTotal} />
+            <br />
 
-          <label>Time Created</label>
-          <Field type="text" name="timeCreated" />
-          <br />
+            <KeyboardDatePicker
+              disableToolbar
+              variant="inline"
+              format="MM/dd/yyyy"
+              margin="normal"
+              id="date-picker-inline"
+              label="Date"
+              value={values.timeCreated}
+              onChange={(newDate) => {
+                // Skip Invalid Date
+                if (!newDate || (newDate instanceof Date && isNaN(newDate.getTime()))) {
+                  return;
+                }
 
-          {/*<DatePicker selected={new Date()} onChange={(v) => console.log(v)}/>*/}
-          {/*<br />*/}
+                const oldDate = values.timeCreated;
+                // copy time from timeCreated to newDate
+                newDate.setHours(oldDate.getHours(), oldDate.getMinutes());
 
-          <Button type="submit" className="m-1" disabled={isSubmitting}>
-            Submit
-          </Button>
+                setFieldValue('timeCreated', newDate);
+              }}
+              KeyboardButtonProps={{
+                'aria-label': 'change date',
+              }}
+            />
+            <br />
 
-          <Button type="reset" className="m-1">
-            Cancel
-          </Button>
+            <KeyboardTimePicker
+              margin="normal"
+              id="time-picker"
+              label="Time"
+              value={values.timeCreated}
+              onChange={(newDate) => {
+                // Skip Invalid Date
+                if (!newDate || (newDate instanceof Date && isNaN(newDate.getTime()))) {
+                  return;
+                }
 
-        </form>
-      )}
-    </Formik>
+                const oldDate = values.timeCreated;
+                // copy date from timeCreated to newDate
+                newDate.setFullYear(oldDate.getFullYear(), oldDate.getMonth(), oldDate.getDate());
+
+                setFieldValue('timeCreated', newDate);
+              }}
+              KeyboardButtonProps={{
+                'aria-label': 'change time',
+              }}
+            />
+
+            <br />
+
+            <Button type="button" variant='secondary' className="m-1" onClick={() => {
+              setFieldValue('timeCreated', new Date());
+            }}>
+              Set Date and Time to Now
+            </Button>
+
+            <br />
+
+            <Button type="submit" className="m-1" disabled={isSubmitting}>
+              Submit
+            </Button>
+
+            <Button type="reset" className="m-1">
+              Cancel
+            </Button>
+
+          </form>
+        )}
+      </Formik>
+    </MuiPickersUtilsProvider>
   );
 }
 
