@@ -92,8 +92,6 @@ class UserProvider extends React.Component<Props> {
     });
 
     this.setLocalStorage();
-
-    return true;
   }
 
   handleLogout() {
@@ -109,7 +107,12 @@ class UserProvider extends React.Component<Props> {
   //////////////
   // API call //
   //////////////
-  apiGoogleLogin(token: string) {
+  /**
+   * Calls backend API to login by using Google account
+   * @param token Google auth token
+   * @return A Promise resolve to true if login is successful
+   */
+  apiGoogleLogin(token: string): Promise<boolean> {
     return fetch(this.base + "google-login/", {
       method: "POST",
       headers: {'Content-Type': 'application/json'},
@@ -118,13 +121,20 @@ class UserProvider extends React.Component<Props> {
       })
     }).then(res => res.json())
       .then(data => this.handleLoginSuccessful(data.access, data.refresh))
+      .then(() => true)
       .catch(err => {
         console.log(err);
         return false;
       });
   }
 
-  apiEmailLogin(email: string, password: string) {
+  /**
+   * Calls backend API to login by email&password
+   * @param email Email address
+   * @param password Password
+   * @return A Promise resolve to true if login is successful
+   */
+  apiEmailLogin(email: string, password: string): Promise<boolean> {
     return fetch(this.base + "email-login/", {
       method: "POST",
       headers: {'Content-Type': 'application/json'},
@@ -134,24 +144,40 @@ class UserProvider extends React.Component<Props> {
       })
     }).then(res => res.json())
       .then(data => this.handleLoginSuccessful(data.access, data.refresh))
+      .then(() => true)
       .catch(err => {
         console.log(err);
         return false;
       });
   }
 
-  apiTokenRefresh(refresh: string) {
-    fetch(this.base + "token-refresh/", {
+  /**
+   * Calls backend API to get a new access token by using refresh token
+   * @param refresh The refresh token
+   * @return A Promise resolve to true if access token refreshed successfully
+   */
+  apiTokenRefresh(refresh: string): Promise<boolean> {
+    return fetch(this.base + "token-refresh/", {
       method: "POST",
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({
         refresh: refresh
       })
     }).then(res => res.json())
-      .then(data => this.handleLoginSuccessful(data.access, refresh));
+      .then(data => this.handleLoginSuccessful(data.access, refresh))
+      .then(() => true)
+      .catch((err) => {
+        console.error("Failed to refresh token with error", err);
+        return false;
+      })
   }
 
-  apiTokenVerify(token: string) {
+  /**
+   * Calls backend API to verify if access/refresh token is not expired or valid
+   * @param token the access or refresh token to verify
+   * @return a Promise resolve to true if token is not expired and valid
+   */
+  apiTokenVerify(token: string): Promise<boolean> {
     return fetch(this.base + "token-verify/", {
       method: "POST",
       headers: {'Content-Type': 'application/json'},
@@ -160,7 +186,7 @@ class UserProvider extends React.Component<Props> {
       })
     }).then((res) => {
       if (res.status !== 200) {
-        throw res;
+        return Promise.reject(res);
       }
 
       console.log("Dashboard - apiTokenVerify success");
@@ -189,23 +215,12 @@ class UserProvider extends React.Component<Props> {
     localStorage.clear();
   }
 
-  /////////////////
-  // UserContext //
-  /////////////////
-  contextEmailLogin(email: string, password: string) {
-    return this.apiEmailLogin(email, password);
-  }
-
-  contextGoogleLogin(token: string) {
-    return this.apiGoogleLogin(token);
-  }
-
   render() {
     const userContext: IUserContext = {
       userAuthState: this.state.userAuthState,
       accessToken: this.state.tokenAccess,
-      emailLogin: (email: string, password: string) => this.contextEmailLogin(email, password),
-      googleLogin: (token: string) => this.contextGoogleLogin(token),
+      emailLogin: (email: string, password: string) => this.apiEmailLogin(email, password),
+      googleLogin: (token: string) => this.apiGoogleLogin(token),
       logout: () => this.handleLogout()
     };
 

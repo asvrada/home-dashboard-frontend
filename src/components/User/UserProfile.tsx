@@ -13,7 +13,7 @@ function UserProfile() {
   if (userContext.userAuthState === UserAuthState.UNAUTHED) {
     return (
       <div>
-        <div>{userContext.userAuthState}</div>
+        <div>You are not logged in.</div>
       </div>
     );
   }
@@ -27,7 +27,7 @@ function UserProfile() {
         <Col>
           <LinkContainer to="/setting/">
             <Button>
-              Change Budget
+              Setting
             </Button>
           </LinkContainer>
         </Col>

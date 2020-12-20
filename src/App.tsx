@@ -12,7 +12,7 @@ import BillUpdate from "./components/Bill/BillUpdate";
 import LandingPage from "./components/LandingPage";
 
 import PrivateRoute from "./components/PrivateRoute";
-import Setting from "./components/Setting";
+import Setting from "./components/Setting/Setting";
 import Login from "./components/User/Login";
 import { IUserContext, UserContext, UserProvider } from "./components/User/UserContext";
 import UserProfile from "./components/User/UserProfile";
