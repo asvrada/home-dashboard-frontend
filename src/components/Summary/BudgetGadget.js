@@ -89,7 +89,7 @@ function BudgetGadget({ obj }) {
                      current={obj.budgetMonth}
                      total={obj.budgetMonthTotal} />;
   // 本月存款
-  const saving = <Bar text={"Saving Month"}
+  const saving = <Bar text={"Saving End of Month"}
                       current={obj.savingMonth}
                       total={obj.incomeMonthTotal} />;
 

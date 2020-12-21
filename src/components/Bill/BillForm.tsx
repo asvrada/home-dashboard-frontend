@@ -6,11 +6,16 @@ import React from "react";
 import Button from "react-bootstrap/Button";
 import { useHistory } from "react-router-dom";
 
-import { CREATE_TRANSACTION, GET_ENUMS, UPDATE_TRANSACTION } from "../../helpers/graphql";
+import 'react-widgets/dist/css/react-widgets.css';
+
+import { CREATE_ENUM, CREATE_TRANSACTION, GET_ENUMS, UPDATE_TRANSACTION } from "../../helpers/graphql";
 import { getBill_bill } from "../../helpers/types/getBill";
 import { getEnums_enums_edges_node } from "../../helpers/types/getEnums";
-import { packSummaryFlag, shouldBeUndefined, unpackSummaryFlag } from "../../helpers/utils";
+import { capitalizeFirstLetter, packSummaryFlag, shouldBeUndefined, unpackSummaryFlag } from "../../helpers/utils";
 import { EnumEnumCategory } from "../../types/graphql-global-types";
+import DropdownListAndClearButtonRow from "./DropdownList/DropdownListAndClearButtonRow";
+
+const cmp = (a: getEnums_enums_edges_node, b: getEnums_enums_edges_node) => a.name < b.name ? -1 : 1;
 
 interface Props {
   transaction?: getBill_bill,
@@ -73,7 +78,6 @@ function generateEnumList({enums}: any) {
     return undefined;
   });
 
-  const cmp = (a: getEnums_enums_edges_node, b: getEnums_enums_edges_node) => a.name < b.name ? -1 : 1;
   listCategory.sort(cmp);
   listCompany.sort(cmp);
   listCard.sort(cmp);
@@ -154,6 +158,34 @@ function BillForm({transaction, urlToGoBack}: Props) {
     isCreate: transaction === undefined
   };
 
+  function handleCreateEnum(type: string, newName: string): Promise<getEnums_enums_edges_node> {
+    return client.mutate({
+      mutation: CREATE_ENUM,
+      variables: {
+        input: {
+          name: newName,
+          category: capitalizeFirstLetter(type),
+        }
+      }
+    }).then((res: any) => {
+      console.log("create enum response", res);
+      const newObject = res.data.createEnum.enum;
+      const mapper: any = {
+        'category': listCategory,
+        'company': listCompany,
+        'card': listCard
+      };
+      const listData: getEnums_enums_edges_node[] = mapper[type];
+
+      listData.push(newObject);
+      listData.sort(cmp);
+      return Promise.resolve(newObject);
+    }).catch(err => {
+      console.error(err);
+      return Promise.reject();
+    });
+  }
+
   if (loading) {
     return (
       <div>Loading...</div>
@@ -167,21 +199,6 @@ function BillForm({transaction, urlToGoBack}: Props) {
   }
 
   const [listCategory, listCompany, listCard] = generateEnumList(data);
-
-  const optionsCategory = [<option key="option-none-category" value="" label="---" />]
-    .concat(listCategory.map((obj) =>
-      <option key={obj.id} value={obj.id}>{obj.name}</option>
-    ));
-
-  const optionsCompany = [<option key="option-none-company" value="" label="---" />]
-    .concat(listCompany.map((obj) =>
-      <option key={obj.id} value={obj.id}>{obj.name}</option>
-    ));
-
-  const optionsCard = [<option key="option-none-card" value="" label="---" />]
-    .concat(listCard.map((obj) =>
-      <option key={obj.id} value={obj.id}>{obj.name}</option>
-    ));
 
   return (
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
@@ -239,21 +256,42 @@ function BillForm({transaction, urlToGoBack}: Props) {
             <br />
 
             <label>Category</label>
-            <Field component="select" name="category" value={values.category ?? ""}>
-              {optionsCategory}
-            </Field>
+            <DropdownListAndClearButtonRow
+              listData={listCategory}
+              propertyKey={'category'}
+              values={values}
+              setFieldValue={setFieldValue}
+              onCreateCallback={(type, name) => handleCreateEnum(type, name)
+                .then((obj) => {
+                  setFieldValue(type, obj.id);
+                })}
+            />
             <br />
 
             <label>Company</label>
-            <Field component="select" name="company" value={values.company ?? ""}>
-              {optionsCompany}
-            </Field>
+            <DropdownListAndClearButtonRow
+              listData={listCompany}
+              propertyKey={'company'}
+              values={values}
+              setFieldValue={setFieldValue}
+              onCreateCallback={(type, name) => handleCreateEnum(type, name)
+                .then((obj) => {
+                  setFieldValue(type, obj.id);
+                })}
+            />
             <br />
 
             <label>Card</label>
-            <Field component="select" name="card" value={values.card ?? ""}>
-              {optionsCard}
-            </Field>
+            <DropdownListAndClearButtonRow
+              listData={listCard}
+              propertyKey={'card'}
+              values={values}
+              setFieldValue={setFieldValue}
+              onCreateCallback={(type, name) => handleCreateEnum(type, name)
+                .then((obj) => {
+                  setFieldValue(type, obj.id);
+                })}
+            />
             <br />
 
             <label>Note</label>

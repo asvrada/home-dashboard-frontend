@@ -132,8 +132,18 @@ const GET_TRANSACTIONS = gql`query getBills($cursor: String, $limit: Int) {
 //////////////
 // Mutation //
 //////////////
+const CREATE_ENUM = gql`mutation createEnum($input: CreateEnumInput!) {
+  createEnum(input: $input) {
+    enum {
+      id,
+      name,
+      category
+    }
+  }
+}`;
+
 const CREATE_TRANSACTION = gql`
-mutation createTransaction($input:CreateTransactionInput!) {
+mutation createTransaction($input: CreateTransactionInput!) {
   createTransaction(input: $input) {
     transaction {
       id,
@@ -238,7 +248,7 @@ mutation deleteObj($id: ID!) {
 export {
   getApolloClient,
   GET_TRANSACTIONS, GET_BILL, GET_ENUMS,
-  CREATE_TRANSACTION,
+  CREATE_ENUM, CREATE_TRANSACTION,
   UPDATE_TRANSACTION,
   DELETE
 };

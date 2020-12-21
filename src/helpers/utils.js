@@ -57,8 +57,9 @@ function getColor(config, percentage) {
 }
 
 function formatCurrency(amount) {
-  return amount.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,').split('.');
-
+  return amount.toFixed(2)
+    .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+    .split('.');
 }
 
 function DateTime({ time }) {
@@ -252,6 +253,21 @@ function shouldBeUndefined(val) {
   return SET_UNDEFINED.has(val);
 }
 
+function findById(items, id) {
+  // todo: use map
+  for (let each of items) {
+    if (each.id === id) {
+      return each;
+    }
+  }
+
+  return null;
+}
+
+function capitalizeFirstLetter(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
 export {
   isDevEnv, getBaseURL,
   formatCurrency,
@@ -264,4 +280,5 @@ export {
   booleanToInt,
   packSummaryFlag, unpackSummaryFlag,
   shouldBeUndefined,
+  findById, capitalizeFirstLetter,
 };
