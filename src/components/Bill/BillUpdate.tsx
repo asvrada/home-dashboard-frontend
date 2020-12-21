@@ -18,7 +18,7 @@ function BillUpdate() {
 
   return (
     <WrapperContainer>
-      <Row>
+      <Row className={'mt-2'}>
         <Col>
           <BillForm transaction={bill} urlToGoBack={`/detail/${bill.id}/`} />
         </Col>

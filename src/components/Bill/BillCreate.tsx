@@ -10,7 +10,7 @@ import BillForm from "./BillForm";
 function BillCreate() {
   return (
     <WrapperContainer>
-      <Row>
+      <Row className={'mt-2'}>
         <Col>
           <BillForm transaction={undefined} urlToGoBack={'/'} />
         </Col>

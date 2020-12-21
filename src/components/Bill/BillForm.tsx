@@ -3,6 +3,7 @@ import DateFnsUtils from '@date-io/date-fns';
 import { KeyboardDatePicker, KeyboardTimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import { ErrorMessage, Field, Formik } from "formik";
 import React from "react";
+import { Col, Row } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import { useHistory } from "react-router-dom";
 
@@ -255,7 +256,6 @@ function BillForm({transaction, urlToGoBack}: Props) {
             <ErrorMessage name="amount" component="div" />
             <br />
 
-            <label>Category</label>
             <DropdownListAndClearButtonRow
               listData={listCategory}
               propertyKey={'category'}
@@ -266,9 +266,7 @@ function BillForm({transaction, urlToGoBack}: Props) {
                   setFieldValue(type, obj.id);
                 })}
             />
-            <br />
 
-            <label>Company</label>
             <DropdownListAndClearButtonRow
               listData={listCompany}
               propertyKey={'company'}
@@ -279,9 +277,7 @@ function BillForm({transaction, urlToGoBack}: Props) {
                   setFieldValue(type, obj.id);
                 })}
             />
-            <br />
 
-            <label>Card</label>
             <DropdownListAndClearButtonRow
               listData={listCard}
               propertyKey={'card'}
@@ -292,22 +288,30 @@ function BillForm({transaction, urlToGoBack}: Props) {
                   setFieldValue(type, obj.id);
                 })}
             />
-            <br />
 
-            <label>Note</label>
-            <Field type="text" name="note" />
-            <ErrorMessage name="note" component="div" />
-            <br />
+            <Row>
+              <Col>
+                <label>Note</label>
+                <Field type="text" name="note" />
+                <ErrorMessage name="note" component="div" />
+              </Col>
+            </Row>
 
-            <label className="cursor-pointer" htmlFor="idSkipBudget">Don&lsquo;t count in Budget</label>
-            <Field id="idSkipBudget" name="isSkipBudget" component="input" type="checkbox"
-                   checked={(values as { isSkipBudget: boolean }).isSkipBudget} />
-            <br />
+            <Row>
+              <Col>
+                <label className="cursor-pointer" htmlFor="idSkipBudget">Don&lsquo;t count in Budget</label>
+                <Field id="idSkipBudget" name="isSkipBudget" component="input" type="checkbox"
+                       checked={(values as { isSkipBudget: boolean }).isSkipBudget} />
+              </Col>
+            </Row>
 
-            <label className="cursor-pointer" htmlFor="idSkipTotal">Don&lsquo;t count in Total</label>
-            <Field id="idSkipTotal" name="isSkipTotal" component="input" type="checkbox"
-                   checked={(values as { isSkipTotal: boolean }).isSkipTotal} />
-            <br />
+            <Row>
+              <Col>
+                <label className="cursor-pointer" htmlFor="idSkipTotal">Don&lsquo;t count in Total</label>
+                <Field id="idSkipTotal" name="isSkipTotal" component="input" type="checkbox"
+                       checked={(values as { isSkipTotal: boolean }).isSkipTotal} />
+              </Col>
+            </Row>
 
             <KeyboardDatePicker
               disableToolbar
@@ -333,7 +337,6 @@ function BillForm({transaction, urlToGoBack}: Props) {
                 'aria-label': 'change date',
               }}
             />
-            <br />
 
             <KeyboardTimePicker
               margin="normal"
@@ -357,24 +360,28 @@ function BillForm({transaction, urlToGoBack}: Props) {
               }}
             />
 
-            <br />
 
-            <Button type="button" variant='secondary' className="m-1" onClick={() => {
-              setFieldValue('timeCreated', new Date());
-            }}>
-              Set Date and Time to Now
-            </Button>
+            <Row>
+              <Col>
+                <Button type="button" variant='secondary' className="m-1" onClick={() => {
+                  setFieldValue('timeCreated', new Date());
+                }}>
+                  Set Date and Time to Now
+                </Button>
+              </Col>
+            </Row>
 
-            <br />
+            <Row>
+              <Col>
+                <Button type="submit" className="m-1" disabled={isSubmitting}>
+                  Submit
+                </Button>
 
-            <Button type="submit" className="m-1" disabled={isSubmitting}>
-              Submit
-            </Button>
-
-            <Button type="reset" className="m-1">
-              Cancel
-            </Button>
-
+                <Button type="reset" className="m-1">
+                  Cancel
+                </Button>
+              </Col>
+            </Row>
           </form>
         )}
       </Formik>
