@@ -56,9 +56,9 @@ function getIDorNull(obj: any): string | null {
 }
 
 function generateEnumList({enums}: any) {
-  let listCategory: getEnums_enums_edges_node[] = [];
-  let listCompany: getEnums_enums_edges_node[] = [];
-  let listCard: getEnums_enums_edges_node[] = [];
+  const listCategory: getEnums_enums_edges_node[] = [];
+  const listCompany: getEnums_enums_edges_node[] = [];
+  const listCard: getEnums_enums_edges_node[] = [];
 
   enums.edges.map((node: any) => {
     const obj: getEnums_enums_edges_node = node.node;
@@ -124,7 +124,7 @@ function generateInitialFormValue(transaction?: getBill_bill): FormValue {
 function prepareValueBeforeSubmit(values: FormValue, state: State): Payload {
   const skipSummaryFlag: number = packSummaryFlag(values.isSkipBudget, values.isSkipTotal);
 
-  let payload: Payload = {
+  const payload: Payload = {
     id: state.isCreate ? undefined : state.idToUpdate,
     amount: Math.round(values.amount * 100) / 100,
     category: values.category,
@@ -230,7 +230,7 @@ function BillForm({transaction, urlToGoBack}: Props) {
             // Redirect
             history.replace(`/detail/${id}/`);
           }).catch(err => {
-            let errAmount = err.graphQLErrors.map((errObj: any) => errObj.message);
+            const errAmount = err.graphQLErrors.map((errObj: any) => errObj.message);
 
             setErrors({amount: errAmount.join(". ")});
 

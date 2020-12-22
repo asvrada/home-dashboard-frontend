@@ -29,18 +29,23 @@ function DropdownListAndClearButtonRow({
                                        }: DropdownListAndClearButtonRowProp) {
   const value = values[propertyKey];
   const currentObj = value ? findById(listData, value) : null;
+
+  const btnRemoveSelection = (
+    <Button variant='link' size='sm' onClick={(e: any) => {
+      e.preventDefault();
+      setFieldValue(propertyKey, null);
+    }}>
+      Remove Selection
+    </Button>
+  );
+
   return (
     <>
       <Row>
         <Col>
           <HeaderSpan>{propertyKey}</HeaderSpan>
 
-          <Button variant='link' size='sm' onClick={(e: any) => {
-            e.preventDefault();
-            setFieldValue(propertyKey, null);
-          }}>
-            Clear Selection
-          </Button>
+          {currentObj ? btnRemoveSelection : null}
         </Col>
       </Row>
       <Row className={'mb-2'}>

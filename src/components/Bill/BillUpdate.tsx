@@ -8,8 +8,6 @@ import WrapperContainer from "../Layout/WrapperContainer";
 import { BillContext } from "./BillContext";
 import BillForm from "./BillForm";
 
-// @ts-ignore
-
 /**
  * For Update
  */

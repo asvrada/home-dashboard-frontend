@@ -1,12 +1,12 @@
-import { useQuery } from "@apollo/react-hooks";
-import React, { useRef } from "react";
-import Col from "react-bootstrap/Col";
-import InfiniteScroll from "react-infinite-scroller";
+import { useQuery } from '@apollo/react-hooks';
+import React, { useRef } from 'react';
+import Col from 'react-bootstrap/Col';
+import InfiniteScroll from 'react-infinite-scroller';
 
-import { GET_TRANSACTIONS } from "../../../helpers/graphql";
-import { insertDate } from "../../../helpers/utils";
-import DateBox from "./DateBox";
-import Entry from "./Entry";
+import { GET_TRANSACTIONS } from '../../../helpers/graphql';
+import { insertDate } from '../../../helpers/utils';
+import DateBox from './DateBox';
+import Entry from './Entry';
 
 function Wrapper({ children }) {
   return (
@@ -34,7 +34,7 @@ function ListView() {
   }
 
   if (error) {
-    console.log("ListView Error");
+    console.log('ListView Error');
     return <Wrapper>
       <div className="Entry text-center">An error occurred</div>
     </Wrapper>;
@@ -46,7 +46,7 @@ function ListView() {
   const edges = insertDate(data.bills.edges);
 
   const components = edges.map((node) => {
-    if (node.hasOwnProperty("type")) {
+    if (Object.prototype.hasOwnProperty.call(node, 'type')) {
       return (
         <DateBox key={String(node.date)} date={node.date} sum={node.sum} />
       );
@@ -62,7 +62,7 @@ function ListView() {
     <Wrapper>
       <div className="scroll-top"
            onClick={() => topRef.current.scrollIntoView(
-             { behavior: "smooth" })} />
+             { behavior: 'smooth' })} />
 
       <InfiniteScroll
         pageStart={0}

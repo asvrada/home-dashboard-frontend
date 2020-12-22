@@ -103,7 +103,7 @@ function insertDate(edges) {
   let prevDay = null;
 
   for (let idx = edges.length - 1; idx >= 0; idx--) {
-    if (!edges.hasOwnProperty(idx)) {
+    if (!Object.prototype.hasOwnProperty.call(edges, idx)) {
       continue;
     }
 
