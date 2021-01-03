@@ -1,9 +1,20 @@
 # Home dashboard Frontend
 
-Powered by React. 
+> This is the frontend part of the Home Dashboard project  
+> Link to backend: https://github.com/asvrada/home-dashboard-backend
 
-> This is the frontend for home dashboard project, link to backend: https://github.com/asvrada/home-dashboard-backend
+Powered by React.
 
+### To Run
+```bash
+yarn install
+# To run dev server
+yarn run start
+# To build production build
+yarn run build
+```
+
+## If the backend's GraphQL Schema has changed
 ### To fetch GraphQL schema
 `apollo schema:download --endpoint=http://localhost:4444/graphqltest/ graphql-schema.json`
 
