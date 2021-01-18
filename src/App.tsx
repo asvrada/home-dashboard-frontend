@@ -28,6 +28,7 @@ function LoginPage({location}: any) {
   );
 }
 
+// This is necessary or GraphQL Client won't have Auth header
 function ApolloWrapper() {
   const userContext = useContext(UserContext) as IUserContext;
 
