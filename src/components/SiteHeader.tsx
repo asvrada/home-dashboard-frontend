@@ -1,43 +1,185 @@
-import React, { useContext } from "react";
-import { LinkContainer } from 'react-router-bootstrap'
-import Nav from "react-bootstrap/Nav";
-import Navbar from "react-bootstrap/Navbar";
-import { IUserContext, UserAuthState, UserContext } from "./User/UserContext";
+import {
+  AppBar,
+  Button,
+  Divider,
+  Drawer,
+  IconButton,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  ListSubheader,
+  makeStyles,
+  Menu,
+  MenuItem,
+  Toolbar,
+  Typography
+} from '@material-ui/core';
+import { AccountCircle } from '@material-ui/icons';
+import AddIcon from '@material-ui/icons/Add';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import HomeIcon from '@material-ui/icons/Home';
+import MenuIcon from '@material-ui/icons/Menu';
+import React, { useContext } from 'react';
+import { useHistory } from 'react-router-dom';
+import { IUserContext, UserAuthState, UserContext } from './User/UserContext';
 
-function SiteHeader({children}: any) {
+const useStyles = makeStyles((theme) => ({
+  toolBar: {
+    'min-height': 0
+  },
+  menuButton: {
+    marginRight: theme.spacing(2),
+  },
+  title: {
+    flexGrow: 1,
+  },
+}));
+
+function SiteHeader(): any {
+  const history = useHistory();
+  const classes = useStyles();
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
   const userContext = useContext(UserContext) as IUserContext;
+  const open = Boolean(anchorEl);
 
-  const componentNavbar = userContext.userAuthState === UserAuthState.AUTHED ? (
-      <Navbar bg="light" expand="lg">
-        <LinkContainer to="/">
-          <Navbar.Brand>Dashboard</Navbar.Brand>
-        </LinkContainer>
-        <Nav className="ml-auto">
-          <LinkContainer to="/profile/">
-            <Nav.Link>Profile</Nav.Link>
-          </LinkContainer>
-        </Nav>
-      </Navbar>
-    ) :
-    // Navbar that non-login user see
-    (
-      <Navbar bg="light" expand="lg">
-        <LinkContainer to="/">
-          <Navbar.Brand>Dashboard</Navbar.Brand>
-        </LinkContainer>
-        <Nav className="ml-auto">
-          <LinkContainer to="/login/">
-            <Nav.Link>Login</Nav.Link>
-          </LinkContainer>
-        </Nav>
-      </Navbar>
-    );
+  const handleMenu = (event: any) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleDrawerClose = () => {
+    setIsDrawerOpen(false);
+  };
+
+  const handleLogout = () => {
+    userContext.logout();
+    history.push('/');
+  };
+
+  const handleRedirectAndCloseDrawer = (path: string) => {
+    setIsDrawerOpen(false);
+    history.push(path);
+  };
+
+  const componentDrawerUserUnauthed = (
+    <>
+      <ListItem button key={'user_login'} onClick={() => handleRedirectAndCloseDrawer('/login/')}>
+        <ListItemIcon><AccountCircle /></ListItemIcon>
+        <ListItemText primary={'Login / Signup'} />
+      </ListItem>
+    </>
+  );
+
+  const componentDrawerUserAuth = (
+    <>
+      <ListItem button key={'user_profile'} onClick={() => handleRedirectAndCloseDrawer('/profile/')}>
+        <ListItemIcon><AccountCircle /></ListItemIcon>
+        <ListItemText primary={'Profile'} />
+      </ListItem>
+
+      <ListItem button key={'user_logout'} onClick={() => {
+        handleLogout();
+        setIsDrawerOpen(false);
+      }}>
+        <ListItemIcon><ExitToAppIcon /></ListItemIcon>
+        <ListItemText primary={'Log out'} />
+      </ListItem>
+    </>
+  );
+
+  const componentAppBarLogin = (
+    <Button color="inherit" onClick={() => history.push('/login/')}>Login</Button>
+  );
+
+  const componentAppBarProfile = (
+    <div>
+      <IconButton
+        aria-label="account of current user"
+        aria-controls="menu-appbar"
+        aria-haspopup="true"
+        onClick={handleMenu}
+        color="inherit"
+      >
+        <AccountCircle />
+      </IconButton>
+      <Menu
+        id="menu-appbar"
+        anchorEl={anchorEl}
+        anchorOrigin={{
+          vertical: 'top',
+          horizontal: 'right',
+        }}
+        keepMounted
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'right',
+        }}
+        open={open}
+        onClose={handleMenuClose}
+      >
+        <MenuItem onClick={() => {
+          handleMenuClose();
+          history.push('/profile/');
+        }}>Profile</MenuItem>
+
+        <MenuItem onClick={() => {
+          handleMenuClose();
+          handleLogout();
+        }}>Logout</MenuItem>
+      </Menu>
+    </div>
+  );
 
   return (
     <>
-      {componentNavbar}
+      <AppBar position="static">
+        <Toolbar className={classes.toolBar}>
+          <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu"
+                      onClick={() => setIsDrawerOpen(true)}>
+            <MenuIcon />
+          </IconButton>
 
-      {children}
+          <Typography variant="h6" className={classes.title}>
+            Dashboard
+          </Typography>
+
+          {userContext.userAuthState === UserAuthState.AUTHED
+            ? componentAppBarProfile
+            : componentAppBarLogin}
+        </Toolbar>
+      </AppBar>
+
+      <Drawer open={isDrawerOpen} onClose={handleDrawerClose}>
+        <List>
+          <ListItem button key={'dashboard'} onClick={() => handleRedirectAndCloseDrawer('/')}>
+            <ListItemIcon><HomeIcon /></ListItemIcon>
+            <ListItemText primary={'Dashboard'} />
+          </ListItem>
+
+          <ListItem button key={'bill_create'} onClick={() => handleRedirectAndCloseDrawer('/detail/new/')}>
+            <ListItemIcon><AddIcon /></ListItemIcon>
+            <ListItemText primary={'Create Transaction'} />
+          </ListItem>
+        </List>
+
+        <Divider />
+
+        {/* User Action */}
+        <List subheader={
+          <ListSubheader component="div" id="list-subheader-user-action">
+            Account
+          </ListSubheader>
+        }>
+          {userContext.userAuthState === UserAuthState.AUTHED
+            ? componentDrawerUserAuth
+            : componentDrawerUserUnauthed}
+        </List>
+      </Drawer>
     </>
   );
 }

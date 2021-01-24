@@ -4,9 +4,9 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import { LinkContainer } from "react-router-bootstrap";
 import Dashboard from "./Dashboard";
-import WrapperContainer from "./Layout/WrapperContainer";
+import WrapperContainer from "../Layout/WrapperContainer";
 
-import { IUserContext, UserAuthState, UserContext } from "./User/UserContext";
+import { IUserContext, UserAuthState, UserContext } from "../User/UserContext";
 
 
 /**
@@ -22,7 +22,7 @@ function LandingPage() {
 
   if (userContext.userAuthState === UserAuthState.AUTHED) {
     return (
-      <WrapperContainer fluid={true}>
+      <WrapperContainer>
         <Dashboard />
       </WrapperContainer>
     );
