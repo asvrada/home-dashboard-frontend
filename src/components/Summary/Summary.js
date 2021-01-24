@@ -6,8 +6,6 @@ import { useGet } from 'restful-react';
 import { UserContext } from '../User/UserContext';
 import BudgetGadget from './BudgetGadget';
 
-import './Summary.scss';
-
 const useStyles = makeStyles((theme) => ({
   card: {
     padding: theme.spacing(0.5),

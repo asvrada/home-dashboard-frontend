@@ -2,10 +2,22 @@ import { Box, Grid, Hidden, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import React from 'react';
 
-import { buildStyles, CircularProgressbar } from 'react-circular-progressbar';
+import { buildStyles, CircularProgressbarWithChildren } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 
 import { getColor } from '../../helpers/utils';
+
+function getPercentage(current: number, total: number): number {
+  // The percentage of the progress [0, 100]
+  let percentage = 0;
+  if (current > 0 && total >= 0) {
+    percentage = Math.min(100,
+      Math.max(0,
+        Math.round(current / total * 100)));
+  }
+
+  return percentage;
+}
 
 const useStylesBar = makeStyles<any, any>((theme) => ({
   root: {
@@ -65,10 +77,7 @@ const useStylesBar = makeStyles<any, any>((theme) => ({
 }));
 
 function Bar({text, current, total}: any): any {
-  let range = 0;
-  if (current >= 0 && total > 0) {
-    range = Math.round(current / total * 100);
-  }
+  const percentage = getPercentage(current, total);
 
   // red
   const colorZero = [255, 0, 0];
@@ -83,9 +92,9 @@ function Bar({text, current, total}: any): any {
       [0.5, colorMiddle],
       [1, colorFull],
     ],
-    range / 100);
+    percentage / 100);
 
-  const textWidth = `${range}%`;
+  const textWidth = `${percentage}%`;
   // color array to rgb(x,y,z)
   const textColor = `rgb(${colorArray[0]}, ${colorArray[1]}, ${colorArray[2]})`;
 
@@ -133,32 +142,63 @@ function Bar({text, current, total}: any): any {
 const useStylesCircle = makeStyles((theme) => ({
   progressCircle: {
     'max-width': '86px',
+    'margin': 'auto'
   },
 }));
 
 function Circle({text, current, total}: any): any {
   const classes = useStylesCircle();
 
-  let percentage = 0;
-  if (current > 0 && total >= 0) {
-    percentage = Math.round(current / total * 100);
-  }
+  const percentage = getPercentage(current, total);
+
+  // red
+  const colorZero = [255, 0, 0];
+  // yellow
+  const colorMiddle = [255, 255, 0];
+  // green
+  const colorFull = [0, 255, 0];
+
+  // generate color array
+  const colorArray = getColor([
+      [0.1, colorZero],
+      [0.5, colorMiddle],
+      [1, colorFull],
+    ],
+    percentage / 100);
+
+  // color array to rgb(x,y,z)
+  const textColor = `rgb(${colorArray[0]}, ${colorArray[1]}, ${colorArray[2]})`;
 
   return (
     <Box>
       <Typography>{text}</Typography>
-      <Box px={3}>
-        <CircularProgressbar className={classes.progressCircle}
-                             counterClockwise={true}
-                             value={percentage}
-                             text={`$${current}`}
-                             styles={buildStyles({
-                               // Whether to use rounded or flat corners on the ends - can use 'butt' or 'round'
-                               strokeLinecap: 'butt',
-                             })}
-        />
+      {/*padding left and right*/}
+      <Box px={2}>
+        <Box className={classes.progressCircle}>
+          <CircularProgressbarWithChildren
+            counterClockwise={true}
+            value={percentage}
+            styles={buildStyles({
+              strokeLinecap: 'butt',
+              pathColor: textColor,
+              trailColor: 'rgba(128,128,128,0.1)'
+            })}
+          >
+            <ProgressBarContent current={current} total={total} />
+          </CircularProgressbarWithChildren>
+        </Box>
       </Box>
     </Box>
+  );
+}
+
+function ProgressBarContent({current, total}: any) {
+  return (
+    <div>
+      <div>{current}</div>
+      <hr style={{margin: 0}}/>
+      <div>{total}</div>
+    </div>
   );
 }
 

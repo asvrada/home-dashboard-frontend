@@ -1,25 +1,26 @@
-import { ApolloProvider } from "@apollo/react-hooks";
-import React, { useContext } from "react";
-import { BrowserRouter as Router, Redirect, Route, Switch, } from "react-router-dom";
-import { RestfulProvider } from "restful-react";
+import { ApolloProvider } from '@apollo/react-hooks';
+import { CssBaseline } from '@material-ui/core';
+import React, { useContext } from 'react';
+import { BrowserRouter as Router, Redirect, Route, Switch, } from 'react-router-dom';
+import { RestfulProvider } from 'restful-react';
 
-import "./App.scss";
-import { TransactionProvider } from "./components/Bill/BillContext";
-import BillCreate from "./components/Bill/BillCreate";
+import './App.scss';
+import { TransactionProvider } from './components/Bill/BillContext';
+import BillCreate from './components/Bill/BillCreate';
 
-import BillDetail from "./components/Bill/BillDetail";
-import BillUpdate from "./components/Bill/BillUpdate";
-import LandingPage from "./components/LandingPage";
+import BillDetail from './components/Bill/BillDetail';
+import BillUpdate from './components/Bill/BillUpdate';
+import LandingPage from './components/Index/LandingPage';
 
-import PrivateRoute from "./components/PrivateRoute";
-import Setting from "./components/Setting/Setting";
-import Login from "./components/User/Login";
-import { IUserContext, UserContext, UserProvider } from "./components/User/UserContext";
-import UserProfile from "./components/User/UserProfile";
-import { getApolloClient } from "./helpers/graphql";
-import { getBaseURL } from "./helpers/utils";
+import PrivateRoute from './components/PrivateRoute';
+import Setting from './components/Setting/Setting';
+import Login from './components/User/Login';
+import { IUserContext, UserContext, UserProvider } from './components/User/UserContext';
+import UserProfile from './components/User/UserProfile';
+import { getApolloClient } from './helpers/graphql';
+import { getBaseURL } from './helpers/utils';
 
-function LoginPage({location}: any) {
+function LoginWrapper({location}: any) {
   // from.pathname
   const pathname = location?.state?.from?.pathname;
 
@@ -61,7 +62,7 @@ function ApolloWrapper() {
         </PrivateRoute>
 
         {/* User related */}
-        <Route path="/login/" component={LoginPage} />
+        <Route path="/login/" component={LoginWrapper} />
 
         <PrivateRoute path="/profile/">
           <UserProfile />
@@ -79,17 +80,20 @@ function ApolloWrapper() {
   );
 }
 
-function App() {
+function App(): any {
   const baseURL = getBaseURL();
 
   return (
-    <Router>
-      <RestfulProvider base={baseURL}>
-        <UserProvider>
-          <ApolloWrapper />
-        </UserProvider>
-      </RestfulProvider>
-    </Router>
+    <>
+      <CssBaseline />
+      <Router>
+        <RestfulProvider base={baseURL}>
+          <UserProvider>
+            <ApolloWrapper />
+          </UserProvider>
+        </RestfulProvider>
+      </Router>
+    </>
   );
 }
 

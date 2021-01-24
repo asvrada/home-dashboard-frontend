@@ -1,15 +1,22 @@
-import React from "react";
-import Container from "react-bootstrap/Container";
-import SiteHeader from "../SiteHeader";
+import Container from '@material-ui/core/Container';
+import { makeStyles } from '@material-ui/core/styles';
+import React from 'react';
 
+import SiteHeader from '../SiteHeader';
 
-function WrapperContainer({fluid, children}: any) {
+const useStyles = makeStyles({
+  container: {
+    'margin-top': '16px'
+  }
+});
+
+function WrapperContainer({children}: any): any {
+  const classes = useStyles();
   return (
     <div className="App">
       <SiteHeader />
 
-      {/* If fluid missing, default to false */}
-      <Container fluid={!!fluid}>
+      <Container className={classes.container} maxWidth={'xl'}>
         {children}
       </Container>
     </div>
