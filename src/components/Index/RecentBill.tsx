@@ -6,7 +6,7 @@ import React from 'react';
 import { GET_TRANSACTIONS } from '../../helpers/graphql';
 import { insertDate } from '../../helpers/utils';
 import DateBox from '../Views/ListView/DateBox';
-import Entry from '../Views/ListView/Entry';
+import Entry from './Bill/Entry';
 
 function RecentBillHeader(): any {
   return (
@@ -56,32 +56,31 @@ function RecentBill(): any {
         );
       }
 
-      const isIncome = node.amount > 0;
       return (
-        <Entry isIncome={isIncome} key={node.id} node={node} />
+        <Box key={node.id} p={1}>
+          <Entry key={node.id} bill={node} />
+        </Box>
       );
     });
   }
 
   return (
     <Paper>
-      <Box p={1}>
-        <Grid container spacing={1}>
-          <Grid item xs={12}>
-            <RecentBillHeader />
-          </Grid>
-
-          <Grid item xs={12}>
-            {components}
-          </Grid>
-
-          <Grid item xs={12} className={classes.footer}>
-            <Button size="small" color="primary">
-              View All
-            </Button>
-          </Grid>
+      <Grid container spacing={1}>
+        <Grid item xs={12}>
+          <RecentBillHeader />
         </Grid>
-      </Box>
+
+        <Grid item xs={12}>
+          {components}
+        </Grid>
+
+        <Grid item xs={12} className={classes.footer}>
+          <Button size="small" color="primary">
+            View All
+          </Button>
+        </Grid>
+      </Grid>
     </Paper>
   );
 }
