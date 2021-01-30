@@ -1,6 +1,4 @@
-import React from 'react';
-
-function isDevEnv() {
+function isDevEnv(): boolean {
   return [process, process.env, process.env.NODE_ENV === 'development'].every(
     (each) => each !== null && each !== false,
   );
@@ -11,9 +9,9 @@ function isDevEnv() {
  * @param config: List of tuple (position, color array)
  * @param percentage
  */
-function getColor(config, percentage) {
-  function colorHelper(colorStart, colorEnd, percentage) {
-    function helper(start, end, percent) {
+function getColor(config: [number, number[]][], percentage: number) {
+  function colorHelper(colorStart: number[], colorEnd: number[], percentage: number) {
+    function helper(start: number, end: number, percent: number) {
       return Math.round((end - start) * percent + start);
     }
 
@@ -24,9 +22,9 @@ function getColor(config, percentage) {
     ];
   }
 
-  let colorStart = null;
-  let colorEnd = null;
-  let relativePercentage = null;
+  let colorStart: number[];
+  let colorEnd: number[];
+  let relativePercentage: number;
 
   let i = 0;
 
@@ -39,7 +37,7 @@ function getColor(config, percentage) {
     colorEnd = colorStart;
     relativePercentage = 0;
   } else if (i === config.length) {
-    colorStart = config[config.length - 1][0];
+    colorStart = config[config.length - 1][1];
     colorEnd = colorStart;
     relativePercentage = 0;
   } else {
@@ -56,29 +54,13 @@ function getColor(config, percentage) {
   return colorHelper(colorStart, colorEnd, relativePercentage);
 }
 
-function formatCurrency(amount) {
+function formatCurrency(amount: number) {
   return amount.toFixed(2)
     .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
     .split('.');
 }
 
-function DateTime({ time }) {
-  const objDatetime = new Date(time);
-
-  const year = objDatetime.getFullYear();
-  const month = objDatetime.getMonth() + 1;
-  const date = objDatetime.getDate().toString().padStart(2, '0');
-  const hour = objDatetime.getHours();
-  const minute = objDatetime.getMinutes().toString().padStart(2, '0');
-
-  const str = `${hour}:${minute} ${month}/${date}/${year}`;
-
-  return (
-    <div>{str}</div>
-  );
-}
-
-function convertDate(str_datetime) {
+function convertDate(str_datetime: string) {
   const day = new Date(str_datetime);
   return [day.getFullYear(), day.getMonth() + 1, day.getDate()];
 }
@@ -87,9 +69,17 @@ function convertDate(str_datetime) {
  * @param edges: [{node: {amount, timeCreated}}]
  * @return: [node | {type: metadata, date: [1 2 3], sum: number}]
  */
-function insertDate(edges) {
-  function isEqual(a, b) {
+function insertDate(edges: any[]) {
+  function isEqual(a: any, b: any) {
     return a[0] === b[0] && a[1] === b[1] && a[2] === b[2];
+  }
+
+  function createMetadata(sum: number, date: number[]) {
+    return {
+      isMetadata: true,
+      sum: sum,
+      date: date,
+    };
   }
 
   if (edges.length === 0) {
@@ -97,7 +87,7 @@ function insertDate(edges) {
   }
 
   const today = new Date();
-  let newEdges = [];
+  const newEdges = [];
 
   let tempSum = 0;
   let prevDay = null;
@@ -107,18 +97,18 @@ function insertDate(edges) {
       continue;
     }
 
-    const node = edges[idx].node;
+    const node = {
+      ...(edges[idx].node),
+      isMetadata: false
+    };
+
     const date = convertDate(node.timeCreated);
     if (prevDay === null) {
       prevDay = date;
     }
 
     if (!isEqual(prevDay, date)) {
-      newEdges.push({
-        type: 'metadata',
-        sum: tempSum,
-        date: prevDay,
-      });
+      newEdges.push(createMetadata(tempSum, prevDay));
 
       tempSum = 0;
       prevDay = date;
@@ -132,87 +122,20 @@ function insertDate(edges) {
   // handle last
   const dateLatest = convertDate(edges[0].node.timeCreated);
   if (!isEqual(dateLatest, today)) {
-    newEdges.push({
-      type: 'metadata',
-      sum: tempSum,
-      date: dateLatest,
-    });
+    newEdges.push(createMetadata(tempSum, dateLatest));
   }
 
   return newEdges.reverse();
 }
 
-/**
- * Is leap year?
- * @param year: 4 digit number represents year
- * @returns {boolean}
- */
-function isLeapYear(year) {
-  // credit: https://stackoverflow.com/questions/16353211/check-if-year-is-leap-year-in-javascript
-  return ((year % 4 === 0) && (year % 100 !== 0)) || (year % 400 === 0);
-}
-
-function daysInMonth(year, month) {
-  const table = {
-    1: 31,
-    2: isLeapYear(year) ? 29 : 28,
-    3: 31,
-    4: 30,
-    5: 31,
-    6: 30,
-    7: 31,
-    8: 31,
-    9: 30,
-    10: 31,
-    11: 30,
-    12: 31,
-  };
-
-  return table[month];
-}
-
-function getDateObj() {
-  return new Date();
-}
-
-function getMonth() {
-  return getDateObj().getMonth() + 1;
-}
-
-function getDate() {
-  return getDateObj().getDate();
-}
-
-function getDay() {
-  const DAT_TO_STRING = {
-    0: 'Sun',
-    1: 'Mon',
-    2: 'Tue',
-    3: 'Wed',
-    4: 'Thu',
-    5: 'Fri',
-    6: 'Sat',
-  };
-
-  return DAT_TO_STRING[getDateObj().getDay()];
-}
-
-/**
- * Include today, how many days left in this month
- * Result always >= 1
- * @returns {number}
- */
-function getDaysLeft() {
-  return Math.max(1,
-    1 + daysInMonth(getDateObj().getFullYear(), getMonth()) - getDate());
-}
-
-function getCurrentISOString() {
-  return (new Date()).toISOString();
-}
-
-function booleanToInt(flag) {
+function booleanToInt(flag: boolean): number {
   return flag ? 1 : 0;
+}
+
+
+interface returnUnpackSummaryFlag {
+  isSkipBudget: boolean,
+  isSkipTotal: boolean
 }
 
 /**
@@ -221,7 +144,7 @@ function booleanToInt(flag) {
  * @param flag: number
  * @returns {{isSkipTotal: boolean, isSkipBudget: boolean}}
  */
-function unpackSummaryFlag(flag) {
+function unpackSummaryFlag(flag: number): returnUnpackSummaryFlag {
   return {
     isSkipBudget: !!(flag & 1),
     isSkipTotal: !!(flag & 2),
@@ -234,7 +157,7 @@ function unpackSummaryFlag(flag) {
  * @param isSkipTotal: boolean
  * @returns {number}
  */
-function packSummaryFlag(isSkipBudget, isSkipTotal) {
+function packSummaryFlag(isSkipBudget: boolean, isSkipTotal: boolean): number {
   return booleanToInt(isSkipBudget) | (booleanToInt(isSkipTotal) * 2);
 }
 
@@ -249,13 +172,13 @@ function getBaseURL() {
 
 const SET_UNDEFINED = new Set(['', 'none', 'null', null, undefined]);
 
-function shouldBeUndefined(val) {
+function shouldBeUndefined(val: any): boolean {
   return SET_UNDEFINED.has(val);
 }
 
-function findById(items, id) {
+function findById(items: any[], id: string) {
   // todo: use map
-  for (let each of items) {
+  for (const each of items) {
     if (each.id === id) {
       return each;
     }
@@ -264,7 +187,7 @@ function findById(items, id) {
   return null;
 }
 
-function capitalizeFirstLetter(string) {
+function capitalizeFirstLetter(string: string): string {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
@@ -272,11 +195,8 @@ export {
   isDevEnv, getBaseURL,
   formatCurrency,
   getColor,
-  DateTime,
   convertDate,
   insertDate,
-  getMonth, getDate, getDay, getDaysLeft,
-  getCurrentISOString,
   booleanToInt,
   packSummaryFlag, unpackSummaryFlag,
   shouldBeUndefined,

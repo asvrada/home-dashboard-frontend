@@ -1,6 +1,6 @@
 import { Grid } from '@material-ui/core';
 import React from 'react';
-import RecentBill from '../Views/ListView/RecentBill';
+import RecentBill from './RecentBill';
 import PieChart from '../Views/PieChart/PieChart';
 
 import Summary from './Summary/Summary';

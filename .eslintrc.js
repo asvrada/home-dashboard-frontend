@@ -27,16 +27,7 @@ module.exports = {
   ],
   'rules': {
     '@typescript-eslint/no-explicit-any': 'off',
-    "@typescript-eslint/explicit-function-return-type": "off"
+    '@typescript-eslint/explicit-function-return-type': 'off',
+    '@typescript-eslint/explicit-module-boundary-types': 'off',
   },
-  'overrides': [
-    {
-      'files': ['**/*.js?(x)'],
-      'rules': {
-        'react/no-unescaped-entities': 'off',
-        'react/display-name': 'off',
-        'react/prop-types': 'off',
-      },
-    },
-  ],
 };
