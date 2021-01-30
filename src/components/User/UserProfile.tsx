@@ -7,7 +7,7 @@ import { LinkContainer } from "react-router-bootstrap";
 import WrapperContainer from "../Layout/WrapperContainer";
 import { IUserContext, UserAuthState, UserContext } from "./UserContext";
 
-function UserProfile() {
+function UserProfile(): any {
   const userContext = useContext(UserContext) as IUserContext;
 
   if (userContext.userAuthState === UserAuthState.UNAUTHED) {

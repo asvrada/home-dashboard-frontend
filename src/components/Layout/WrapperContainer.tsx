@@ -10,7 +10,7 @@ const useStyles = makeStyles({
   }
 });
 
-function WrapperContainer({children}: any): any {
+function WrapperContainer({children}: {children: any}): any {
   const classes = useStyles();
   return (
     <div className="App">

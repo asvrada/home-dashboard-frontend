@@ -66,7 +66,7 @@ function UpdateBudgetForm({initialBudget, putBudget}: any) {
   );
 }
 
-function Setting() {
+function Setting(): any {
   const userContext = useContext(UserContext) as IUserContext;
 
   // GET

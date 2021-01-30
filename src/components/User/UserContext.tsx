@@ -1,10 +1,10 @@
-import React from "react";
-import { getBaseURL } from "../../helpers/utils";
+import React from 'react';
+import { getBaseURL } from '../../helpers/utils';
 
 enum UserAuthState {
-  UNAUTHED = "Unauthorized",
-  AUTHED = "Authorized",
-  PROCESSING = "Processing"
+  UNAUTHED = 'Unauthorized',
+  AUTHED = 'Authorized',
+  PROCESSING = 'Processing'
 }
 
 interface Props {
@@ -40,13 +40,13 @@ class UserProvider extends React.Component<Props> {
   // Life Cycle      //
   ////////////////////
   componentDidMount(): void {
-    console.log("Dashboard - UserProvider - componentDidMount - loadLocalStorage");
+    console.log('Dashboard - UserProvider - componentDidMount - loadLocalStorage');
 
     this.handleAppStartup();
   }
 
   componentWillUnmount(): void {
-    console.log("Dashboard - componentWillUnmount - setLocalStorage");
+    console.log('Dashboard - componentWillUnmount - setLocalStorage');
 
     this.setLocalStorage();
   }
@@ -54,7 +54,7 @@ class UserProvider extends React.Component<Props> {
   ////////////
   // helper //
   ///////////
-  setAuthState(state: UserAuthState) {
+  setAuthState(state: UserAuthState): void {
     this.setState({
       ...this.state,
       userAuthState: state
@@ -64,7 +64,7 @@ class UserProvider extends React.Component<Props> {
   ///////////
   // Logic //
   ///////////
-  handleAppStartup() {
+  handleAppStartup(): void {
     const tokenRefresh = this.loadLocalStorage();
 
     if (tokenRefresh === null) {
@@ -84,7 +84,7 @@ class UserProvider extends React.Component<Props> {
     });
   }
 
-  handleLoginSuccessful(access: string, refresh: string) {
+  handleLoginSuccessful(access: string, refresh: string): any {
     this.setState({
       tokenAccess: access,
       tokenRefresh: refresh,
@@ -94,7 +94,7 @@ class UserProvider extends React.Component<Props> {
     this.setLocalStorage();
   }
 
-  handleLogout() {
+  handleLogout(): any {
     this.setState({
       tokenAccess: undefined,
       tokenRefresh: undefined,
@@ -113,11 +113,11 @@ class UserProvider extends React.Component<Props> {
    * @return A Promise resolve to true if login is successful
    */
   apiGoogleLogin(token: string): Promise<boolean> {
-    return fetch(this.base + "google-login/", {
-      method: "POST",
+    return fetch(this.base + 'google-login/', {
+      method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({
-        "token": token
+        'token': token
       })
     }).then(res => res.json())
       .then(data => this.handleLoginSuccessful(data.access, data.refresh))
@@ -135,8 +135,8 @@ class UserProvider extends React.Component<Props> {
    * @return A Promise resolve to true if login is successful
    */
   apiEmailLogin(email: string, password: string): Promise<boolean> {
-    return fetch(this.base + "email-login/", {
-      method: "POST",
+    return fetch(this.base + 'email-login/', {
+      method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({
         email: email,
@@ -157,8 +157,8 @@ class UserProvider extends React.Component<Props> {
    * @return A Promise resolve to true if access token refreshed successfully
    */
   apiTokenRefresh(refresh: string): Promise<boolean> {
-    return fetch(this.base + "token-refresh/", {
-      method: "POST",
+    return fetch(this.base + 'token-refresh/', {
+      method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({
         refresh: refresh
@@ -167,9 +167,9 @@ class UserProvider extends React.Component<Props> {
       .then(data => this.handleLoginSuccessful(data.access, refresh))
       .then(() => true)
       .catch((err) => {
-        console.error("Failed to refresh token with error", err);
+        console.error('Failed to refresh token with error', err);
         return false;
-      })
+      });
   }
 
   /**
@@ -178,8 +178,8 @@ class UserProvider extends React.Component<Props> {
    * @return a Promise resolve to true if token is not expired and valid
    */
   apiTokenVerify(token: string): Promise<boolean> {
-    return fetch(this.base + "token-verify/", {
-      method: "POST",
+    return fetch(this.base + 'token-verify/', {
+      method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({
         token: token
@@ -189,10 +189,10 @@ class UserProvider extends React.Component<Props> {
         return Promise.reject(res);
       }
 
-      console.log("Dashboard - apiTokenVerify success");
+      console.log('Dashboard - apiTokenVerify success');
       return true;
     }).catch(err => {
-      console.log("Dashboard - apiTokenVerify failed", err);
+      console.log('Dashboard - apiTokenVerify failed', err);
       return false;
     });
   }
@@ -200,22 +200,22 @@ class UserProvider extends React.Component<Props> {
   //////////////////
   // localStorage //
   //////////////////
-  setLocalStorage() {
+  setLocalStorage(): any {
     // only store if user logged in
     if (this.state.tokenRefresh) {
-      localStorage.setItem("refresh", this.state.tokenRefresh!);
+      localStorage.setItem('refresh', this.state.tokenRefresh);
     }
   }
 
-  loadLocalStorage() {
-    return localStorage.getItem("refresh");
+  loadLocalStorage(): string | null {
+    return localStorage.getItem('refresh');
   }
 
-  clearLocalStorage() {
+  clearLocalStorage(): void {
     localStorage.clear();
   }
 
-  render() {
+  render(): any {
     const userContext: IUserContext = {
       userAuthState: this.state.userAuthState,
       accessToken: this.state.tokenAccess,
@@ -228,7 +228,7 @@ class UserProvider extends React.Component<Props> {
       <UserContext.Provider value={userContext}>
         {this.props.children}
       </UserContext.Provider>
-    )
+    );
   }
 }
 

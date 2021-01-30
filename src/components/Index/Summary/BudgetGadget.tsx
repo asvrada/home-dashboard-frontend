@@ -5,7 +5,7 @@ import React from 'react';
 import { buildStyles, CircularProgressbarWithChildren } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 
-import { getColor } from '../../helpers/utils';
+import { getColor } from '../../../helpers/utils';
 
 function getPercentage(current: number, total: number): number {
   // The percentage of the progress [0, 100]
@@ -19,7 +19,7 @@ function getPercentage(current: number, total: number): number {
   return percentage;
 }
 
-const useStylesBar = makeStyles<any, any>((theme) => ({
+const useStylesBar = makeStyles<any, any>(() => ({
   root: {
     position: 'relative',
     'height': '35px',
@@ -139,7 +139,7 @@ function Bar({text, current, total}: any): any {
   );
 }
 
-const useStylesCircle = makeStyles((theme) => ({
+const useStylesCircle = makeStyles(() => ({
   progressCircle: {
     'max-width': '86px',
     'margin': 'auto'

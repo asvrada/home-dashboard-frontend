@@ -26,7 +26,7 @@ function DropdownListAndClearButtonRow({
                                          values,
                                          setFieldValue,
                                          onCreateCallback
-                                       }: DropdownListAndClearButtonRowProp) {
+                                       }: DropdownListAndClearButtonRowProp): any {
   const value = values[propertyKey];
   const currentObj = value ? findById(listData, value) : null;
 

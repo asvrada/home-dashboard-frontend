@@ -16,7 +16,7 @@ import { BillContext } from "./BillContext";
 /**
  * For Retrieve and Delete
  */
-function BillDetail() {
+function BillDetail(): any {
   const bill = useContext(BillContext) as getBill_bill;
   const history = useHistory();
   const [deleteObj] = useMutation(DELETE);
@@ -29,7 +29,7 @@ function BillDetail() {
       variables: {
         id: id
       }
-    }).then(res => {
+    }).then(() => {
       history.push("/");
     });
   };

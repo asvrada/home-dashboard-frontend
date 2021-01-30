@@ -21,14 +21,13 @@ function handleGoogleLoginSuccess(res: any, userContext: IUserContext) {
   return userContext.googleLogin(token);
 }
 
-function Login({redirect}: Props) {
-  redirect = redirect ? redirect : '/';
-
+function Login({redirect}: Props): any {
+  const redirectURL = redirect ?? '/';
   const userContext = useContext(UserContext) as IUserContext;
   const history = useHistory();
 
   if (userContext.userAuthState === UserAuthState.AUTHED) {
-    return <Redirect to={redirect} />;
+    return <Redirect to={redirectURL} />;
   }
 
   const email = 'noojeff@gmail.com';
@@ -36,7 +35,7 @@ function Login({redirect}: Props) {
 
   const handleLoginResponse = (succeed: boolean) => {
     if (succeed) {
-      history.push(redirect!);
+      history.push(redirectURL);
     }
   };
 

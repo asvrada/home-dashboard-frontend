@@ -1,9 +1,9 @@
 import { Grid } from '@material-ui/core';
 import React from 'react';
-
-import Summary from '../Summary/Summary';
-// import ListView from '../Views/ListView/ListView';
+import RecentBill from '../Views/ListView/RecentBill';
 import PieChart from '../Views/PieChart/PieChart';
+
+import Summary from './Summary/Summary';
 
 function Dashboard(): any {
   return (
@@ -13,15 +13,11 @@ function Dashboard(): any {
       </Grid>
 
       <Grid item xs={12}>
-        <Grid container spacing={1}>
-          {/*<Grid item xs={12} md={4}>*/}
-          {/*  <ListView />*/}
-          {/*</Grid>*/}
+        <RecentBill />
+      </Grid>
 
-          <Grid item xs={12} md={8}>
-            <PieChart />
-          </Grid>
-        </Grid>
+      <Grid item xs={12}>
+        <PieChart />
       </Grid>
     </Grid>
   );

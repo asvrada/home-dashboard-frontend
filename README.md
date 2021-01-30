@@ -3,7 +3,7 @@
 > This is the frontend part of the Home Dashboard project  
 > Link to backend: https://github.com/asvrada/home-dashboard-backend
 
-Powered by React.
+Powered by React and Material-UI.
 
 ### To Run
 ```bash

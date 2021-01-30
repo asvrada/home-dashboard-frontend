@@ -1,9 +1,9 @@
-import { Card } from '@material-ui/core';
+import { Paper } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import React, { useContext } from 'react';
 import { useGet } from 'restful-react';
 
-import { UserContext } from '../User/UserContext';
+import { UserContext } from '../../User/UserContext';
 import BudgetGadget from './BudgetGadget';
 
 const useStyles = makeStyles((theme) => ({
@@ -29,9 +29,9 @@ function Summary() {
   }
 
   return (
-    <Card className={classes.card}>
+    <Paper className={classes.card}>
       {componentBudget}
-    </Card>
+    </Paper>
   );
 }
 

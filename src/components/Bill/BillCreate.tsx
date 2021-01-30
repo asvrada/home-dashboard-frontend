@@ -7,7 +7,7 @@ import BillForm from "./BillForm";
 /**
  * For Create
  */
-function BillCreate() {
+function BillCreate(): any {
   return (
     <WrapperContainer>
       <Row className={'mt-2'}>

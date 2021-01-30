@@ -13,7 +13,7 @@ import { IUserContext, UserAuthState, UserContext } from "../User/UserContext";
  * For anonymous user, show welcome page
  * For authed user, show dashboard
  */
-function LandingPage() {
+function LandingPage(): any {
   const userContext = useContext(UserContext) as IUserContext;
 
   if (userContext.userAuthState === UserAuthState.PROCESSING) {

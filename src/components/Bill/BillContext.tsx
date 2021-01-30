@@ -10,7 +10,7 @@ type Props = {
 
 const BillContext = React.createContext({});
 
-function TransactionProvider({children}: Props) {
+function TransactionProvider({children}: Props): any {
   const {id} = useParams();
 
   // get transaction detail

@@ -11,7 +11,7 @@ import BillForm from "./BillForm";
 /**
  * For Update
  */
-function BillUpdate() {
+function BillUpdate(): any {
   const bill = useContext(BillContext) as getBill_bill;
 
   return (

@@ -149,7 +149,7 @@ function prepareValueBeforeSubmit(values: FormValue, state: State): Payload {
   return payload;
 }
 
-function BillForm({transaction, urlToGoBack}: Props) {
+function BillForm({transaction, urlToGoBack}: Props): any {
   const history = useHistory();
   const client = useApolloClient();
   const {loading, error, data} = useQuery(GET_ENUMS);

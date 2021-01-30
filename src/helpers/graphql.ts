@@ -1,14 +1,14 @@
-import { gql } from "apollo-boost";
+import { gql } from 'apollo-boost';
+import { InMemoryCache } from 'apollo-cache-inmemory';
 import { ApolloClient } from 'apollo-client';
 import { setContext } from 'apollo-link-context';
 import { createHttpLink } from 'apollo-link-http';
-import { InMemoryCache } from 'apollo-cache-inmemory';
-import { getBaseURL } from "./utils";
+import { getBaseURL } from './utils';
 
 
-function getApolloClient(token?: string) {
+function getApolloClient(token?: string): ApolloClient<any> {
   const httpLink = createHttpLink({
-    uri: getBaseURL() + "graphql/"
+    uri: getBaseURL() + 'graphql/'
   });
 
   const authLink = setContext((_, {headers}) => {
@@ -16,9 +16,9 @@ function getApolloClient(token?: string) {
     return {
       headers: {
         ...headers,
-        authorization: token ? `Bearer ${token}` : "",
+        authorization: token ? `Bearer ${token}` : '',
       }
-    }
+    };
   });
 
   return new ApolloClient({

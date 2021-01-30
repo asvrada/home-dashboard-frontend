@@ -1,8 +1,8 @@
-import React, { useContext } from "react";
-import { Redirect, Route } from "react-router-dom"
-import { IUserContext, UserAuthState, UserContext } from "./User/UserContext";
+import React, { useContext } from 'react';
+import { Redirect, Route } from 'react-router-dom';
+import { IUserContext, UserAuthState, UserContext } from './User/UserContext';
 
-function PrivateRoute({children, ...rest}: any) {
+function PrivateRoute({children, ...rest}: any): any {
   const userContext = useContext(UserContext) as IUserContext;
 
   return (
@@ -16,7 +16,7 @@ function PrivateRoute({children, ...rest}: any) {
             component = (
               <Redirect
                 to={{
-                  pathname: "/login/",
+                  pathname: '/login/',
                   state: {from: location}
                 }}
               />
@@ -28,7 +28,7 @@ function PrivateRoute({children, ...rest}: any) {
             component = children;
             break;
           default:
-            throw new DOMException("Invalid state", userContext.userAuthState);
+            throw new DOMException('Invalid state', userContext.userAuthState);
         }
 
         return component;
