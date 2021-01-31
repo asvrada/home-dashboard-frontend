@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/react-hooks';
-import { Box, Button, Grid, IconButton, Paper } from '@material-ui/core';
+import { Box, Button, Grid, IconButton, Paper, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { Add } from '@material-ui/icons';
 import React from 'react';
@@ -15,7 +15,11 @@ function RecentBillHeader(): any {
   return (
     <Grid container justify="space-between">
       <Grid item>
-        Recent Transaction
+        <Box ml={1} mt={0.5}>
+          <Typography>
+            Recent Transaction
+          </Typography>
+        </Box>
       </Grid>
 
       <Grid item>

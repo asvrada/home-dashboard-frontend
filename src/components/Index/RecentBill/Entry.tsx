@@ -22,7 +22,8 @@ const StyleSpending = {
 
 const useStyles = makeStyles<any, any>({
   app: props => ({
-    'background-color': props['background-color']
+    'background-color': props['background-color'],
+    'cursor': 'pointer'
   })
 });
 

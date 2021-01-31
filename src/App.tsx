@@ -5,6 +5,8 @@ import { BrowserRouter as Router, Redirect, Route, Switch, } from 'react-router-
 import { RestfulProvider } from 'restful-react';
 
 import './App.scss';
+
+import AllEntry from './components/AllEntry/AllEntry';
 import { TransactionProvider } from './components/Bill/BillContext';
 import BillCreate from './components/Bill/BillCreate';
 
@@ -40,7 +42,7 @@ function ApolloWrapper() {
       <Switch>
         {/* View all history Transactions */}
         <PrivateRoute exact path={routeURL(EnumPage.AllEntry)}>
-          <div>todo: 查看所有bill</div>
+          <AllEntry />
         </PrivateRoute>
 
         {/* Bill Detail pages */}
