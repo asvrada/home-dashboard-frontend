@@ -8,17 +8,6 @@
   word-break: break-word;
 }
 
-.amount {
-  .dollar-sign {
-    opacity: 0.5;
-    margin-right: 5px;
-  }
-
-  .amount-decimal {
-    font-size: 0.8em;
-  }
-}
-
 .fake-col {
   padding-left: 15px;
   padding-right: 15px;
@@ -99,18 +88,6 @@
           font-size: 0.8em;
         }
       }
-
-      .EntryIn {
-        background-color: aqua;
-      }
-
-      .EntryOut {
-        //background-color: aqua;
-      }
-    }
-
-    .PieChart {
-      background-color: gray;
     }
   }
 }

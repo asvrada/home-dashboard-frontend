@@ -6,7 +6,9 @@ import SiteHeader from '../SiteHeader';
 
 const useStyles = makeStyles({
   container: {
-    'margin-top': '16px'
+    'margin-top': '16px',
+    'padding-left': '8px',
+    'padding-right': '8px'
   }
 });
 

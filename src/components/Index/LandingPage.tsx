@@ -1,12 +1,12 @@
-import React, { useContext } from "react";
-import Button from "react-bootstrap/Button";
-import Col from "react-bootstrap/Col";
-import Row from "react-bootstrap/Row";
-import { LinkContainer } from "react-router-bootstrap";
-import Dashboard from "./Dashboard";
-import WrapperContainer from "../Layout/WrapperContainer";
+import { Button } from '@material-ui/core';
+import React, { useContext } from 'react';
+import Col from 'react-bootstrap/Col';
+import Row from 'react-bootstrap/Row';
+import { Link } from 'react-router-dom';
+import WrapperContainer from '../Layout/WrapperContainer';
 
-import { IUserContext, UserAuthState, UserContext } from "../User/UserContext";
+import { IUserContext, UserAuthState, UserContext } from '../User/UserContext';
+import Dashboard from './Dashboard';
 
 
 /**
@@ -35,9 +35,9 @@ function LandingPage(): any {
           <h1>Login to see your personalized dashboard</h1>
         </Row>
         <Row>
-          <LinkContainer to="/login/">
-            <Button>Login</Button>
-          </LinkContainer>
+          <Button variant="contained" color="primary" component={Link} to={'/login/'}>
+            Login
+          </Button>
         </Row>
       </Col>
     </WrapperContainer>

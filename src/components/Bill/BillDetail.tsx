@@ -1,17 +1,16 @@
-import { useMutation } from "@apollo/react-hooks";
-import React, { useContext } from "react";
-import Button from "react-bootstrap/Button";
-import Col from "react-bootstrap/Col";
-import Row from "react-bootstrap/Row";
-import { LinkContainer } from "react-router-bootstrap";
-import { useHistory } from "react-router-dom";
+import { useMutation } from '@apollo/react-hooks';
+import { Button } from '@material-ui/core';
+import React, { useContext } from 'react';
+import Col from 'react-bootstrap/Col';
+import Row from 'react-bootstrap/Row';
+import { Link, useHistory } from 'react-router-dom';
 
-import { DELETE } from "../../helpers/graphql";
-import { getBill_bill } from "../../helpers/types/getBill";
-import { unpackSummaryFlag } from "../../helpers/utils";
-import WrapperContainer from "../Layout/WrapperContainer";
+import { DELETE } from '../../helpers/graphql';
+import { getBill_bill } from '../../helpers/types/getBill';
+import { unpackSummaryFlag } from '../../helpers/utils';
+import WrapperContainer from '../Layout/WrapperContainer';
 
-import { BillContext } from "./BillContext";
+import { BillContext } from './BillContext';
 
 /**
  * For Retrieve and Delete
@@ -30,7 +29,7 @@ function BillDetail(): any {
         id: id
       }
     }).then(() => {
-      history.push("/");
+      history.push('/');
     });
   };
 
@@ -61,15 +60,11 @@ function BillDetail(): any {
           <p>{bill.timeCreated}</p>
 
           <div>
-            <LinkContainer to={'/'}>
-              <Button className="m-1">Back</Button>
-            </LinkContainer>
+            <Button variant="contained" component={Link} to={'/'}>Back</Button>
 
-            <LinkContainer to={`/detail/${id}/edit/`}>
-              <Button className="m-1">Edit</Button>
-            </LinkContainer>
+            <Button variant="contained" color="primary" component={Link} to={`/detail/${id}/edit/`}>Edit</Button>
 
-            <Button className="m-1"
+            <Button variant="contained" color="secondary"
                     onClick={handleDelete}>Delete</Button>
           </div>
         </Col>

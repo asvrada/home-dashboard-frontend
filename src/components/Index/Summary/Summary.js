@@ -8,7 +8,7 @@ import BudgetGadget from './BudgetGadget';
 
 const useStyles = makeStyles((theme) => ({
   card: {
-    padding: theme.spacing(0.5),
+    // padding: theme.spacing(0.5),
     textAlign: 'center',
   },
 }));

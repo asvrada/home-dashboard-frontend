@@ -60,7 +60,7 @@ function formatCurrency(amount: number) {
     .split('.');
 }
 
-function convertDate(str_datetime: string) {
+function convertDate(str_datetime: string): number[] {
   const day = new Date(str_datetime);
   return [day.getFullYear(), day.getMonth() + 1, day.getDate()];
 }

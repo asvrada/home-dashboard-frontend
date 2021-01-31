@@ -1,14 +1,15 @@
-import React, { useContext } from "react";
-import Button from "react-bootstrap/Button";
-import Col from "react-bootstrap/Col";
-import Row from "react-bootstrap/Row";
-import { LinkContainer } from "react-router-bootstrap";
+import { Button } from '@material-ui/core';
+import React, { useContext } from 'react';
+import Col from 'react-bootstrap/Col';
+import Row from 'react-bootstrap/Row';
+import { Link, useHistory } from 'react-router-dom';
 
-import WrapperContainer from "../Layout/WrapperContainer";
-import { IUserContext, UserAuthState, UserContext } from "./UserContext";
+import WrapperContainer from '../Layout/WrapperContainer';
+import { IUserContext, UserAuthState, UserContext } from './UserContext';
 
 function UserProfile(): any {
   const userContext = useContext(UserContext) as IUserContext;
+  const history = useHistory();
 
   if (userContext.userAuthState === UserAuthState.UNAUTHED) {
     return (
@@ -25,18 +26,21 @@ function UserProfile(): any {
       </Row>
       <Row>
         <Col>
-          <LinkContainer to="/setting/">
-            <Button>
-              Setting
-            </Button>
-          </LinkContainer>
+          <Button variant="contained" color="primary"
+                  component={Link} to={'/setting/'}>
+            Setting
+          </Button>
         </Col>
       </Row>
       <Row>
         <Col>
-          <Button onClick={() => {
-            userContext.logout()
-          }}>Logout</Button>
+          <Button variant="contained" color="secondary"
+                  onClick={() => {
+                    userContext.logout();
+                    history.push('/');
+                  }}>
+            Logout
+          </Button>
         </Col>
       </Row>
     </WrapperContainer>

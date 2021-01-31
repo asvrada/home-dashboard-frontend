@@ -1,5 +1,7 @@
 import { Grid, Paper } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import Card from './Card';
 import Category from './Category';
 import Company from './Company';
@@ -9,17 +11,34 @@ interface IEntry {
   bill: any
 }
 
+const StyleIncome = {
+  'background-color': 'aqua'
+};
+
+const StyleSpending = {
+  'background-color': 'white'
+};
+
+const useStyles = makeStyles<any, any>({
+  app: props => ({
+    'background-color': props['background-color']
+  })
+});
+
 function Entry({bill}: IEntry): any {
-  const isIncome = bill.income > 0;
+  const isIncome = bill.amount > 0;
+  const classes = useStyles(isIncome ? StyleIncome : StyleSpending);
+  const history = useHistory();
 
   return (
-    <Paper>
+    <Paper className={classes.app}
+           onClick={() => history.push(`/detail/${bill.id}/`)}>
       <Grid container>
         <Grid item xs={2}>
           <Category bill={bill} />
         </Grid>
 
-        <Grid item xs={6}>
+        <Grid item xs={4}>
           <Grid container>
             <Grid item xs={12}>
               <Currency amount={bill.amount} />
@@ -30,11 +49,11 @@ function Entry({bill}: IEntry): any {
           </Grid>
         </Grid>
 
-        <Grid item xs={2}>
+        <Grid item xs={3}>
           <Card card={bill.card} />
         </Grid>
 
-        <Grid item xs={2}>
+        <Grid item xs={3}>
           <Company company={bill.company} />
         </Grid>
       </Grid>

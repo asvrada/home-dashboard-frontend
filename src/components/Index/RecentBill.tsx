@@ -5,7 +5,7 @@ import { Add } from '@material-ui/icons';
 import React from 'react';
 import { GET_TRANSACTIONS } from '../../helpers/graphql';
 import { insertDate } from '../../helpers/utils';
-import DateBox from '../Views/ListView/DateBox';
+import DateBox from './Bill/DateBox';
 import Entry from './Bill/Entry';
 
 function RecentBillHeader(): any {
@@ -56,9 +56,11 @@ function RecentBill(): any {
         );
       }
 
+      const bill = node;
+
       return (
-        <Box key={node.id} p={1}>
-          <Entry key={node.id} bill={node} />
+        <Box key={bill.id}>
+          <Entry bill={bill} />
         </Box>
       );
     });
@@ -66,13 +68,15 @@ function RecentBill(): any {
 
   return (
     <Paper>
-      <Grid container spacing={1}>
+      <Grid container spacing={0}>
         <Grid item xs={12}>
           <RecentBillHeader />
         </Grid>
 
         <Grid item xs={12}>
-          {components}
+          <Box px={1}>
+            {components}
+          </Box>
         </Grid>
 
         <Grid item xs={12} className={classes.footer}>
