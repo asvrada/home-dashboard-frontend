@@ -3,10 +3,13 @@ import { Box, Button, Grid, IconButton, Paper } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { Add } from '@material-ui/icons';
 import React from 'react';
-import { GET_TRANSACTIONS } from '../../helpers/graphql';
-import { insertDate } from '../../helpers/utils';
-import DateBox from './Bill/DateBox';
-import Entry from './Bill/Entry';
+import { Link } from 'react-router-dom';
+
+import { GET_TRANSACTIONS } from '../../../helpers/graphql';
+import { EnumPage, routeURL } from '../../../helpers/url';
+import { insertDate } from '../../../helpers/utils';
+import DateBox from './DateBox';
+import Entry from './Entry';
 
 function RecentBillHeader(): any {
   return (
@@ -17,11 +20,13 @@ function RecentBillHeader(): any {
 
       <Grid item>
         <Box component='span' mr={1}>
-          <IconButton size="small" color="primary" aria-label="add">
+          <IconButton size="small" color="primary" aria-label="add"
+                      component={Link} to={routeURL(EnumPage.EntryNew)}>
             <Add />
           </IconButton>
         </Box>
-        <Button size="small" color="primary">
+        <Button size="small" color="primary"
+                component={Link} to={routeURL(EnumPage.AllEntry)}>
           View All
         </Button>
       </Grid>
@@ -80,7 +85,8 @@ function RecentBill(): any {
         </Grid>
 
         <Grid item xs={12} className={classes.footer}>
-          <Button size="small" color="primary">
+          <Button size="small" color="primary"
+                  component={Link} to={routeURL(EnumPage.AllEntry)}>
             View All
           </Button>
         </Grid>

@@ -5,7 +5,7 @@ import InfiniteScroll from 'react-infinite-scroller';
 
 import { GET_TRANSACTIONS } from '../../../helpers/graphql';
 import { insertDate } from '../../../helpers/utils';
-import DateBox from '../../Index/Bill/DateBox';
+import DateBox from '../../Index/RecentBill/DateBox';
 import Entry from './Entry';
 
 function Wrapper({ children }) {

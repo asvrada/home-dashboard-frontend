@@ -3,6 +3,7 @@ import React, { useContext } from 'react';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import { Link, useHistory } from 'react-router-dom';
+import { EnumPage, routeURL } from '../../helpers/url';
 
 import WrapperContainer from '../Layout/WrapperContainer';
 import { IUserContext, UserAuthState, UserContext } from './UserContext';
@@ -27,7 +28,7 @@ function UserProfile(): any {
       <Row>
         <Col>
           <Button variant="contained" color="primary"
-                  component={Link} to={'/setting/'}>
+                  component={Link} to={routeURL(EnumPage.Setting)}>
             Setting
           </Button>
         </Col>
@@ -37,7 +38,7 @@ function UserProfile(): any {
           <Button variant="contained" color="secondary"
                   onClick={() => {
                     userContext.logout();
-                    history.push('/');
+                    history.push(routeURL(EnumPage.Index));
                   }}>
             Logout
           </Button>

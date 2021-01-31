@@ -2,6 +2,7 @@ import { Grid, Paper } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
+import { EnumPage, makeURL } from '../../../helpers/url';
 import Card from './Card';
 import Category from './Category';
 import Company from './Company';
@@ -32,7 +33,7 @@ function Entry({bill}: IEntry): any {
 
   return (
     <Paper className={classes.app}
-           onClick={() => history.push(`/detail/${bill.id}/`)}>
+           onClick={() => history.push(makeURL(EnumPage.Entry, [bill.id]))}>
       <Grid container>
         <Grid item xs={2}>
           <Category bill={bill} />

@@ -5,6 +5,7 @@ import Row from 'react-bootstrap/Row';
 import GoogleLogin from 'react-google-login';
 import { Redirect, useHistory } from 'react-router-dom';
 
+import { EnumPage, routeURL } from '../../helpers/url';
 import { isDevEnv } from '../../helpers/utils';
 import WrapperContainer from '../Layout/WrapperContainer';
 
@@ -22,7 +23,7 @@ function handleGoogleLoginSuccess(res: any, userContext: IUserContext) {
 }
 
 function Login({redirect}: Props): any {
-  const redirectURL = redirect ?? '/';
+  const redirectURL = redirect ?? routeURL(EnumPage.Index);
   const userContext = useContext(UserContext) as IUserContext;
   const history = useHistory();
 

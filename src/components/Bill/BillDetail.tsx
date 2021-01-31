@@ -7,6 +7,7 @@ import { Link, useHistory } from 'react-router-dom';
 
 import { DELETE } from '../../helpers/graphql';
 import { getBill_bill } from '../../helpers/types/getBill';
+import { EnumPage, makeURL, routeURL } from '../../helpers/url';
 import { unpackSummaryFlag } from '../../helpers/utils';
 import WrapperContainer from '../Layout/WrapperContainer';
 
@@ -29,7 +30,7 @@ function BillDetail(): any {
         id: id
       }
     }).then(() => {
-      history.push('/');
+      history.push(routeURL(EnumPage.Index));
     });
   };
 
@@ -60,9 +61,10 @@ function BillDetail(): any {
           <p>{bill.timeCreated}</p>
 
           <div>
-            <Button variant="contained" component={Link} to={'/'}>Back</Button>
+            <Button variant="contained" component={Link} to={routeURL(EnumPage.Index)}>Back</Button>
 
-            <Button variant="contained" color="primary" component={Link} to={`/detail/${id}/edit/`}>Edit</Button>
+            <Button variant="contained" color="primary" component={Link}
+                    to={makeURL(EnumPage.EntryEdit, [id])}>Edit</Button>
 
             <Button variant="contained" color="secondary"
                     onClick={handleDelete}>Delete</Button>

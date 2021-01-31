@@ -1,20 +1,21 @@
-import { useApolloClient, useQuery } from "@apollo/react-hooks";
+import { useApolloClient, useQuery } from '@apollo/react-hooks';
 import DateFnsUtils from '@date-io/date-fns';
 import { KeyboardDatePicker, KeyboardTimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
-import { ErrorMessage, Field, Formik } from "formik";
-import React from "react";
-import { Col, Row } from "react-bootstrap";
-import Button from "react-bootstrap/Button";
-import { useHistory } from "react-router-dom";
+import { ErrorMessage, Field, Formik } from 'formik';
+import React from 'react';
+import { Col, Row } from 'react-bootstrap';
+import Button from 'react-bootstrap/Button';
+import { useHistory } from 'react-router-dom';
 
 import 'react-widgets/dist/css/react-widgets.css';
 
-import { CREATE_ENUM, CREATE_TRANSACTION, GET_ENUMS, UPDATE_TRANSACTION } from "../../helpers/graphql";
-import { getBill_bill } from "../../helpers/types/getBill";
-import { getEnums_enums_edges_node } from "../../helpers/types/getEnums";
-import { capitalizeFirstLetter, packSummaryFlag, shouldBeUndefined, unpackSummaryFlag } from "../../helpers/utils";
-import { EnumEnumCategory } from "../../types/graphql-global-types";
-import DropdownListAndClearButtonRow from "./DropdownList/DropdownListAndClearButtonRow";
+import { CREATE_ENUM, CREATE_TRANSACTION, GET_ENUMS, UPDATE_TRANSACTION } from '../../helpers/graphql';
+import { getBill_bill } from '../../helpers/types/getBill';
+import { getEnums_enums_edges_node } from '../../helpers/types/getEnums';
+import { EnumPage, makeURL } from '../../helpers/url';
+import { capitalizeFirstLetter, packSummaryFlag, shouldBeUndefined, unpackSummaryFlag } from '../../helpers/utils';
+import { EnumEnumCategory } from '../../types/graphql-global-types';
+import DropdownListAndClearButtonRow from './DropdownList/DropdownListAndClearButtonRow';
 
 const cmp = (a: getEnums_enums_edges_node, b: getEnums_enums_edges_node) => a.name < b.name ? -1 : 1;
 
@@ -73,7 +74,7 @@ function generateEnumList({enums}: any) {
         listCompany.push(obj);
         break;
       default:
-        throw Error("Wrong obj category");
+        throw Error('Wrong obj category');
     }
 
     return undefined;
@@ -115,7 +116,7 @@ function generateInitialFormValue(transaction?: getBill_bill): FormValue {
       ...unpackSummaryFlag(transaction.skipSummaryFlag),
 
       timeCreated: new Date(transaction.timeCreated)
-    }
+    };
   }
 
   return initialFormValue;
@@ -169,7 +170,7 @@ function BillForm({transaction, urlToGoBack}: Props): any {
         }
       }
     }).then((res: any) => {
-      console.log("create enum response", res);
+      console.log('create enum response', res);
       const newObject = res.data.createEnum.enum;
       const mapper: any = {
         'category': listCategory,
@@ -209,14 +210,14 @@ function BillForm({transaction, urlToGoBack}: Props): any {
           const payload: Payload = prepareValueBeforeSubmit(values, state);
           const mutation = state.isCreate ? CREATE_TRANSACTION : UPDATE_TRANSACTION;
 
-          console.log("Mutate", payload);
+          console.log('Mutate', payload);
           client.mutate({
             mutation: mutation,
             variables: {
               input: payload
             }
           }).then((res: any) => {
-            console.log("Response", res);
+            console.log('Response', res);
 
             let id: string;
             if (state.isCreate) {
@@ -228,11 +229,11 @@ function BillForm({transaction, urlToGoBack}: Props): any {
             setSubmitting(false);
 
             // Redirect
-            history.replace(`/detail/${id}/`);
+            history.replace(makeURL(EnumPage.Entry, [id]));
           }).catch(err => {
             const errAmount = err.graphQLErrors.map((errObj: any) => errObj.message);
 
-            setErrors({amount: errAmount.join(". ")});
+            setErrors({amount: errAmount.join('. ')});
 
             setSubmitting(false);
           });

@@ -22,6 +22,7 @@ import HomeIcon from '@material-ui/icons/Home';
 import MenuIcon from '@material-ui/icons/Menu';
 import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
+import { EnumPage, routeURL } from '../helpers/url';
 import { IUserContext, UserAuthState, UserContext } from './User/UserContext';
 
 const useStyles = makeStyles((theme) => ({
@@ -58,7 +59,7 @@ function SiteHeader(): any {
 
   const handleLogout = () => {
     userContext.logout();
-    history.push('/');
+    history.push(routeURL(EnumPage.Index));
   };
 
   const handleRedirectAndCloseDrawer = (path: string) => {
@@ -68,7 +69,7 @@ function SiteHeader(): any {
 
   const componentDrawerUserUnauthed = (
     <>
-      <ListItem button key={'user_login'} onClick={() => handleRedirectAndCloseDrawer('/login/')}>
+      <ListItem button key={'user_login'} onClick={() => handleRedirectAndCloseDrawer(routeURL(EnumPage.Login))}>
         <ListItemIcon><AccountCircle /></ListItemIcon>
         <ListItemText primary={'Login / Signup'} />
       </ListItem>
@@ -77,7 +78,7 @@ function SiteHeader(): any {
 
   const componentDrawerUserAuth = (
     <>
-      <ListItem button key={'user_profile'} onClick={() => handleRedirectAndCloseDrawer('/profile/')}>
+      <ListItem button key={'user_profile'} onClick={() => handleRedirectAndCloseDrawer(routeURL(EnumPage.Profile))}>
         <ListItemIcon><AccountCircle /></ListItemIcon>
         <ListItemText primary={'Profile'} />
       </ListItem>
@@ -156,12 +157,12 @@ function SiteHeader(): any {
 
       <Drawer open={isDrawerOpen} onClose={handleDrawerClose}>
         <List>
-          <ListItem button key={'dashboard'} onClick={() => handleRedirectAndCloseDrawer('/')}>
+          <ListItem button key={'dashboard'} onClick={() => handleRedirectAndCloseDrawer(routeURL(EnumPage.Index))}>
             <ListItemIcon><HomeIcon /></ListItemIcon>
             <ListItemText primary={'Dashboard'} />
           </ListItem>
 
-          <ListItem button key={'bill_create'} onClick={() => handleRedirectAndCloseDrawer('/detail/new/')}>
+          <ListItem button key={'bill_create'} onClick={() => handleRedirectAndCloseDrawer(routeURL(EnumPage.EntryNew))}>
             <ListItemIcon><AddIcon /></ListItemIcon>
             <ListItemText primary={'Create Transaction'} />
           </ListItem>
