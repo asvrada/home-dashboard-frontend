@@ -7,7 +7,6 @@ import { Redirect, useHistory } from 'react-router-dom';
 
 import { EnumPage, routeURL } from '../../helpers/url';
 import { isDevEnv } from '../../helpers/utils';
-import WrapperContainer from '../Layout/WrapperContainer';
 
 import { IUserContext, UserAuthState, UserContext } from './UserContext';
 
@@ -62,7 +61,7 @@ function Login({redirect}: Props): any {
   );
 
   return (
-    <WrapperContainer>
+    <>
       {isDevEnv() ? componentEmailLogin : null}
 
       <Row>
@@ -86,7 +85,7 @@ function Login({redirect}: Props): any {
           />
         </Col>
       </Row>
-    </WrapperContainer>
+    </>
   );
 }
 

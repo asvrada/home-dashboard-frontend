@@ -3,7 +3,6 @@ import React, { useContext } from 'react';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import { Link } from 'react-router-dom';
-import WrapperContainer from '../Layout/WrapperContainer';
 
 import { IUserContext, UserAuthState, UserContext } from '../User/UserContext';
 import Dashboard from './Dashboard';
@@ -22,25 +21,21 @@ function LandingPage(): any {
 
   if (userContext.userAuthState === UserAuthState.AUTHED) {
     return (
-      <WrapperContainer>
-        <Dashboard />
-      </WrapperContainer>
+      <Dashboard />
     );
   }
 
   return (
-    <WrapperContainer>
-      <Col>
-        <Row>
-          <h1>Login to see your personalized dashboard</h1>
-        </Row>
-        <Row>
-          <Button variant="contained" color="primary" component={Link} to={'/login/'}>
-            Login
-          </Button>
-        </Row>
-      </Col>
-    </WrapperContainer>
+    <Col>
+      <Row>
+        <h1>Login to see your personalized dashboard</h1>
+      </Row>
+      <Row>
+        <Button variant="contained" color="primary" component={Link} to={'/login/'}>
+          Login
+        </Button>
+      </Row>
+    </Col>
   );
 
 }

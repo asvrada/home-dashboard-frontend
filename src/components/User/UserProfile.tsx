@@ -4,8 +4,6 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import { Link, useHistory } from 'react-router-dom';
 import { EnumPage, routeURL } from '../../helpers/url';
-
-import WrapperContainer from '../Layout/WrapperContainer';
 import { IUserContext, UserAuthState, UserContext } from './UserContext';
 
 function UserProfile(): any {
@@ -21,7 +19,7 @@ function UserProfile(): any {
   }
 
   return (
-    <WrapperContainer>
+    <>
       <Row>
         <div>{userContext.userAuthState}</div>
       </Row>
@@ -44,7 +42,7 @@ function UserProfile(): any {
           </Button>
         </Col>
       </Row>
-    </WrapperContainer>
+    </>
   );
 }
 

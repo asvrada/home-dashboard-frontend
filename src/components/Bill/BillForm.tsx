@@ -160,6 +160,7 @@ function BillForm({transaction, urlToGoBack}: Props): any {
     isCreate: transaction === undefined
   };
 
+  // todo: whats this type?
   function handleCreateEnum(type: string, newName: string): Promise<getEnums_enums_edges_node> {
     return client.mutate({
       mutation: CREATE_ENUM,

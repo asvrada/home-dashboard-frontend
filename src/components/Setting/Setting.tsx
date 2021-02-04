@@ -1,10 +1,8 @@
-import { ErrorMessage, Field, Formik } from "formik";
-import React, { useContext } from "react";
-import Button from "react-bootstrap/Button";
-import { useGet, useMutate } from "restful-react";
-
-import WrapperContainer from "../Layout/WrapperContainer";
-import { IUserContext, UserContext } from "../User/UserContext";
+import { ErrorMessage, Field, Formik } from 'formik';
+import React, { useContext } from 'react';
+import Button from 'react-bootstrap/Button';
+import { useGet, useMutate } from 'restful-react';
+import { IUserContext, UserContext } from '../User/UserContext';
 
 interface FormValue {
   amount: number
@@ -25,14 +23,14 @@ function UpdateBudgetForm({initialBudget, putBudget}: any) {
               throw res;
             }
 
-            console.log("Dashboard - UpdateBudgetForm - putBudget HTTP 200", res);
-            alert("OK");
+            console.log('Dashboard - UpdateBudgetForm - putBudget HTTP 200', res);
+            alert('OK');
           })
           .catch((err: any) => {
-            console.log("Dashboard - UpdateBudgetForm - error", err);
+            console.log('Dashboard - UpdateBudgetForm - error', err);
 
             if (err.status === 400) {
-              setErrors({amount: err.data.error.amount.join(". ")});
+              setErrors({amount: err.data.error.amount.join('. ')});
             }
           });
 
@@ -71,31 +69,29 @@ function Setting(): any {
 
   // GET
   const {data: objBudget, loading: loadingGet} = useGet({
-    path: "/restful/budget/",
+    path: '/restful/budget/',
     requestOptions: {headers: {Authorization: `Bearer ${userContext.accessToken}`}},
   });
 
   // PUT
   const {mutate: putBudget} = useMutate({
-    verb: "PUT",
+    verb: 'PUT',
     path: `/restful/budget/`,
     requestOptions: {headers: {Authorization: `Bearer ${userContext.accessToken}`}},
   });
 
   if (loadingGet) {
     return (
-      <WrapperContainer>
-        <div>Loading...</div>
-      </WrapperContainer>
+      <div>Loading...</div>
     );
   }
 
   return (
-    <WrapperContainer>
+    <>
       <h1>Setting</h1>
       <UpdateBudgetForm initialBudget={objBudget.amount}
                         putBudget={putBudget} />
-    </WrapperContainer>
+    </>
   );
 }
 

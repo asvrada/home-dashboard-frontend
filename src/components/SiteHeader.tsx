@@ -21,7 +21,7 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import HomeIcon from '@material-ui/icons/Home';
 import MenuIcon from '@material-ui/icons/Menu';
 import React, { useContext } from 'react';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { EnumPage, routeURL } from '../helpers/url';
 import { IUserContext, UserAuthState, UserContext } from './User/UserContext';
 
@@ -62,14 +62,18 @@ function SiteHeader(): any {
     history.push(routeURL(EnumPage.Index));
   };
 
-  const handleRedirectAndCloseDrawer = (path: string) => {
+  const handleRedirectAndCloseDrawer = (path?: string) => {
     setIsDrawerOpen(false);
-    history.push(path);
+    if (path !== undefined) {
+      history.push(path);
+    }
   };
 
   const componentDrawerUserUnauthed = (
     <>
-      <ListItem button key={'user_login'} onClick={() => handleRedirectAndCloseDrawer(routeURL(EnumPage.Login))}>
+      <ListItem button key={'user_login'}
+                component={Link} to={routeURL(EnumPage.Login)}
+                onClick={() => handleRedirectAndCloseDrawer()}>
         <ListItemIcon><AccountCircle /></ListItemIcon>
         <ListItemText primary={'Login / Signup'} />
       </ListItem>
@@ -78,7 +82,9 @@ function SiteHeader(): any {
 
   const componentDrawerUserAuth = (
     <>
-      <ListItem button key={'user_profile'} onClick={() => handleRedirectAndCloseDrawer(routeURL(EnumPage.Profile))}>
+      <ListItem button key={'user_profile'}
+                component={Link} to={routeURL(EnumPage.Profile)}
+                onClick={() => handleRedirectAndCloseDrawer()}>
         <ListItemIcon><AccountCircle /></ListItemIcon>
         <ListItemText primary={'Profile'} />
       </ListItem>
@@ -157,12 +163,16 @@ function SiteHeader(): any {
 
       <Drawer open={isDrawerOpen} onClose={handleDrawerClose}>
         <List>
-          <ListItem button key={'dashboard'} onClick={() => handleRedirectAndCloseDrawer(routeURL(EnumPage.Index))}>
+          <ListItem button key={'dashboard'}
+                    component={Link} to={routeURL(EnumPage.Index)}
+                    onClick={() => handleRedirectAndCloseDrawer()}>
             <ListItemIcon><HomeIcon /></ListItemIcon>
             <ListItemText primary={'Dashboard'} />
           </ListItem>
 
-          <ListItem button key={'bill_create'} onClick={() => handleRedirectAndCloseDrawer(routeURL(EnumPage.EntryNew))}>
+          <ListItem button key={'bill_create'}
+                    component={Link} to={routeURL(EnumPage.EntryNew)}
+                    onClick={() => handleRedirectAndCloseDrawer()}>
             <ListItemIcon><AddIcon /></ListItemIcon>
             <ListItemText primary={'Create Transaction'} />
           </ListItem>
@@ -170,9 +180,20 @@ function SiteHeader(): any {
 
         <Divider />
 
+        <List>
+          <ListItem button key={'all_enum'}
+                    component={Link} to={routeURL(EnumPage.AllEnum)}
+                    onClick={() => handleRedirectAndCloseDrawer()}>
+            <ListItemIcon><AddIcon /></ListItemIcon>
+            <ListItemText primary={'All Enum'} />
+          </ListItem>
+        </List>
+
+        <Divider />
+
         {/* User Action */}
         <List subheader={
-          <ListSubheader component="div" id="list-subheader-user-action">
+          <ListSubheader component="div" id="list-subheader-account">
             Account
           </ListSubheader>
         }>

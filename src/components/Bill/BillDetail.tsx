@@ -9,7 +9,6 @@ import { DELETE } from '../../helpers/graphql';
 import { getBill_bill } from '../../helpers/types/getBill';
 import { EnumPage, makeURL, routeURL } from '../../helpers/url';
 import { unpackSummaryFlag } from '../../helpers/utils';
-import WrapperContainer from '../Layout/WrapperContainer';
 
 import { BillContext } from './BillContext';
 
@@ -43,35 +42,33 @@ function BillDetail(): any {
   );
 
   return (
-    <WrapperContainer>
-      <Row>
-        <Col>
-          <p>
-            {bill.amount}
-          </p>
-          <p>
-            {bill.category && bill.category.name}
-          </p>
-          <p>{bill.company && bill.company.name}</p>
-          <p>{bill.card && bill.card.name}</p>
-          <p>{bill.note}</p>
+    <Row>
+      <Col>
+        <p>
+          {bill.amount}
+        </p>
+        <p>
+          {bill.category && bill.category.name}
+        </p>
+        <p>{bill.company && bill.company.name}</p>
+        <p>{bill.card && bill.card.name}</p>
+        <p>{bill.note}</p>
 
-          {componentSummaryFlag}
+        {componentSummaryFlag}
 
-          <p>{bill.timeCreated}</p>
+        <p>{bill.timeCreated}</p>
 
-          <div>
-            <Button variant="contained" component={Link} to={routeURL(EnumPage.Index)}>Back</Button>
+        <div>
+          <Button variant="contained" component={Link} to={routeURL(EnumPage.Index)}>Back</Button>
 
-            <Button variant="contained" color="primary" component={Link}
-                    to={makeURL(EnumPage.EntryEdit, [id])}>Edit</Button>
+          <Button variant="contained" color="primary" component={Link}
+                  to={makeURL(EnumPage.EntryEdit, [id])}>Edit</Button>
 
-            <Button variant="contained" color="secondary"
-                    onClick={handleDelete}>Delete</Button>
-          </div>
-        </Col>
-      </Row>
-    </WrapperContainer>
+          <Button variant="contained" color="secondary"
+                  onClick={handleDelete}>Delete</Button>
+        </div>
+      </Col>
+    </Row>
   );
 }
 
