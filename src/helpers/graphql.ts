@@ -46,6 +46,21 @@ const GET_ENUMS = gql`query getEnums {
   }
 }`;
 
+const GET_ENUMS_BY_CATEGORY = gql`query getEnumsByCategory($category: String) {
+  enums(category: $category) {
+    edges {
+      node {
+        id,
+        name,
+        category,
+        icon {
+          id
+        }
+      }
+    }
+  }
+}`;
+
 const GET_BILL = gql`query getBill($id: ID!) {
   bill(id: $id) {
     id,
@@ -247,7 +262,7 @@ mutation deleteObj($id: ID!) {
 
 export {
   getApolloClient,
-  GET_TRANSACTIONS, GET_BILL, GET_ENUMS,
+  GET_TRANSACTIONS, GET_BILL, GET_ENUMS, GET_ENUMS_BY_CATEGORY,
   CREATE_ENUM, CREATE_TRANSACTION,
   UPDATE_TRANSACTION,
   DELETE

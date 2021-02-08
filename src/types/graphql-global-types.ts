@@ -14,6 +14,13 @@ export enum EnumEnumCategory {
   NULL = "NULL",
 }
 
+export interface CreateEnumInput {
+  icon?: string | null;
+  name: string;
+  category: EnumEnumCategory;
+  clientMutationId?: string | null;
+}
+
 export interface CreateTransactionInput {
   amount: number;
   category?: string | null;
