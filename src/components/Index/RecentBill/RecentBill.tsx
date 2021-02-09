@@ -13,10 +13,10 @@ import Entry from './Entry';
 
 function RecentBillHeader(): any {
   return (
-    <Grid container justify="space-between">
+    <Grid container justify="space-between" alignItems="center">
       <Grid item>
-        <Box ml={1} mt={0.5}>
-          <Typography>
+        <Box ml={0.5}>
+          <Typography variant="h6">
             Recent Transaction
           </Typography>
         </Box>

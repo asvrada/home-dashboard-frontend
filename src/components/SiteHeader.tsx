@@ -129,15 +129,20 @@ function SiteHeader(): any {
         open={open}
         onClose={handleMenuClose}
       >
-        <MenuItem onClick={() => {
-          handleMenuClose();
-          history.push('/profile/');
-        }}>Profile</MenuItem>
+        <MenuItem
+          component={Link} to={routeURL(EnumPage.Profile)}
+          onClick={() => {
+            handleMenuClose();
+          }}>
+          Profile
+        </MenuItem>
 
         <MenuItem onClick={() => {
           handleMenuClose();
           handleLogout();
-        }}>Logout</MenuItem>
+        }}>
+          Logout
+        </MenuItem>
       </Menu>
     </div>
   );

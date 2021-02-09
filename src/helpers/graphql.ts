@@ -31,6 +31,47 @@ function getApolloClient(token?: string): ApolloClient<any> {
 ///////////
 // Query //
 ///////////
+const GET_ENUMS_ALL_TYPE = gql`query getAllEnums {
+  enumCat: enums(category: "CAT") {
+    edges {
+      node {
+        id,
+        name,
+        category,
+        icon {
+          id
+        }
+      }
+    }
+  }
+  
+  enumCom: enums(category: "COM") {
+    edges {
+      node {
+        id,
+        name,
+        category,
+        icon {
+          id
+        }
+      }
+    }
+  }
+  
+  enumCar: enums(category: "CAR") {
+    edges {
+      node {
+        id,
+        name,
+        category,
+        icon {
+          id
+        }
+      }
+    }
+  }
+}`;
+
 const GET_ENUMS = gql`query getEnums {
   enums {
     edges {
@@ -262,7 +303,7 @@ mutation deleteObj($id: ID!) {
 
 export {
   getApolloClient,
-  GET_TRANSACTIONS, GET_BILL, GET_ENUMS, GET_ENUMS_BY_CATEGORY,
+  GET_TRANSACTIONS, GET_BILL, GET_ENUMS, GET_ENUMS_BY_CATEGORY, GET_ENUMS_ALL_TYPE,
   CREATE_ENUM, CREATE_TRANSACTION,
   UPDATE_TRANSACTION,
   DELETE
