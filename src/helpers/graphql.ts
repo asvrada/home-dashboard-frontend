@@ -37,7 +37,7 @@ const GET_ENUMS_ALL_TYPE = gql`query getAllEnums {
       node {
         id,
         name,
-        category,
+        countBill,
         icon {
           id
         }
@@ -50,7 +50,7 @@ const GET_ENUMS_ALL_TYPE = gql`query getAllEnums {
       node {
         id,
         name,
-        category,
+        countBill
         icon {
           id
         }
@@ -63,7 +63,7 @@ const GET_ENUMS_ALL_TYPE = gql`query getAllEnums {
       node {
         id,
         name,
-        category,
+        countBill,
         icon {
           id
         }

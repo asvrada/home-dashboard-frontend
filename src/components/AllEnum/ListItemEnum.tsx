@@ -1,6 +1,7 @@
-import { Box, Grid, Link, Paper, Typography } from '@material-ui/core';
+import { Box, Grid, Paper, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import React from 'react';
+import { getAllEnums_enumCat_edges_node } from '../../helpers/types/getAllEnums';
 
 const useStyle = makeStyles(() => ({
   root: {
@@ -9,7 +10,7 @@ const useStyle = makeStyles(() => ({
 }));
 
 // category, id, name, icon
-function ListItemEnum({data}: any) {
+function ListItemEnum({data}: { data: getAllEnums_enumCat_edges_node }) {
   const classes = useStyle();
 
   return (
@@ -22,7 +23,7 @@ function ListItemEnum({data}: any) {
           </Grid>
 
           <Grid item xs={6}>
-            <Typography align="center">123</Typography>
+            <Typography align="center">{data.countBill}</Typography>
             <Typography variant="caption">associated records</Typography>
           </Grid>
         </Grid>
