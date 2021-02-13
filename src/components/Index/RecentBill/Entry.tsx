@@ -1,4 +1,4 @@
-import { Grid, Paper } from '@material-ui/core';
+import { Box, Grid, Paper } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
@@ -35,31 +35,32 @@ function Entry({bill}: IEntry): any {
   return (
     <Paper className={classes.app}
            onClick={() => history.push(makeURL(EnumPage.Entry, [bill.id]))}>
-      <Grid container>
-        <Grid item xs={2}>
-          <Category bill={bill} />
-        </Grid>
+      <Box p={1}>
+        <Grid container>
+          <Grid item xs={2}>
+            <Category bill={bill} />
+          </Grid>
 
-        <Grid item xs={4}>
-          <Grid container>
-            <Grid item xs={12}>
-              <Currency amount={bill.amount} />
-            </Grid>
-            <Grid item xs={12}>
-              {bill.note}
+          <Grid item xs={4}>
+            <Grid container>
+              <Grid item xs={12}>
+                <Currency amount={bill.amount} />
+              </Grid>
+              <Grid item xs={12}>
+                {bill.note}
+              </Grid>
             </Grid>
           </Grid>
-        </Grid>
 
-        <Grid item xs={3}>
-          <Card card={bill.card} />
-        </Grid>
+          <Grid item xs={3}>
+            <Card card={bill.card} />
+          </Grid>
 
-        <Grid item xs={3}>
-          <Company company={bill.company} />
+          <Grid item xs={3}>
+            <Company company={bill.company} />
+          </Grid>
         </Grid>
-      </Grid>
-
+      </Box>
     </Paper>
   );
 }

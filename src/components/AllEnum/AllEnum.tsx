@@ -52,29 +52,11 @@ function AllEnum() {
 
   // console.log(data);
 
-  const componentCategoryEnums = graphQLResultToArray(data.enumCat).map((each: any) => {
-    return (
-      <Grid key={each.id} item xs={12}>
-        <ListItemEnum data={each} />
-      </Grid>
-    );
-  });
-
-  const componentCompanyEnums = graphQLResultToArray(data.enumCom).map((each: any) => {
-    return (
-      <Grid key={each.id} item xs={12}>
-        <ListItemEnum data={each} />
-      </Grid>
-    );
-  });
-
-  const componentCardEnums = graphQLResultToArray(data.enumCar).map((each: any) => {
-    return (
-      <Grid key={each.id} item xs={12}>
-        <ListItemEnum data={each} />
-      </Grid>
-    );
-  });
+  const [componentCategoryEnums, componentCompanyEnums, componentCardEnums] = [data.enumCat, data.enumCom, data.enumCar].map((data) => graphQLResultToArray(data).map((each: any) => (
+    <Grid key={each.id} item xs={12}>
+      <ListItemEnum data={each} />
+    </Grid>
+  )));
 
   return (
     <div className={classes.root}>
