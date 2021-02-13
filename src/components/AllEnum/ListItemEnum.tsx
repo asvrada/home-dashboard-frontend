@@ -18,7 +18,10 @@ function ListItemEnum({data}: { data: getAllEnums_enumCat_edges_node }) {
       <Box p={1}>
         <Grid container alignItems="center">
           <Grid item xs={6}>
-            <span>icon</span>
+            <img
+              width="24"
+              src={process.env.PUBLIC_URL + '/static/test_icon.jpeg'}
+              alt="icon for category" />
             <Typography>{data.name}</Typography>
           </Grid>
 

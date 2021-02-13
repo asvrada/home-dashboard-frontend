@@ -1,7 +1,9 @@
 import { useQuery } from '@apollo/react-hooks';
 import { Box, Grid, Paper, Tab, Tabs } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
 import React from 'react';
+import SwipeableViews from 'react-swipeable-views';
+
 import { GET_ENUMS_ALL_TYPE } from '../../helpers/graphql';
 import ListItemEnum from './ListItemEnum';
 
@@ -10,11 +12,11 @@ function graphQLResultToArray(data: any) {
 }
 
 function TabPanel(props: any) {
-  const {children, selectedTab, index, ...other} = props;
+  const {children} = props;
   return (
-    <div role="tabpanel" hidden={selectedTab !== index}>
+    <Box p={1} role="tabpanel">
       {children}
-    </div>
+    </Box>
   );
 }
 
@@ -26,11 +28,18 @@ const useStylesAllEnum = makeStyles(() => ({
 
 function AllEnum() {
   const classes = useStylesAllEnum();
+  const theme = useTheme();
   const [selectedTab, setSelectedTab] = React.useState(0);
   const {loading, error, data} = useQuery(GET_ENUMS_ALL_TYPE);
 
   const handleTabSelectionChange = (event: any, newVal: number) => {
     setSelectedTab(newVal);
+  };
+
+  // index: the index to be displayed
+  // second argument indexLatest: previous index
+  const handleTabSwipe = (index: number) => {
+    setSelectedTab(index);
   };
 
   if (loading) {
@@ -70,14 +79,18 @@ function AllEnum() {
   return (
     <div className={classes.root}>
       <Paper square>
-        <Tabs value={selectedTab} onChange={handleTabSelectionChange} aria-label="simple tabs example"
+        <Tabs value={selectedTab} onChange={handleTabSelectionChange} aria-label="enum type tabs"
               indicatorColor="primary" textColor="primary" variant="fullWidth">
           <Tab label="Category" />
           <Tab label="Company" />
           <Tab label="Card" />
         </Tabs>
       </Paper>
-      <Box p={1}>
+      <SwipeableViews
+        axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
+        index={selectedTab}
+        onChangeIndex={handleTabSwipe}
+      >
         <TabPanel selectedTab={selectedTab} index={0}>
           <Grid container spacing={1}>
             {componentCategoryEnums}
@@ -93,7 +106,7 @@ function AllEnum() {
             {componentCardEnums}
           </Grid>
         </TabPanel>
-      </Box>
+      </SwipeableViews>
     </div>
   );
 }
