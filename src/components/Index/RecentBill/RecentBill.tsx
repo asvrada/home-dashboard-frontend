@@ -68,7 +68,7 @@ function RecentBill(): any {
       const bill = node;
 
       return (
-        <Box key={bill.id}>
+        <Box mb={1} key={bill.id}>
           <Entry bill={bill} />
         </Box>
       );

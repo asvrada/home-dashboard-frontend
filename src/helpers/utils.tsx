@@ -166,7 +166,7 @@ function getBaseURL() {
     // mock server URL
     return 'http://localhost:4444/';
   } else {
-    throw new DOMException('Missing prod server');
+    return 'http://localhost:4444/';
   }
 }
 
