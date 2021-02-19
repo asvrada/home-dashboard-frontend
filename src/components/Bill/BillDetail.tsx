@@ -59,7 +59,11 @@ function BillDetail(): any {
         <p>{bill.timeCreated}</p>
 
         <div>
-          <Button variant="contained" component={Link} to={routeURL(EnumPage.Index)}>Back</Button>
+          <Button variant="contained"
+                  component={Link}
+                  to={(history.location.state as any)?.from ?? routeURL(EnumPage.Index)}>
+            Back
+          </Button>
 
           <Button variant="contained" color="primary" component={Link}
                   to={makeURL(EnumPage.EntryEdit, [id])}>Edit</Button>

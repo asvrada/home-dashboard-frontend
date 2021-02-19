@@ -34,7 +34,9 @@ function Entry({bill}: IEntry): any {
 
   return (
     <Paper className={classes.app}
-           onClick={() => history.push(makeURL(EnumPage.Entry, [bill.id]))}>
+           onClick={() => history.push(makeURL(EnumPage.Entry, [bill.id]), {
+             from: history.location.pathname
+           })}>
       <Box p={1}>
         <Grid container>
           <Grid item xs={2}>
