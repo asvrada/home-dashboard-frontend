@@ -46,27 +46,20 @@ function routeURL(page: EnumPage): string {
 
 function makeURL(page: EnumPage, props?: string[]) {
   const map: {
-    [key in EnumPage]: ReturnTypeGetURLTo
+    [key in EnumPage]?: ReturnTypeGetURLTo
   } = {
-    [EnumPage.Index]: () => '/',
-    [EnumPage.AllEntry]: () => '/all-entry/',
-    [EnumPage.AllReEntry]: () => '/all-re-entry/',
     [EnumPage.Entry]: (props) => `/entry/${props[0]}/`,
     [EnumPage.EntryEdit]: (props) => `/entry/${props[0]}/edit/`,
-    [EnumPage.EntryNew]: () => '/entry/new/',
-    [EnumPage.AllEnum]: () => '/all-enum/',
-    [EnumPage.EnumNew]: () => '/enum/new/',
     [EnumPage.Enum]: (props) => `/enum/${props[0]}/`,
-    [EnumPage.Login]: () => '/login/',
-    [EnumPage.Profile]: () => '/profile/',
     [EnumPage.ReEntry]: (props) => `/re-entry/${props[0]}`,
-    [EnumPage.ReEntryEdit]: (props) => `/re-entry/${props[0]}/edit/`,
-    [EnumPage.ReEntryNew]: () => '/re-entry/new/',
-    [EnumPage.Setting]: () => '/setting/',
-    [EnumPage.Welcome]: () => '/welcome/'
+    [EnumPage.ReEntryEdit]: (props) => `/re-entry/${props[0]}/edit/`
   };
 
-  return map[page](props ?? []);
+  if (!(page in map)) {
+    return routeURL(page);
+  }
+  
+  return map[page]!(props ?? []);
 }
 
 export { routeURL, makeURL, EnumPage };
