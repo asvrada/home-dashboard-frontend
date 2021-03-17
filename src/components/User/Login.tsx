@@ -6,7 +6,6 @@ import GoogleLogin from 'react-google-login';
 import { Redirect, useHistory } from 'react-router-dom';
 
 import { EnumPage, routeURL } from '../../helpers/url';
-import { isDevEnv } from '../../helpers/utils';
 
 import { IUserContext, UserAuthState, UserContext } from './UserContext';
 
@@ -62,7 +61,7 @@ function Login({redirect}: Props): any {
 
   return (
     <>
-      {isDevEnv() ? componentEmailLogin : null}
+      {componentEmailLogin}
 
       <Row>
         <Col>
