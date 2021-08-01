@@ -1,0 +1,16 @@
+language: node_js
+
+git:
+  depth: false
+
+node_js:
+  - node
+
+script:
+  echo "Script step, test skipped"
+
+deploy:
+  provider: script
+  script: bash ci/deploy.sh
+  on:
+    branch: master
