@@ -9,6 +9,6 @@ if [[ -z $ROOT_HOME_DASHBOARD_FRONTEND ]]; then
 fi
 
 cd $ROOT_HOME_DASHBOARD_FRONTEND
-git pull --rebase
+git pull --ff-only
 npx browserslist@latest --update-db
 yarn run build
