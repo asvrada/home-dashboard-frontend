@@ -10,4 +10,5 @@ fi
 
 cd $ROOT_HOME_DASHBOARD_FRONTEND
 git pull --rebase
+npx browserslist@latest --update-db
 yarn run build
