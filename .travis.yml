@@ -4,7 +4,7 @@ git:
   depth: false
 
 node_js:
-  - node
+  - 14
 
 script:
   echo "Script step, test skipped"
