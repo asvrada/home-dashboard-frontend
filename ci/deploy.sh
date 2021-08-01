@@ -5,6 +5,6 @@ echo "Running deploy.sh"
 # Call Servicebus
 SERVICEBUS_ENDPOINT="https://jeff-servicebusclient.azurewebsites.net"
 
-curl -d '{"queue":"deploy-home-dashboard-frontend","repo":"home-dashboard-frontend"}' -H 'Content-Type: application/json' -X POST $SERVICEBUS_ENDPOINT
+curl -d '{"repo":"home-dashboard-frontend"}' -H 'Content-Type: application/json' -X POST $SERVICEBUS_ENDPOINT
 
 echo "Finished deploy.sh"
