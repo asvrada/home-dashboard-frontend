@@ -254,7 +254,7 @@ function BillForm({transaction, urlToGoBack}: Props): any {
           <form onSubmit={handleSubmit} onReset={handleReset}>
 
             <label>Amount</label>
-            <Field type="number" name="amount" />
+            <Field type="number" name="amount" step="0.01" />
             <ErrorMessage name="amount" component="div" />
             <br />
 
